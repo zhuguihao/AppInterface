@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	
+	<!-- 常规的日志输出到这里，需要注意的是这里同时还有系统输出的信息 -->
+	<appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	  <File>./log/app.log</File>
+	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	    <!-- daily rollover -->
+	    <FileNamePattern>./log/app.%d{yyyy-MM-dd}.log</FileNamePattern>
+	    <!-- keep 30 days' worth of history -->
+	    <maxHistory>30</maxHistory>
+	  </rollingPolicy>
+	  <encoder>
+	    <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+	  </encoder>        
+	</appender>
+	    
+	    <!-- 控制台输出 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	    <encoder>   
+	      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>   
+	    </encoder>   
+	 </appender>
+  
+	<root level="info">
+	    <appender-ref ref="dailyRollingFileAppender" />
+	    <appender-ref ref="STDOUT" />
+	</root>
+	
+	
+	<!-- mybatis -->
+	<appender name="mybatisAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	  <File>./log/mybatis.log</File>
+	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	    <!-- daily rollover -->
+	    <FileNamePattern>./log/mybatis.%d{yyyy-MM-dd}.log</FileNamePattern>
+	    <!-- keep 30 days' worth of history -->
+	    <maxHistory>30</maxHistory>
+	  </rollingPolicy>
+	  <encoder>
+	    <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+	  </encoder>        
+	</appender>
+	<logger name="com.gubang.dao" level="info" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="mybatisAppender" />
+	</logger>
+	
+	<!-- 业务相关的appender，如果 某些日志需要输出到特定的目录，用这个方法-->
+	<appender name="bizAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	  <File>./log/admin.log</File>
+	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	    <FileNamePattern>./log/admin.%d{yyyy-MM-dd}.log</FileNamePattern>
+	    <maxHistory>30</maxHistory>
+	  </rollingPolicy>
+	  <encoder>
+	    <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+	  </encoder>        
+	</appender>
+	<logger name="Admin" level="INFO" additivity="false"> 
+			<appender-ref ref="STDOUT" />
+	        <appender-ref ref="bizAppender" /> 
+	</logger>
+	
+	<!-- 业务相关的appender，如果 某些日志需要输出到特定的目录，用这个方法-->
+	<appender name="systemAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	  <File>./log/schedule.log</File>
+	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	    <FileNamePattern>./log/schedule.%d{yyyy-MM-dd}.log</FileNamePattern>
+	    <maxHistory>30</maxHistory>
+	  </rollingPolicy>
+	  <encoder>
+	    <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+	  </encoder>        
+	</appender>
+	<logger name="System" level="INFO" additivity="false"> 
+		<appender-ref ref="systemAppender"/>
+	</logger>
+	
+</configuration>
