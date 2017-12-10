@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 import com.alibaba.fastjson.JSONObject;
 import com.gubang.dto.query.GetWechatOpenIdQuery;
 import com.gubang.dto.result.GetWechatOpenIdResult;
+import com.gubang.service.WechatService;
+import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
 
 
@@ -29,16 +32,8 @@ public class WechatController {
 
 	private final static Logger log = LoggerFactory.getLogger("Admin");
 	
-	@Value("${wechat.getOpenIdByCode}")
-	private String getOpenIdByCodeUrl;
-	
-	@Value("${wechat.appId}")
-	private String wechatAppId;
-	
-	@Value("${wechat.secret}")
-	private String wechatSecret;
-	
-	private RestTemplate restTemplate = new RestTemplate();
+	@Autowired
+	private WechatService wechatService;
 	
 	/**
 	 * 通过code来调用微信接口来获取用户openID
@@ -50,15 +45,10 @@ public class WechatController {
 		if (getWechatOpenIdQuery.inValid()) {
 			return resultDTO.setFailObject();
 		}
-		
-		String requestUrl = String.format(getOpenIdByCodeUrl, wechatAppId, wechatSecret, getWechatOpenIdQuery.getJsCode());
-		log.info("begin to request wx to get openid : " + requestUrl);
-		String wechatResult = restTemplate.getForObject(requestUrl, String.class);
-		log.info("wx to get openid result: " + wechatResult);
-		JSONObject json = JSONObject.parseObject(wechatResult);
+		String openid = wechatService.getOpenIdByCode(getWechatOpenIdQuery.getJsCode());
 		GetWechatOpenIdResult getWechatOpenIdResult = new GetWechatOpenIdResult();
-		if (json.containsKey("openid")) {
-			getWechatOpenIdResult.setOpenId(json.getString("openid"));
+		if (!CommonUtil.isEmpty(openid)) {
+			getWechatOpenIdResult.setOpenId(openid); 
 			return resultDTO.setSuccess(getWechatOpenIdResult);
 		} else {
 			return resultDTO.setFailObject();

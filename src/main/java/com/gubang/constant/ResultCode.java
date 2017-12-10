@@ -10,6 +10,7 @@ public enum ResultCode {
 
 	SUCCESS("success", "成功"),
 	FAIL("fail","失败"),
+	NOT_FOUND("not_found","结果为空"),
 	PARAMETER_ERROR("invalid_parameter", "参数无效"),
 	SYSTEM_ERROR("system_error", "系统异常"),
 	NOT_LOGIN("not_login", "用户没有登录");

@@ -42,6 +42,12 @@ public class ResultDTO implements Serializable {
 		return this;
 	}
 	
+	public ResultDTO setNotFound() {
+		status = ResultCode.NOT_FOUND.getCode();
+		msg = ResultCode.NOT_FOUND.getDesc();
+		return this;
+	}
+	
 	public ResultDTO setParameterInvalid() {
 		status = ResultCode.PARAMETER_ERROR.getCode();
 		msg = ResultCode.PARAMETER_ERROR.getDesc();
