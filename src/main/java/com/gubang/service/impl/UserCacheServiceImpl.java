@@ -32,6 +32,7 @@ public class UserCacheServiceImpl implements UserCacheService,InitializingBean {
 	@Override
 	public void set(String key, UserInfo info) {
 		redisTemplate.opsForHash().put(Constant.REDIS_USER_KEY, key, info);
+		redisTemplate.expire(Constant.REDIS_USER_KEY, timeout, TimeUnit.SECONDS);
 	}
 	
 	/**
@@ -49,6 +50,6 @@ public class UserCacheServiceImpl implements UserCacheService,InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		redisTemplate.expire(Constant.REDIS_USER_KEY, timeout, TimeUnit.SECONDS);
+		
 	}
 }

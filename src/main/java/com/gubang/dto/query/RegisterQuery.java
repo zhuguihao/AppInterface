@@ -24,10 +24,6 @@ public class RegisterQuery {
 
     private String country;
 
-    private String token;
-
-    private Date lastLoginDate;
-
     public String getOpenId() {
 		return openId;
 	}
@@ -116,27 +112,6 @@ public class RegisterQuery {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
-
-	public String getToken() {
-		return token;
-	}
-
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-
-	public Date getLastLoginDate() {
-		return lastLoginDate;
-	}
-
-
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-	}
-
 
 	public boolean inValid() {
 		return CommonUtil.isEmpty(account) || CommonUtil.isEmpty(password) || account.length() > 64 || password.length() > 64;

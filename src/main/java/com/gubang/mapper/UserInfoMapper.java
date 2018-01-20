@@ -1,4 +1,4 @@
-package com.gubang.dao;
+package com.gubang.mapper;
 
 import com.gubang.entity.UserInfo;
 

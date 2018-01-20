@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gubang.constant.Constant;
-import com.gubang.dao.UserInfoMapper;
 import com.gubang.dto.query.LoginQuery;
 import com.gubang.dto.query.RegisterQuery;
 import com.gubang.dto.result.LoginResult;
 import com.gubang.dto.result.RegisterResult;
 import com.gubang.entity.UserInfo;
+import com.gubang.mapper.UserInfoMapper;
 import com.gubang.service.LoginService;
 import com.gubang.service.UserCacheService;
 import com.gubang.util.CommonUtil;
@@ -44,6 +44,7 @@ public class LoginServiceImpl implements LoginService {
 		
 		UserInfo newComeUserInfo = new UserInfo();
 		BeanUtils.copyProperties(registerQuery, newComeUserInfo);
+		newComeUserInfo.setPassword(CommonUtil.md5(registerQuery.getPassword()));
 		newComeUserInfo.setId(CommonUtil.getUUid());
 		newComeUserInfo.setCreateBy(newComeUserInfo.getId());
 		newComeUserInfo.setCreateDate(new Date());
@@ -55,7 +56,7 @@ public class LoginServiceImpl implements LoginService {
 		if (effectLine <= 0) {
 			return resultDTO.setSystemError();
 		}
-		return resultDTO.setSuccess(result);
+		return resultDTO.setSuccess(result.setSuccess());
 	}
 
 	@Override
@@ -96,6 +97,7 @@ public class LoginServiceImpl implements LoginService {
 		result.setLoginResult("ok.");
 		result.setToken(token);
 		result.setUserInfo(userEntity);
+		result.getUserInfo().setToken(token);
 		return resultDTO.setSuccess(result);
 	}
 }

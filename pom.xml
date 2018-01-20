@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.1.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
     </parent>
 
 	
@@ -118,17 +118,26 @@
 
     <!-- Add Spring repositories -->
     <!-- (you don't need this if you are using a .RELEASE version) -->
-    <repositories>
+<!--     <repositories>
          <repository>
             <id>spring-snapshots</id>
             <url>http://uk.maven.org/maven2/</url>
             <snapshots><enabled>true</enabled></snapshots>
-        </repository> <!-- 
+        </repository> 
         <repository>
             <id>spring-milestones</id>
             <url>http://repo.spring.io/milestone</url>
-        </repository> -->
-    </repositories>
+        </repository>
+    </repositories> -->
+    
+    <repositories>
+		<repository>
+			<id>alimaven</id>
+			<name>aliyun maven</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>spring-snapshots</id>

@@ -1,9 +1,15 @@
 package com.gubang.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserInfo {
-    private String id;
+public class UserInfo implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8304531234759615890L;
+
+	private String id;
 
     private String openId;
 

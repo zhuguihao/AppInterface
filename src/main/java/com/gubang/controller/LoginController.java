@@ -31,7 +31,7 @@ public class LoginController {
 	LoginService loginService;
 	
 	@RequestMapping(value="register",method = RequestMethod.POST)
-	public ResultDTO test(HttpServletRequest request, HttpServletResponse response
+	public ResultDTO register(HttpServletRequest request, HttpServletResponse response
 			, @RequestBody RegisterQuery registerQuery) throws ParseException, IOException {
 		ResultDTO res = new ResultDTO();
 		if (registerQuery.inValid()) {
@@ -41,7 +41,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="login",method = RequestMethod.POST)
-	public ResultDTO test(HttpServletRequest request, HttpServletResponse response
+	public ResultDTO login(HttpServletRequest request, HttpServletResponse response
 			, @RequestBody LoginQuery loginQuery) throws ParseException, IOException {
 		ResultDTO res = new ResultDTO();
 		if (loginQuery.inValid()) {

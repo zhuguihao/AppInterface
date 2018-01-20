@@ -1,4 +1,5 @@
 package com.gubang;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @SpringBootApplication
 @EnableWebMvc
 @ComponentScan(basePackages={"com.gubang"})
+@MapperScan(basePackages = { "com.gubang.mapper" })
 @ServletComponentScan
 public class Application extends WebMvcConfigurationSupport {
 	
