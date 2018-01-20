@@ -2,7 +2,13 @@ package com.gubang.util;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.security.MessageDigest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.UUID;
 
@@ -79,4 +85,57 @@ public class CommonUtil {
 		return null;
 	}
 	
+	public static String md5(String source) {
+
+		StringBuffer sb = new StringBuffer(32);
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			byte[] array = md.digest(source.getBytes("utf-8"));
+
+			for (int i = 0; i < array.length; i++) {
+				sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).toUpperCase().substring(1, 3));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return sb.toString();
+	}
+	
+	public static Date getAnotherDate(Date date, int addDay) {
+	     Calendar calendar = new GregorianCalendar(); 
+	     calendar.setTime(date); 
+	     calendar.add(Calendar.DATE,addDay);
+	     date=calendar.getTime();
+	     return date;
+	}
+	
+	public static Date parseDate(SimpleDateFormat myFmt2, String dateStr) {
+		try {
+			return myFmt2.parse(dateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public static String getNowFormat() {
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			return dateFormat.format(new Date());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Integer parseInt(String dateStr) {
+		try {
+			return Integer.parseInt(dateStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

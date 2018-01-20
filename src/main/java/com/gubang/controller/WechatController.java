@@ -3,18 +3,12 @@ package com.gubang.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import com.alibaba.fastjson.JSONObject;
 import com.gubang.dto.query.GetWechatOpenIdQuery;
 import com.gubang.dto.result.GetWechatOpenIdResult;
 import com.gubang.service.WechatService;
@@ -30,8 +24,6 @@ import com.gubang.util.ResultDTO;
 @RestController
 public class WechatController {
 
-	private final static Logger log = LoggerFactory.getLogger("Admin");
-	
 	@Autowired
 	private WechatService wechatService;
 	
@@ -40,7 +32,6 @@ public class WechatController {
 	 */
 	@RequestMapping(value="getOpenIdByCode",method = RequestMethod.POST)
 	public ResultDTO test(HttpServletRequest request, HttpServletResponse response, @RequestBody GetWechatOpenIdQuery getWechatOpenIdQuery) {
-		log.info("test comes request");
 		ResultDTO resultDTO = new ResultDTO();
 		if (getWechatOpenIdQuery.inValid()) {
 			return resultDTO.setFailObject();
