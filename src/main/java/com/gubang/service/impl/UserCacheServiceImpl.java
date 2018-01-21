@@ -49,7 +49,15 @@ public class UserCacheServiceImpl implements UserCacheService,InitializingBean {
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
-		
+	public UserInfo get(String key) {
+		Object o = redisTemplate.opsForHash().get(Constant.REDIS_USER_KEY, key);
+		if (o == null) {
+			return null;
+		} else {
+			return (UserInfo) o;
+		}
 	}
+	
+	@Override
+	public void afterPropertiesSet() throws Exception {}
 }
