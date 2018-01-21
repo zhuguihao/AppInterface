@@ -11,9 +11,12 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import com.gubang.constant.Constant;
 
 /**
  * 通用工具类
+ * 
  * @author liangwenhan
  *
  */
@@ -33,7 +36,7 @@ public class CommonUtil {
 			}
 		}
 	}
-	
+
 	public static String structString(String sep, Collection<?> coll) {
 		StringBuffer buff = new StringBuffer();
 		for (Object object : coll) {
@@ -46,8 +49,8 @@ public class CommonUtil {
 		}
 		return buff.toString();
 	}
-		
-	public static String structString(String sep,String...fields) {
+
+	public static String structString(String sep, String... fields) {
 		StringBuffer buff = new StringBuffer();
 		for (int i = 0; i < fields.length; i++) {
 			if (fields.length - 1 == i) {
@@ -58,25 +61,26 @@ public class CommonUtil {
 		}
 		return buff.toString();
 	}
-	
+
 	/**
 	 * 获得一个从0到end之间的整形，包括0，但不包括end
+	 * 
 	 * @param end
 	 * @return
 	 */
 	static public int getRamdon(int end) {
-		Random ra =new Random(System.currentTimeMillis());
+		Random ra = new Random(System.currentTimeMillis());
 		return ra.nextInt(end);
 	}
-	
+
 	public static boolean isEmpty(String str) {
 		return str == null || str.isEmpty();
 	}
-	
+
 	public static String getUUid() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
-	
+
 	public static Integer parseInteger(String intString) {
 		try {
 			return Integer.parseInt(intString);
@@ -84,7 +88,7 @@ public class CommonUtil {
 		}
 		return null;
 	}
-	
+
 	public static String md5(String source) {
 
 		StringBuffer sb = new StringBuffer(32);
@@ -101,15 +105,15 @@ public class CommonUtil {
 		}
 		return sb.toString();
 	}
-	
+
 	public static Date getAnotherDate(Date date, int addDay) {
-	     Calendar calendar = new GregorianCalendar(); 
-	     calendar.setTime(date); 
-	     calendar.add(Calendar.DATE,addDay);
-	     date=calendar.getTime();
-	     return date;
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		calendar.add(Calendar.DATE, addDay);
+		date = calendar.getTime();
+		return date;
 	}
-	
+
 	public static Date parseDate(SimpleDateFormat myFmt2, String dateStr) {
 		try {
 			return myFmt2.parse(dateStr);
@@ -120,6 +124,7 @@ public class CommonUtil {
 		}
 		return null;
 	}
+
 	public static String getNowFormat() {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -129,10 +134,19 @@ public class CommonUtil {
 		}
 		return null;
 	}
-	
+
 	public static Integer parseInt(String dateStr) {
 		try {
 			return Integer.parseInt(dateStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String getToken(HttpServletRequest request) {
+		try {
+			return request.getHeader(Constant.TOKEN_HEADER_KEY);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

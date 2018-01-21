@@ -50,6 +50,9 @@ public class UserCacheServiceImpl implements UserCacheService,InitializingBean {
 
 	@Override
 	public UserInfo get(String key) {
+		if(null == key){
+			return null;
+		}
 		Object o = redisTemplate.opsForHash().get(Constant.REDIS_USER_KEY, key);
 		if (o == null) {
 			return null;
@@ -60,4 +63,5 @@ public class UserCacheServiceImpl implements UserCacheService,InitializingBean {
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {}
+
 }

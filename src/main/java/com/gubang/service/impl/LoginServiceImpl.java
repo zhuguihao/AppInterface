@@ -1,18 +1,16 @@
 package com.gubang.service.impl;
 
 import java.util.Date;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.Constant;
 import com.gubang.dto.query.LoginQuery;
 import com.gubang.dto.query.RegisterQuery;
 import com.gubang.dto.result.LoginResult;
+import com.gubang.dto.result.OutLoginResult;
 import com.gubang.dto.result.RegisterResult;
 import com.gubang.entity.UserInfo;
 import com.gubang.mapper.UserInfoMapper;
@@ -23,8 +21,6 @@ import com.gubang.util.ResultDTO;
 
 @Service
 public class LoginServiceImpl implements LoginService {
-	
-	private final static Logger log = LoggerFactory.getLogger("Admin");
 	
 	@Autowired
 	UserInfoMapper userInfoMapper;
@@ -69,13 +65,13 @@ public class LoginServiceImpl implements LoginService {
 		//find by account,if not exist return
 		UserInfo userEntity = userInfoMapper.findByAccount(loginQuery.getAccount());
 		if (userEntity == null) {
-			 result.setLoginResult("account not exist.");
+			 result.setLoginResult("账号不存在");
 			 return resultDTO.setFail(result);
 		}
 		
 		//passwd compare with the md5 of passwd user input,if not exist return
 		if (!userEntity.getPassword().equals(CommonUtil.md5(loginQuery.getPassword()))) {
-			result.setLoginResult("password incorrect.");
+			result.setLoginResult("密码错误");
 			 return resultDTO.setFail(result);
 		}
 		
@@ -95,10 +91,25 @@ public class LoginServiceImpl implements LoginService {
 		userCacheService.set(token, userEntity);
 		
 		//return token and userInfo
-		result.setLoginResult("ok.");
+		result.setLoginResult("登录成功");
 		result.setToken(token);
 		result.setUserInfo(userEntity);
 		result.getUserInfo().setToken(token);
 		return resultDTO.setSuccess(result);
+	}
+
+	@Override
+	public ResultDTO outLogin(UserInfo user) {
+		ResultDTO resultDTO = new ResultDTO();
+		OutLoginResult outLoginResult = new OutLoginResult();
+		//清空数据库token
+		UserInfo updateEntity = new UserInfo();
+		updateEntity.setId(user.getId());
+		updateEntity.setToken("");
+		userInfoMapper.updateByPrimaryKeySelective(updateEntity);
+		userCacheService.remove(user.getToken());
+		
+		outLoginResult.setOutLoginResult("退出成功");
+		return resultDTO.setSuccess(outLoginResult);
 	}
 }

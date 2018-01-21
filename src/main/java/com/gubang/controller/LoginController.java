@@ -2,21 +2,19 @@ package com.gubang.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.gubang.dto.query.LoginQuery;
 import com.gubang.dto.query.RegisterQuery;
+import com.gubang.entity.UserInfo;
 import com.gubang.service.LoginService;
+import com.gubang.service.UserCacheService;
+import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
 
 
@@ -29,6 +27,8 @@ public class LoginController {
 
 	@Autowired
 	LoginService loginService;
+	@Autowired
+	UserCacheService userCacheService;
 	
 	@RequestMapping(value="register",method = RequestMethod.POST)
 	public ResultDTO register(HttpServletRequest request, HttpServletResponse response
@@ -48,5 +48,16 @@ public class LoginController {
 			return res.setParameterInvalid();
 		}
 		return loginService.login(loginQuery);
+	}
+	
+	@RequestMapping(value="outLogin",method = RequestMethod.POST)
+	public ResultDTO outLogin(HttpServletRequest request, HttpServletResponse response
+			) throws ParseException, IOException {
+		ResultDTO res = new ResultDTO();
+		UserInfo user = userCacheService.get(CommonUtil.getToken(request));
+		if (null == user) {
+			return res.setNotLogin();
+		}
+		return loginService.outLogin(user);
 	}
 }

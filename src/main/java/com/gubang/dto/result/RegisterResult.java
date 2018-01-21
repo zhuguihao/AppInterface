@@ -13,12 +13,12 @@ public class RegisterResult {
 	}
 	
 	public RegisterResult setAccountExist() {
-		registerResult="account exist.";
+		registerResult="账号存在";
 		return this;
 	}
 	
 	public RegisterResult setSuccess() {
-		registerResult="ok.";
+		registerResult="注册成功";
 		return this;
 	}
 }
