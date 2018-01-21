@@ -1,6 +1,7 @@
 package com.gubang.service;
 
 import com.gubang.dto.query.LoginQuery;
+import com.gubang.dto.query.ModifyPwdDto;
 import com.gubang.dto.query.RegisterQuery;
 import com.gubang.entity.UserInfo;
 import com.gubang.util.ResultDTO;
@@ -24,4 +25,11 @@ public interface LoginService {
 	 * @return
 	 */
 	ResultDTO outLogin(UserInfo user);
+	
+	/**
+	 * 修改密码
+	 * @param params
+	 * @return
+	 */
+	ResultDTO modifyPwd(ModifyPwdDto params);
 }

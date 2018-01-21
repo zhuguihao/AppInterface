@@ -4,12 +4,12 @@ import java.util.Date;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.Constant;
 import com.gubang.dto.query.LoginQuery;
+import com.gubang.dto.query.ModifyPwdDto;
 import com.gubang.dto.query.RegisterQuery;
 import com.gubang.dto.result.LoginResult;
+import com.gubang.dto.result.ModifyPwdResult;
 import com.gubang.dto.result.OutLoginResult;
 import com.gubang.dto.result.RegisterResult;
 import com.gubang.entity.UserInfo;
@@ -21,24 +21,24 @@ import com.gubang.util.ResultDTO;
 
 @Service
 public class LoginServiceImpl implements LoginService {
-	
+
 	@Autowired
 	UserInfoMapper userInfoMapper;
 
 	@Autowired
 	UserCacheService userCacheService;
-	
+
 	@Override
 	public ResultDTO register(RegisterQuery registerQuery) {
-		//find by account; if accout exist return
-		//insert into user
+		// find by account; if accout exist return
+		// insert into user
 		ResultDTO resultDTO = new ResultDTO();
 		RegisterResult result = new RegisterResult();
 		UserInfo userExistAlready = userInfoMapper.findByAccount(registerQuery.getAccount());
 		if (userExistAlready != null) {
 			return resultDTO.setFail(result.setAccountExist());
 		}
-		
+
 		UserInfo newComeUserInfo = new UserInfo();
 		BeanUtils.copyProperties(registerQuery, newComeUserInfo);
 		newComeUserInfo.setPassword(CommonUtil.md5(registerQuery.getPassword()));
@@ -58,27 +58,29 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public ResultDTO login(LoginQuery loginQuery) {
-		
+
 		ResultDTO resultDTO = new ResultDTO();
 		LoginResult result = new LoginResult();
-		
-		//find by account,if not exist return
+
+		// find by account,if not exist return
 		UserInfo userEntity = userInfoMapper.findByAccount(loginQuery.getAccount());
 		if (userEntity == null) {
-			 result.setLoginResult("账号不存在");
-			 return resultDTO.setFail(result);
+			result.setLoginResult("账号不存在");
+			return resultDTO.setFail(result);
 		}
-		
-		//passwd compare with the md5 of passwd user input,if not exist return
+
+		// passwd compare with the md5 of passwd user input,if not exist return
 		if (!userEntity.getPassword().equals(CommonUtil.md5(loginQuery.getPassword()))) {
 			result.setLoginResult("密码错误");
-			 return resultDTO.setFail(result);
+			return resultDTO.setFail(result);
 		}
-		
-		//use the token of the db record as key, remove data from redis (single point login)
+
+		// use the token of the db record as key, remove data from redis (single
+		// point login)
 		userCacheService.remove(userEntity.getToken());
-		
-		//auth success,create uuid as token,now as last login date ,save to user
+
+		// auth success,create uuid as token,now as last login date ,save to
+		// user
 		String token = CommonUtil.getUUid();
 		Date lastLoginDate = new Date();
 		UserInfo updateEntity = new UserInfo();
@@ -86,11 +88,11 @@ public class LoginServiceImpl implements LoginService {
 		updateEntity.setLastLoginDate(lastLoginDate);
 		updateEntity.setToken(token);
 		userInfoMapper.updateByPrimaryKeySelective(updateEntity);
-		
-		//use the token just create as key,save userinfo to redis
+
+		// use the token just create as key,save userinfo to redis
 		userCacheService.set(token, userEntity);
-		
-		//return token and userInfo
+
+		// return token and userInfo
 		result.setLoginResult("登录成功");
 		result.setToken(token);
 		result.setUserInfo(userEntity);
@@ -102,14 +104,37 @@ public class LoginServiceImpl implements LoginService {
 	public ResultDTO outLogin(UserInfo user) {
 		ResultDTO resultDTO = new ResultDTO();
 		OutLoginResult outLoginResult = new OutLoginResult();
-		//清空数据库token
+		// 清空数据库token
 		UserInfo updateEntity = new UserInfo();
 		updateEntity.setId(user.getId());
 		updateEntity.setToken("");
 		userInfoMapper.updateByPrimaryKeySelective(updateEntity);
 		userCacheService.remove(user.getToken());
-		
+
 		outLoginResult.setOutLoginResult("退出成功");
 		return resultDTO.setSuccess(outLoginResult);
+	}
+
+	@Override
+	public ResultDTO modifyPwd(ModifyPwdDto params) {
+		ResultDTO resultDTO = new ResultDTO();
+		ModifyPwdResult result = new ModifyPwdResult();
+
+		// find by account,if not exist return
+		UserInfo userEntity = userInfoMapper.findByAccount(params.getAccount());
+		if (userEntity == null) {
+			result.setAccountNotExist();
+			return resultDTO.setFail(result);
+		}
+
+		UserInfo updateEntity = new UserInfo();
+		updateEntity.setId(userEntity.getId());
+		updateEntity.setPassword(CommonUtil.md5(params.getPassword()));
+		updateEntity.setUpdateBy(updateEntity.getId());
+		updateEntity.setUpdateDate(new Date());
+		userInfoMapper.updateByPrimaryKeySelective(updateEntity);
+
+		result.setModifyPwdResult("修改成功");
+		return resultDTO.setSuccess(result);
 	}
 }

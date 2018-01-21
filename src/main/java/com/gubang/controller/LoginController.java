@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.gubang.dto.query.LoginQuery;
+import com.gubang.dto.query.ModifyPwdDto;
 import com.gubang.dto.query.RegisterQuery;
 import com.gubang.entity.UserInfo;
 import com.gubang.service.LoginService;
@@ -59,5 +60,15 @@ public class LoginController {
 			return res.setNotLogin();
 		}
 		return loginService.outLogin(user);
+	}
+	
+	@RequestMapping(value="modifyPwd",method = RequestMethod.POST)
+	public ResultDTO modifyPwd(HttpServletRequest request, HttpServletResponse response
+			, @RequestBody ModifyPwdDto params) throws ParseException, IOException {
+		ResultDTO res = new ResultDTO();
+		if (params.inValid()) {
+			return res.setParameterInvalid();
+		}
+		return loginService.modifyPwd(params);
 	}
 }
