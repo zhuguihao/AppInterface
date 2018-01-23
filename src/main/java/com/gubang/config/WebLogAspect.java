@@ -35,7 +35,7 @@ public class WebLogAspect {
 		// 获取传入目标方法的参数
 		Object[] args = joinPoint.getArgs();
 		if(args.length>2){
-			System.out.println("入参为" + JSONArray.toJSONString(args[2]));
+			log.info("入参为" + JSONArray.toJSONString(args[2]));
 		}
 		
 
@@ -43,6 +43,6 @@ public class WebLogAspect {
 
 	@AfterReturning(returning = "ret", pointcut = "webLog()")
 	public void doAfterReturning(Object ret) throws Throwable {
-		System.out.println("出参为" + JSONArray.toJSONString(ret));
+		log.info("出参为" + JSONArray.toJSONString(ret));
 	}
 }
