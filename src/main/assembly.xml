@@ -9,10 +9,10 @@
     <fileSets>   
         <fileSet>  
             <directory>${project.basedir}\src\main\resources</directory>  
-            <outputDirectory>config</outputDirectory>  
+            <outputDirectory>resources</outputDirectory>  
         </fileSet> 
         <fileSet>  
-            <directory>${project.basedir}\src\script</directory>  
+            <directory>${project.basedir}\src\main\script</directory>  
             <outputDirectory>.</outputDirectory>  
             <fileMode>0755</fileMode>  
         </fileSet>

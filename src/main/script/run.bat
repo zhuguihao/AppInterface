@@ -1,0 +1,1 @@
+java -classpath ./resources/;./lib/* com.gubang.Application

@@ -66,21 +66,20 @@
 		</dependency>
     </dependencies>
 
-    <!-- Package as an executable jar -->
-   <build>
+	<build> 
 		<resources>
+			 <resource>
+				<directory>src/main/resources</directory>
+				<excludes> 
+					<exclude>*</exclude> 
+				</excludes>
+			</resource>
 			<resource>
 				<directory>src/main/java</directory>
 				<includes>
 					<include>**/*.xml</include>
 				</includes>
 				<filtering>false</filtering>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<excludes>
-					<exclude>*</exclude>
-				</excludes>
 			</resource>
 		</resources>
 		<plugins>
@@ -115,20 +114,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-    <!-- Add Spring repositories -->
-    <!-- (you don't need this if you are using a .RELEASE version) -->
-<!--     <repositories>
-         <repository>
-            <id>spring-snapshots</id>
-            <url>http://uk.maven.org/maven2/</url>
-            <snapshots><enabled>true</enabled></snapshots>
-        </repository> 
-        <repository>
-            <id>spring-milestones</id>
-            <url>http://repo.spring.io/milestone</url>
-        </repository>
-    </repositories> -->
     
     <repositories>
 		<repository>

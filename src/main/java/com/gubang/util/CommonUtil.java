@@ -143,13 +143,4 @@ public class CommonUtil {
 		}
 		return null;
 	}
-
-	public static String getToken(HttpServletRequest request) {
-		try {
-			return request.getHeader(Constant.TOKEN_HEADER_KEY);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 }

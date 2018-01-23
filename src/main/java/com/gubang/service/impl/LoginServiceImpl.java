@@ -1,9 +1,12 @@
 package com.gubang.service.impl;
 
 import java.util.Date;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import com.gubang.constant.Constant;
 import com.gubang.dto.query.LoginQuery;
 import com.gubang.dto.query.ModifyPwdDto;
@@ -15,7 +18,7 @@ import com.gubang.dto.result.RegisterResult;
 import com.gubang.entity.UserInfo;
 import com.gubang.mapper.UserInfoMapper;
 import com.gubang.service.LoginService;
-import com.gubang.service.UserCacheService;
+import com.gubang.service.RedisService;
 import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
 
@@ -25,9 +28,14 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	UserInfoMapper userInfoMapper;
 
+	//@Autowired
+	//UserSessionService userSessionService;
 	@Autowired
-	UserCacheService userCacheService;
-
+	RedisService redisService;
+	
+	@Value(value="${redis.userinfo.timeout}")
+	private Long timeout;
+	
 	@Override
 	public ResultDTO register(RegisterQuery registerQuery) {
 		// find by account; if accout exist return
@@ -77,7 +85,7 @@ public class LoginServiceImpl implements LoginService {
 
 		// use the token of the db record as key, remove data from redis (single
 		// point login)
-		userCacheService.remove(userEntity.getToken());
+		redisService.remove(Constant.TOKEN_HEADER_KEY, userEntity.getToken());
 
 		// auth success,create uuid as token,now as last login date ,save to
 		// user
@@ -90,8 +98,8 @@ public class LoginServiceImpl implements LoginService {
 		userInfoMapper.updateByPrimaryKeySelective(updateEntity);
 
 		// use the token just create as key,save userinfo to redis
-		userCacheService.set(token, userEntity);
-
+		//userSessionService.set(token, userEntity);
+		redisService.set(Constant.TOKEN_HEADER_KEY, token, userEntity, timeout);
 		// return token and userInfo
 		result.setLoginResult("登录成功");
 		result.setToken(token);
@@ -101,7 +109,7 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public ResultDTO outLogin(UserInfo user) {
+	public ResultDTO logout(UserInfo user) {
 		ResultDTO resultDTO = new ResultDTO();
 		OutLoginResult outLoginResult = new OutLoginResult();
 		// 清空数据库token
@@ -109,8 +117,7 @@ public class LoginServiceImpl implements LoginService {
 		updateEntity.setId(user.getId());
 		updateEntity.setToken("");
 		userInfoMapper.updateByPrimaryKeySelective(updateEntity);
-		userCacheService.remove(user.getToken());
-
+		redisService.remove(Constant.TOKEN_HEADER_KEY, user.getToken());
 		outLoginResult.setOutLoginResult("退出成功");
 		return resultDTO.setSuccess(outLoginResult);
 	}

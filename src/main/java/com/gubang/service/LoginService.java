@@ -24,7 +24,7 @@ public interface LoginService {
 	 * @param user
 	 * @return
 	 */
-	ResultDTO outLogin(UserInfo user);
+	ResultDTO logout(UserInfo user);
 	
 	/**
 	 * 修改密码

@@ -22,6 +22,7 @@ import com.gubang.util.ResultDTO;
  *
  */
 @RestController
+@RequestMapping("/wechat")
 public class WechatController {
 
 	@Autowired
@@ -30,7 +31,7 @@ public class WechatController {
 	/**
 	 * 通过code来调用微信接口来获取用户openID
 	 */
-	@RequestMapping(value="getOpenIdByCode",method = RequestMethod.POST)
+	@RequestMapping(value="/getOpenIdByCode",method = RequestMethod.POST)
 	public ResultDTO test(HttpServletRequest request, HttpServletResponse response, @RequestBody GetWechatOpenIdQuery getWechatOpenIdQuery) {
 		ResultDTO resultDTO = new ResultDTO();
 		if (getWechatOpenIdQuery.inValid()) {

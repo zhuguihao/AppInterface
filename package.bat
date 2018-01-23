@@ -1,1 +1,1 @@
-mvn clean package -Dmaven.test.skip=true -Dpackagedir=
+mvn clean package
