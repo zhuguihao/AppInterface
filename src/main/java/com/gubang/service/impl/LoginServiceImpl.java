@@ -32,7 +32,7 @@ public class LoginServiceImpl implements LoginService {
 	//UserSessionService userSessionService;
 	@Autowired
 	RedisService redisService;
-	
+
 	@Value(value="${redis.userinfo.timeout}")
 	private Long timeout;
 	

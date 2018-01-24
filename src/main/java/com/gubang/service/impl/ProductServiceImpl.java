@@ -10,12 +10,15 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.gubang.constant.Constant;
 import com.gubang.entity.ProductInfo;
 import com.gubang.entity.ProductNameInfo;
+import com.gubang.entity.ProductSaleInfo;
 import com.gubang.entity.ProductSeriesInfo;
 import com.gubang.mapper.ProductInfoMapper;
 import com.gubang.mapper.ProductNameInfoMapper;
@@ -45,13 +48,26 @@ public class ProductServiceImpl implements ProductService {
 	@Resource
     private RedisService redisService;
 	
+	
+	@Value(value="${redis.product.cascade.timeout}")
+	private Long timeout;
+	
 	@Override
 	public ResultDTO getAllProductCascade() {
 		//find from redis
 		//if null, get from db,save to redis
 		//else return
-		ResultDTO re = new ResultDTO();
-		return re.setSuccess(doGetAllProductJson());
+		ResultDTO result = redisService.get(Constant.REDIS_PRODUCT_ALL_KEY, 
+						Constant.REDIS_PRODUCT_ALL_KEY, ResultDTO.class);
+		if (result == null) {
+			result = new ResultDTO();
+			result.setSuccess(doGetAllProductJson());
+			synchronized(this.getClass()) {
+				redisService.set(Constant.REDIS_PRODUCT_ALL_KEY, Constant.REDIS_PRODUCT_ALL_KEY, 
+						result, timeout);
+			}
+		}
+		return result;
 	}
 	
 	private JSONArray doGetAllProductJson() {
@@ -113,5 +129,41 @@ public class ProductServiceImpl implements ProductService {
 			retArray.add(level1Json);
 		}
 		return retArray;
+	}
+
+	@Override
+	public List<ProductSaleInfo> querySaleByPage(Integer startPage, Integer pageSize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer countSaleByPage(Integer startPage, Integer pageSize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductSaleInfo getSaleById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteSale(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void instore(String barcode, Integer productId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void outstore(Integer customerId, String barcode) {
+		// TODO Auto-generated method stub
+		
 	}
 }
