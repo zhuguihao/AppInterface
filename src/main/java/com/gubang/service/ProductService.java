@@ -2,7 +2,11 @@ package com.gubang.service;
 
 import java.util.List;
 
+import com.gubang.dto.query.ProductDto;
+import com.gubang.dto.query.SaveProductSaleDto;
+import com.gubang.dto.query.StorageDto;
 import com.gubang.entity.ProductSaleInfo;
+import com.gubang.entity.UserInfo;
 import com.gubang.util.ResultDTO;
 
 public interface ProductService {
@@ -25,5 +29,9 @@ public interface ProductService {
 	
 	void outstore(Integer customerId, String barcode);
 	
+	ResultDTO getProductById(ProductDto params,UserInfo userInfo);
 	
+	ResultDTO storage(SaveProductSaleDto params,UserInfo userInfo);
+	
+	ResultDTO outStorage(StorageDto params,UserInfo userInfo);
 }

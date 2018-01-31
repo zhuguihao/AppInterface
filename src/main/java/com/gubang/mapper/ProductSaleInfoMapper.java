@@ -10,8 +10,12 @@ public interface ProductSaleInfoMapper {
     int insertSelective(ProductSaleInfo record);
 
     ProductSaleInfo selectByPrimaryKey(String id);
+    
+    ProductSaleInfo selectByProductSaleInfoParams(ProductSaleInfo productSaleInfo);
 
     int updateByPrimaryKeySelective(ProductSaleInfo record);
 
     int updateByPrimaryKey(ProductSaleInfo record);
+    
+    int selectProductSaleByBarcode(String barCode);
 }

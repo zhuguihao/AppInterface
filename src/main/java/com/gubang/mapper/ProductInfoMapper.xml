@@ -1,220 +1,325 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gubang.mapper.ProductInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.gubang.entity.ProductInfo" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="pro_name_id" property="proNameId" jdbcType="VARCHAR" />
-    <result column="pro_model" property="proModel" jdbcType="VARCHAR" />
-    <result column="voltage_range" property="voltageRange" jdbcType="VARCHAR" />
-    <result column="distribution_price" property="distributionPrice" jdbcType="DECIMAL" />
-    <result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
-    <result column="pro_desc" property="proDesc" jdbcType="VARCHAR" />
-    <result column="policy" property="policy" jdbcType="DECIMAL" />
-    <result column="policy_replace" property="policyReplace" jdbcType="DECIMAL" />
-    <result column="sort" property="sort" jdbcType="DECIMAL" />
-    <result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
-    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, pro_name_id, pro_model, voltage_range, distribution_price, retail_price, pro_desc, 
-    policy, policy_replace, sort, del_flag, create_by, create_date, update_by, update_date
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_product
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from t_product
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.gubang.entity.ProductInfo" >
-    insert into t_product (id, pro_name_id, pro_model, 
-      voltage_range, distribution_price, retail_price, 
-      pro_desc, policy, policy_replace, 
-      sort, del_flag, create_by, 
-      create_date, update_by, update_date
-      )
-    values (#{id,jdbcType=VARCHAR}, #{proNameId,jdbcType=VARCHAR}, #{proModel,jdbcType=VARCHAR}, 
-      #{voltageRange,jdbcType=VARCHAR}, #{distributionPrice,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL}, 
-      #{proDesc,jdbcType=VARCHAR}, #{policy,jdbcType=DECIMAL}, #{policyReplace,jdbcType=DECIMAL}, 
-      #{sort,jdbcType=DECIMAL}, #{delFlag,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.gubang.entity.ProductInfo" >
-    insert into t_product
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="proNameId != null" >
-        pro_name_id,
-      </if>
-      <if test="proModel != null" >
-        pro_model,
-      </if>
-      <if test="voltageRange != null" >
-        voltage_range,
-      </if>
-      <if test="distributionPrice != null" >
-        distribution_price,
-      </if>
-      <if test="retailPrice != null" >
-        retail_price,
-      </if>
-      <if test="proDesc != null" >
-        pro_desc,
-      </if>
-      <if test="policy != null" >
-        policy,
-      </if>
-      <if test="policyReplace != null" >
-        policy_replace,
-      </if>
-      <if test="sort != null" >
-        sort,
-      </if>
-      <if test="delFlag != null" >
-        del_flag,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="updateBy != null" >
-        update_by,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="proNameId != null" >
-        #{proNameId,jdbcType=VARCHAR},
-      </if>
-      <if test="proModel != null" >
-        #{proModel,jdbcType=VARCHAR},
-      </if>
-      <if test="voltageRange != null" >
-        #{voltageRange,jdbcType=VARCHAR},
-      </if>
-      <if test="distributionPrice != null" >
-        #{distributionPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="retailPrice != null" >
-        #{retailPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="proDesc != null" >
-        #{proDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="policy != null" >
-        #{policy,jdbcType=DECIMAL},
-      </if>
-      <if test="policyReplace != null" >
-        #{policyReplace,jdbcType=DECIMAL},
-      </if>
-      <if test="sort != null" >
-        #{sort,jdbcType=DECIMAL},
-      </if>
-      <if test="delFlag != null" >
-        #{delFlag,jdbcType=VARCHAR},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductInfo" >
-    update t_product
-    <set >
-      <if test="proNameId != null" >
-        pro_name_id = #{proNameId,jdbcType=VARCHAR},
-      </if>
-      <if test="proModel != null" >
-        pro_model = #{proModel,jdbcType=VARCHAR},
-      </if>
-      <if test="voltageRange != null" >
-        voltage_range = #{voltageRange,jdbcType=VARCHAR},
-      </if>
-      <if test="distributionPrice != null" >
-        distribution_price = #{distributionPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="retailPrice != null" >
-        retail_price = #{retailPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="proDesc != null" >
-        pro_desc = #{proDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="policy != null" >
-        policy = #{policy,jdbcType=DECIMAL},
-      </if>
-      <if test="policyReplace != null" >
-        policy_replace = #{policyReplace,jdbcType=DECIMAL},
-      </if>
-      <if test="sort != null" >
-        sort = #{sort,jdbcType=DECIMAL},
-      </if>
-      <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=VARCHAR},
-      </if>
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.gubang.entity.ProductInfo" >
-    update t_product
-    set pro_name_id = #{proNameId,jdbcType=VARCHAR},
-      pro_model = #{proModel,jdbcType=VARCHAR},
-      voltage_range = #{voltageRange,jdbcType=VARCHAR},
-      distribution_price = #{distributionPrice,jdbcType=DECIMAL},
-      retail_price = #{retailPrice,jdbcType=DECIMAL},
-      pro_desc = #{proDesc,jdbcType=VARCHAR},
-      policy = #{policy,jdbcType=DECIMAL},
-      policy_replace = #{policyReplace,jdbcType=DECIMAL},
-      sort = #{sort,jdbcType=DECIMAL},
-      del_flag = #{delFlag,jdbcType=VARCHAR},
-      create_by = #{createBy,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=VARCHAR},
-      update_date = #{updateDate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  
-  <select id="findAll" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_product
-    where del_flag = 'N' order by sort,create_date
-  </select>
+<mapper namespace="com.gubang.mapper.ProductInfoMapper">
+	<resultMap id="BaseResultMap" type="com.gubang.entity.ProductInfo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="pro_name_id" property="proNameId" jdbcType="VARCHAR" />
+		<result column="pro_model" property="proModel" jdbcType="VARCHAR" />
+		<result column="voltage_range" property="voltageRange"
+			jdbcType="VARCHAR" />
+		<result column="distribution_price" property="distributionPrice"
+			jdbcType="DECIMAL" />
+		<result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
+		<result column="pro_desc" property="proDesc" jdbcType="VARCHAR" />
+		<result column="policy" property="policy" jdbcType="DECIMAL" />
+		<result column="policy_replace" property="policyReplace"
+			jdbcType="DECIMAL" />
+		<result column="sort" property="sort" jdbcType="DECIMAL" />
+		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="BaseProductMap" type="com.gubang.vo.ProductVo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="series" property="series" jdbcType="VARCHAR" />
+		<result column="pro_name" property="proName" jdbcType="VARCHAR" />
+		<result column="pro_name_id" property="proNameId" jdbcType="VARCHAR" />
+		<result column="pro_model" property="proModel" jdbcType="VARCHAR" />
+		<result column="voltage_range" property="voltageRange"
+			jdbcType="VARCHAR" />
+		<result column="distribution_price" property="distributionPrice"
+			jdbcType="DECIMAL" />
+		<result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
+		<result column="pro_desc" property="proDesc" jdbcType="VARCHAR" />
+		<result column="policy" property="policy" jdbcType="DECIMAL" />
+		<result column="policy_replace" property="policyReplace"
+			jdbcType="DECIMAL" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, pro_name_id, pro_model, voltage_range,
+		distribution_price,
+		retail_price, pro_desc,
+		policy, policy_replace,
+		sort, del_flag, create_by, create_date, update_by,
+		update_date
+	</sql>
+
+	<sql id="Base_Pro_Column_List">
+		tps.series,
+		tpn.pro_name,
+		tp.id,
+		tp.pro_model,
+		tp.voltage_range,
+		tp.distribution_price,
+		tp.retail_price,
+		tp.pro_desc,
+		tp.policy,
+		tp.policy_replace
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_product
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		t_product
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.gubang.entity.ProductInfo">
+		insert into t_product (id,
+		pro_name_id, pro_model,
+		voltage_range, distribution_price,
+		retail_price,
+		pro_desc, policy, policy_replace,
+		sort, del_flag,
+		create_by,
+		create_date, update_by, update_date
+		)
+		values
+		(#{id,jdbcType=VARCHAR}, #{proNameId,jdbcType=VARCHAR},
+		#{proModel,jdbcType=VARCHAR},
+		#{voltageRange,jdbcType=VARCHAR},
+		#{distributionPrice,jdbcType=DECIMAL},
+		#{retailPrice,jdbcType=DECIMAL},
+		#{proDesc,jdbcType=VARCHAR},
+		#{policy,jdbcType=DECIMAL}, #{policyReplace,jdbcType=DECIMAL},
+		#{sort,jdbcType=DECIMAL}, #{delFlag,jdbcType=VARCHAR},
+		#{createBy,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.gubang.entity.ProductInfo">
+		insert into t_product
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="proNameId != null">
+				pro_name_id,
+			</if>
+			<if test="proModel != null">
+				pro_model,
+			</if>
+			<if test="voltageRange != null">
+				voltage_range,
+			</if>
+			<if test="distributionPrice != null">
+				distribution_price,
+			</if>
+			<if test="retailPrice != null">
+				retail_price,
+			</if>
+			<if test="proDesc != null">
+				pro_desc,
+			</if>
+			<if test="policy != null">
+				policy,
+			</if>
+			<if test="policyReplace != null">
+				policy_replace,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="proNameId != null">
+				#{proNameId,jdbcType=VARCHAR},
+			</if>
+			<if test="proModel != null">
+				#{proModel,jdbcType=VARCHAR},
+			</if>
+			<if test="voltageRange != null">
+				#{voltageRange,jdbcType=VARCHAR},
+			</if>
+			<if test="distributionPrice != null">
+				#{distributionPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="retailPrice != null">
+				#{retailPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="proDesc != null">
+				#{proDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="policy != null">
+				#{policy,jdbcType=DECIMAL},
+			</if>
+			<if test="policyReplace != null">
+				#{policyReplace,jdbcType=DECIMAL},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=DECIMAL},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductInfo">
+		update t_product
+		<set>
+			<if test="proNameId != null">
+				pro_name_id = #{proNameId,jdbcType=VARCHAR},
+			</if>
+			<if test="proModel != null">
+				pro_model = #{proModel,jdbcType=VARCHAR},
+			</if>
+			<if test="voltageRange != null">
+				voltage_range = #{voltageRange,jdbcType=VARCHAR},
+			</if>
+			<if test="distributionPrice != null">
+				distribution_price =
+				#{distributionPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="retailPrice != null">
+				retail_price = #{retailPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="proDesc != null">
+				pro_desc = #{proDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="policy != null">
+				policy = #{policy,jdbcType=DECIMAL},
+			</if>
+			<if test="policyReplace != null">
+				policy_replace = #{policyReplace,jdbcType=DECIMAL},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=DECIMAL},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gubang.entity.ProductInfo">
+		update t_product
+		set pro_name_id = #{proNameId,jdbcType=VARCHAR},
+		pro_model =
+		#{proModel,jdbcType=VARCHAR},
+		voltage_range =
+		#{voltageRange,jdbcType=VARCHAR},
+		distribution_price =
+		#{distributionPrice,jdbcType=DECIMAL},
+		retail_price =
+		#{retailPrice,jdbcType=DECIMAL},
+		pro_desc =
+		#{proDesc,jdbcType=VARCHAR},
+		policy = #{policy,jdbcType=DECIMAL},
+		policy_replace = #{policyReplace,jdbcType=DECIMAL},
+		sort =
+		#{sort,jdbcType=DECIMAL},
+		del_flag = #{delFlag,jdbcType=VARCHAR},
+		create_by = #{createBy,jdbcType=VARCHAR},
+		create_date =
+		#{createDate,jdbcType=TIMESTAMP},
+		update_by =
+		#{updateBy,jdbcType=VARCHAR},
+		update_date =
+		#{updateDate,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_product
+		where del_flag = 'N' order by sort,create_date
+	</select>
+
+	<select id="getProduct" resultMap="BaseProductMap"
+		parameterType="com.gubang.vo.ProductVo">
+		select
+		<include refid="Base_Pro_Column_List" />
+		from
+		t_product_series tps,
+		t_product_name tpn,
+		t_product tp
+		<where>
+			tp.pro_name_id = tpn.id
+			and
+			tpn.t_series_id = tps.id	
+			<if test='id != null and id != ""'>
+				and tp.id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test='series != null and series != ""'>
+				and tps.series = #{series,jdbcType=VARCHAR}
+			</if>
+			<if test='proName != null and proName != ""'>
+				and tpn.pro_name = #{proName,jdbcType=VARCHAR}
+			</if>
+			<if test='proModel != null and proModel != ""'>
+				and tp.pro_model = #{proModel,jdbcType=VARCHAR}
+			</if>
+			<if test='voltageRange != null and voltageRange != ""'>
+				and tp.voltage_range = #{voltageRange,jdbcType=VARCHAR}
+			</if>
+			<if test='distributionPrice != null and distributionPrice != ""'>
+				and tp.distribution_price = #{distributionPrice,jdbcType=VARCHAR}
+			</if>
+			<if test='retailPrice != null and retailPrice != ""'>
+				and tp.retail_price = #{retailPrice,jdbcType=VARCHAR}
+			</if>
+			<if test='proDesc != null and proDesc != ""'>
+				and tp.pro_desc = #{proDesc,jdbcType=VARCHAR}
+			</if>
+			<if test='policy != null and policy != ""'>
+				and tp.policy = #{policy,jdbcType=VARCHAR}
+			</if>
+			<if test='policyReplace != null and policyReplace != ""'>
+				and tp.policy_replace = #{policyReplace,jdbcType=VARCHAR}
+			</if>
+		</where>
+
+	</select>
 </mapper>

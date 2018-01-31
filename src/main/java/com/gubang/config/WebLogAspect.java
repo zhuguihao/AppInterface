@@ -32,6 +32,7 @@ public class WebLogAspect {
 		// 记录下请求内容
 		log.info("request url : " + request.getRequestURL().toString());
 		log.info("request IP : " + request.getRemoteAddr());
+		log.info("NGINX转发前 IP : " + request.getHeader("service_ip"));
 		// 获取传入目标方法的参数
 		Object[] args = joinPoint.getArgs();
 		if(args.length>2){

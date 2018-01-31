@@ -1,142 +1,208 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gubang.mapper.ProductSaleInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.gubang.entity.ProductSaleInfo" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="product_id" property="productId" jdbcType="VARCHAR" />
-    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
-    <result column="product_status" property="productStatus" jdbcType="VARCHAR" />
-    <result column="is_del" property="isDel" jdbcType="VARCHAR" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
-    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, product_id, bar_code, product_status, is_del, create_by, create_date, update_by, 
-    update_date
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_product_sale
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from t_product_sale
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.gubang.entity.ProductSaleInfo" >
-    insert into t_product_sale (id, product_id, bar_code, 
-      product_status, is_del, create_by, 
-      create_date, update_by, update_date
-      )
-    values (#{id,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{barCode,jdbcType=VARCHAR}, 
-      #{productStatus,jdbcType=VARCHAR}, #{isDel,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.gubang.entity.ProductSaleInfo" >
-    insert into t_product_sale
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="productId != null" >
-        product_id,
-      </if>
-      <if test="barCode != null" >
-        bar_code,
-      </if>
-      <if test="productStatus != null" >
-        product_status,
-      </if>
-      <if test="isDel != null" >
-        is_del,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="updateBy != null" >
-        update_by,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="productId != null" >
-        #{productId,jdbcType=VARCHAR},
-      </if>
-      <if test="barCode != null" >
-        #{barCode,jdbcType=VARCHAR},
-      </if>
-      <if test="productStatus != null" >
-        #{productStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="isDel != null" >
-        #{isDel,jdbcType=VARCHAR},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductSaleInfo" >
-    update t_product_sale
-    <set >
-      <if test="productId != null" >
-        product_id = #{productId,jdbcType=VARCHAR},
-      </if>
-      <if test="barCode != null" >
-        bar_code = #{barCode,jdbcType=VARCHAR},
-      </if>
-      <if test="productStatus != null" >
-        product_status = #{productStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="isDel != null" >
-        is_del = #{isDel,jdbcType=VARCHAR},
-      </if>
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.gubang.entity.ProductSaleInfo" >
-    update t_product_sale
-    set product_id = #{productId,jdbcType=VARCHAR},
-      bar_code = #{barCode,jdbcType=VARCHAR},
-      product_status = #{productStatus,jdbcType=VARCHAR},
-      is_del = #{isDel,jdbcType=VARCHAR},
-      create_by = #{createBy,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=VARCHAR},
-      update_date = #{updateDate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+<mapper namespace="com.gubang.mapper.ProductSaleInfoMapper">
+	<resultMap id="BaseResultMap" type="com.gubang.entity.ProductSaleInfo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="product_id" property="productId" jdbcType="VARCHAR" />
+		<result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+		<result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+		<result column="product_status" property="productStatus"
+			jdbcType="VARCHAR" />
+		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, product_id, customer_id, bar_code, product_status,
+		is_del, create_by,
+		create_date, update_by,
+		update_date
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_sale
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		t_product_sale
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.gubang.entity.ProductSaleInfo">
+		insert into t_product_sale (
+		id, product_id,customer_id, bar_code,
+		product_status, is_del,
+		create_by,
+		create_date, update_by, update_date
+		)
+		values
+		(#{id,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR},
+		#{customerId,jdbcType=VARCHAR},#{barCode,jdbcType=VARCHAR},
+		#{productStatus,jdbcType=VARCHAR}, #{isDel,jdbcType=VARCHAR},
+		#{createBy,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.gubang.entity.ProductSaleInfo">
+		insert into t_product_sale
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="productId != null">
+				product_id,
+			</if>
+			<if test="customerId != null">
+				customer_id,
+			</if>
+			<if test="barCode != null">
+				bar_code,
+			</if>
+			<if test="productStatus != null">
+				product_status,
+			</if>
+			<if test="isDel != null">
+				is_del,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateBy != null">
+				update_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="productId != null">
+				#{productId,jdbcType=VARCHAR},
+			</if>
+			<if test="customerId != null">
+				#{customerId,jdbcType=VARCHAR},
+			</if>
+			<if test="barCode != null">
+				#{barCode,jdbcType=VARCHAR},
+			</if>
+			<if test="productStatus != null">
+				#{productStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="isDel != null">
+				#{isDel,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductSaleInfo">
+		update t_product_sale
+		<set>
+			<if test="productId != null">
+				product_id = #{productId,jdbcType=VARCHAR},
+			</if>
+			<if test="customerId != null">
+				customer_id = #{productId,jdbcType=VARCHAR},
+			</if>
+			<if test="barCode != null">
+				bar_code = #{barCode,jdbcType=VARCHAR},
+			</if>
+			<if test="productStatus != null">
+				product_status = #{productStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="isDel != null">
+				is_del = #{isDel,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gubang.entity.ProductSaleInfo">
+		update
+		t_product_sale
+		set 
+		product_id = #{productId,jdbcType=VARCHAR},
+		customer_id = #{customerId,jdbcType=VARCHAR},
+		bar_code = #{barCode,jdbcType=VARCHAR},
+		product_status = #{productStatus,jdbcType=VARCHAR},
+		is_del = #{isDel,jdbcType=VARCHAR},
+		create_by = #{createBy,jdbcType=VARCHAR},
+		create_date =
+		#{createDate,jdbcType=TIMESTAMP},
+		update_by =
+		#{updateBy,jdbcType=VARCHAR},
+		update_date =
+		#{updateDate,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectProductSaleByBarcode" resultType="java.lang.Integer"
+		parameterType="java.lang.String">
+		select
+		count(*)
+		from t_product_sale tps
+		where 
+		tps.is_del = 'N'
+		and
+		tps.bar_code = #{barCode,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByProductSaleInfoParams" resultMap="BaseResultMap"
+		parameterType="com.gubang.entity.ProductSaleInfo">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_sale tps
+		<where>
+			<if test='barCode != null and barCode != ""'>
+				and tps.bar_code = #{barCode,jdbcType=VARCHAR}
+			</if>
+			<if test='productStatus != null and productStatus != ""'>
+				and	tps.product_status = #{productStatus,jdbcType=VARCHAR}
+			</if>
+			<if test='id != null and id != ""'>
+				and	tps.id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test='productId != null and productId != ""'>
+				and	tps.product_id = #{productId,jdbcType=VARCHAR}
+			</if>
+			<if test='customerId != null and customerId != ""'>
+				and	tps.customer_id = #{customerId,jdbcType=VARCHAR}
+			</if>
+			<if test='isDel != null and isDel != ""'>
+				and	tps.is_del = #{isDel,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
 </mapper>

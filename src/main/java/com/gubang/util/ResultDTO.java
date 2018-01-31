@@ -48,6 +48,16 @@ public class ResultDTO implements Serializable {
 		return this;
 	}
 	
+	/**
+	 * 根据产品ID查询不到产品信息
+	 * @return
+	 */
+	public ResultDTO setNotFoundProduct() {
+		status = ResultCode.NOT_FOUND_PRODUCT.getCode();
+		msg = ResultCode.NOT_FOUND_PRODUCT.getDesc();
+		return this;
+	}
+	
 	public ResultDTO setParameterInvalid() {
 		status = ResultCode.PARAMETER_ERROR.getCode();
 		msg = ResultCode.PARAMETER_ERROR.getDesc();
@@ -95,6 +105,16 @@ public class ResultDTO implements Serializable {
 
 	public void setData(Object data) {
 		this.data = data;
+	}
+	
+	/**
+	 * 产品售出表流水号存在多个相同
+	 * @return
+	 */
+	public ResultDTO setBarCodeError() {
+		status = ResultCode.BARCODE_ERROR.getCode();
+		msg = ResultCode.BARCODE_ERROR.getDesc();
+		return this;
 	}
 
 	@Override
