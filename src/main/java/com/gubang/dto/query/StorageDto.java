@@ -4,7 +4,16 @@ import com.gubang.util.CommonUtil;
 
 public class StorageDto {
 
+	private String productId;
 	private String barCode;
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
 
 	public String getBarCode() {
 		return barCode;
@@ -15,6 +24,6 @@ public class StorageDto {
 	}
 
 	public boolean inValid() {
-		return CommonUtil.isEmpty(barCode);
+		return CommonUtil.isEmpty(productId) || CommonUtil.isEmpty(barCode);
 	}
 }

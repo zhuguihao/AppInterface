@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gubang.config.UserInfoParam;
 import com.gubang.dto.query.ProductDto;
-import com.gubang.dto.query.SaveProductSaleDto;
+import com.gubang.dto.query.StorageDto;
+import com.gubang.dto.query.OutStorageDto;
 import com.gubang.entity.UserInfo;
 import com.gubang.service.ProductService;
 import com.gubang.util.ResultDTO;
@@ -74,10 +75,29 @@ public class ProductController {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "saveProductSale", method = RequestMethod.POST)
-	public ResultDTO saveProductSale(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody SaveProductSaleDto params, @UserInfoParam UserInfo userInfo)
+	@RequestMapping(value = "storage", method = RequestMethod.POST)
+	public ResultDTO storage(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody StorageDto params, @UserInfoParam UserInfo userInfo)
 			throws ParseException, IOException {
 		return productService.storage(params, userInfo);
 	}
+	
+	/**
+	 * 根据产品码查询库中是否存在该产品
+	 * 存在则进行出库
+	 * @param request
+	 * @param response
+	 * @param params
+	 * @param userInfo
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "outStorage", method = RequestMethod.POST)
+	public ResultDTO outStorage(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody OutStorageDto params, @UserInfoParam UserInfo userInfo)
+			throws ParseException, IOException {
+		return productService.outStorage(params, userInfo);
+	}
+	
 }

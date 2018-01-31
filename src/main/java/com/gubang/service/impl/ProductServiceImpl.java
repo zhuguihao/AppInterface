@@ -16,8 +16,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.ApplyCode;
 import com.gubang.constant.Constant;
 import com.gubang.dto.query.ProductDto;
-import com.gubang.dto.query.SaveProductSaleDto;
 import com.gubang.dto.query.StorageDto;
+import com.gubang.dto.query.OutStorageDto;
 import com.gubang.entity.ProductInfo;
 import com.gubang.entity.ProductNameInfo;
 import com.gubang.entity.ProductSaleInfo;
@@ -191,7 +191,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ResultDTO storage(SaveProductSaleDto params, UserInfo userInfo) {
+	public ResultDTO storage(StorageDto params, UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		ResultDTO result = new ResultDTO();
 		try {
@@ -241,7 +241,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ResultDTO outStorage(StorageDto params, UserInfo userInfo) {
+	public ResultDTO outStorage(OutStorageDto params, UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		ResultDTO result = new ResultDTO();
 		try {
