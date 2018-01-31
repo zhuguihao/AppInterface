@@ -16,6 +16,11 @@ public class ModifyPwdResult {
 		modifyResult = "账号不存在";
 		return this;
 	}
+	
+	public ModifyPwdResult setOldPwdError() {
+		modifyResult = "旧密码错误";
+		return this;
+	}
 
 	public ModifyPwdResult setSuccess() {
 		modifyResult = "修改成功";

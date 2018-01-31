@@ -133,6 +133,11 @@ public class LoginServiceImpl implements LoginService {
 			result.setAccountNotExist();
 			return resultDTO.setFail(result);
 		}
+		
+		if(userEntity.getPassword().equals(CommonUtil.md5(params.getOldPassword()))){
+			result.setOldPwdError();
+			return resultDTO.setFail(result);
+		}
 
 		UserInfo updateEntity = new UserInfo();
 		updateEntity.setId(userEntity.getId());
