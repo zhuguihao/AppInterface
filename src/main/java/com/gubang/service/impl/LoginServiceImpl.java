@@ -85,7 +85,7 @@ public class LoginServiceImpl implements LoginService {
 
 		// use the token of the db record as key, remove data from redis (single
 		// point login)
-		redisService.remove(Constant.TOKEN_HEADER_KEY, userEntity.getToken());
+		redisService.remove(Constant.REDIS_USER_KEY, userEntity.getToken());
 
 		// auth success,create uuid as token,now as last login date ,save to
 		// user
@@ -99,7 +99,7 @@ public class LoginServiceImpl implements LoginService {
 
 		// use the token just create as key,save userinfo to redis
 		//userSessionService.set(token, userEntity);
-		redisService.set(Constant.TOKEN_HEADER_KEY, token, userEntity, timeout);
+		redisService.set(Constant.REDIS_USER_KEY, token, userEntity, timeout);
 		// return token and userInfo
 		result.setLoginResult("登录成功");
 		result.setToken(token);
