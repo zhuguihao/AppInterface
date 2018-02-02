@@ -11,11 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.ApplyCode;
 import com.gubang.constant.Constant;
 import com.gubang.dto.query.ProductDto;
+import com.gubang.dto.query.ProductSaleDelDto;
 import com.gubang.dto.query.StorageDto;
 import com.gubang.dto.query.OutStorageDto;
 import com.gubang.entity.ProductInfo;
@@ -31,6 +35,7 @@ import com.gubang.service.ProductService;
 import com.gubang.service.RedisService;
 import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
+import com.gubang.vo.ProductSaleVo;
 import com.gubang.vo.ProductVo;
 
 @Service
@@ -191,6 +196,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public ResultDTO storage(StorageDto params, UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		ResultDTO result = new ResultDTO();
@@ -231,9 +237,19 @@ public class ProductServiceImpl implements ProductService {
 				return result.setSystemError();
 			}
 
-			return result.setSuccess(new JSONObject());
+			/**
+			 * 根据产品ID和产品出库状态查询产品信息
+			 * 
+			 */
+			ProductSaleVo psVo = new ProductSaleVo();
+			psVo.setProductId(params.getProductId());
+			psVo.setProductStatus(ApplyCode.APPLY_STORAGE.getCode());
+			return result.setSuccess(productSaleInfoMapper.getProductSaleInfo(psVo));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			/**
+			 * 回滚事务
+			 */
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			e.printStackTrace();
 			log.error(e.getMessage());
 			return result.setSystemError();
@@ -258,10 +274,10 @@ public class ProductServiceImpl implements ProductService {
 			productSaleInfo.setBarCode(params.getBarCode());
 			productSaleInfo.setProductStatus(ApplyCode.APPLY_STORAGE.getCode());
 			productSaleInfo = productSaleInfoMapper.selectByProductSaleInfoParams(productSaleInfo);
-			if(null == productSaleInfo){
+			if (null == productSaleInfo) {
 				return result.setNotFoundProduct();
 			}
-			
+
 			ProductSaleInfo record = new ProductSaleInfo();
 			record.setId(productSaleInfo.getId());
 			record.setBarCode(params.getBarCode());
@@ -270,6 +286,33 @@ public class ProductServiceImpl implements ProductService {
 				log.error(userInfo.getAccount() + ":修改售出表信息失败");
 				return result.setSystemError();
 			}
+			return result.setSuccess(new JSONObject());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e.getMessage());
+			return result.setSystemError();
+		}
+	}
+
+	@Override
+	public ResultDTO delStorage(ProductSaleDelDto params, UserInfo userInfo) {
+		ResultDTO result = new ResultDTO();
+		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			if (params.inValid()) {
+				return result.setParameterInvalid();
+			}
+
+			ProductSaleInfo record = new ProductSaleInfo();
+			record.setId(params.getId());
+			record.setIsDel(Constant.DB_TRUE_FLAG);
+			if (productSaleInfoMapper.updateByPrimaryKeySelective(record) < 1) {
+				return result.setFail(new JSONObject());
+			}
+			
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -3,6 +3,7 @@ package com.gubang.service;
 import java.util.List;
 
 import com.gubang.dto.query.ProductDto;
+import com.gubang.dto.query.ProductSaleDelDto;
 import com.gubang.dto.query.StorageDto;
 import com.gubang.dto.query.OutStorageDto;
 import com.gubang.entity.ProductSaleInfo;
@@ -34,4 +35,6 @@ public interface ProductService {
 	ResultDTO storage(StorageDto params,UserInfo userInfo);
 	
 	ResultDTO outStorage(OutStorageDto params,UserInfo userInfo);
+
+	ResultDTO delStorage(ProductSaleDelDto params, UserInfo userInfo);
 }

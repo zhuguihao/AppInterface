@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gubang.config.UserInfoParam;
 import com.gubang.dto.query.ProductDto;
+import com.gubang.dto.query.ProductSaleDelDto;
 import com.gubang.dto.query.StorageDto;
 import com.gubang.dto.query.OutStorageDto;
 import com.gubang.entity.UserInfo;
@@ -98,6 +99,23 @@ public class ProductController {
 			@RequestBody OutStorageDto params, @UserInfoParam UserInfo userInfo)
 			throws ParseException, IOException {
 		return productService.outStorage(params, userInfo);
+	}
+	
+	/**
+	 * 根据出库单ID和出库状态删除出库产品
+	 * @param request
+	 * @param response
+	 * @param params
+	 * @param userInfo
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "delStorage", method = RequestMethod.POST)
+	public ResultDTO delStorage(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody ProductSaleDelDto params, @UserInfoParam UserInfo userInfo)
+			throws ParseException, IOException {
+		return productService.delStorage(params, userInfo);
 	}
 	
 }

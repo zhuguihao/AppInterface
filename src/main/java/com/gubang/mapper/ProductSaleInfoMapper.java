@@ -1,6 +1,8 @@
 package com.gubang.mapper;
 
 import com.gubang.entity.ProductSaleInfo;
+import com.gubang.vo.GetProductSaleVo;
+import com.gubang.vo.ProductSaleVo;
 
 public interface ProductSaleInfoMapper {
     int deleteByPrimaryKey(String id);
@@ -18,4 +20,6 @@ public interface ProductSaleInfoMapper {
     int updateByPrimaryKey(ProductSaleInfo record);
     
     int selectProductSaleByBarcode(String barCode);
+    
+    GetProductSaleVo getProductSaleInfo(ProductSaleVo params);
 }

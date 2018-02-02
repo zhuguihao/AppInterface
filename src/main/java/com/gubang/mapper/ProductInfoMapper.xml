@@ -288,7 +288,9 @@
 		<where>
 			tp.pro_name_id = tpn.id
 			and
-			tpn.t_series_id = tps.id	
+			tpn.t_series_id = tps.id
+			and
+			tp.del_flag = 'N'
 			<if test='id != null and id != ""'>
 				and tp.id = #{id,jdbcType=VARCHAR}
 			</if>
@@ -305,7 +307,8 @@
 				and tp.voltage_range = #{voltageRange,jdbcType=VARCHAR}
 			</if>
 			<if test='distributionPrice != null and distributionPrice != ""'>
-				and tp.distribution_price = #{distributionPrice,jdbcType=VARCHAR}
+				and tp.distribution_price =
+				#{distributionPrice,jdbcType=VARCHAR}
 			</if>
 			<if test='retailPrice != null and retailPrice != ""'>
 				and tp.retail_price = #{retailPrice,jdbcType=VARCHAR}

@@ -14,12 +14,45 @@
 		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
 		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
 	</resultMap>
+
 	<sql id="Base_Column_List">
 		id, product_id, customer_id, bar_code, product_status,
 		is_del, create_by,
 		create_date, update_by,
 		update_date
 	</sql>
+	
+	<resultMap id="BaseProductSaleMap" type="com.gubang.vo.GetProductSaleVo">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+		<result column="series" property="series" jdbcType="VARCHAR" />
+		<result column="pro_name" property="proName" jdbcType="VARCHAR" />
+		<result column="pro_model" property="proModel" jdbcType="VARCHAR" />
+		<result column="voltage_range" property="voltageRange"
+			jdbcType="VARCHAR" />
+		<result column="distribution_price" property="distributionPrice"
+			jdbcType="DECIMAL" />
+		<result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
+		<result column="pro_desc" property="proDesc" jdbcType="DECIMAL" />
+		<result column="policy" property="policy" jdbcType="DECIMAL" />
+		<result column="policy_replace" property="policyReplace"
+			jdbcType="DECIMAL" />
+	</resultMap>
+	
+	<sql id="Product_Sale_Column_List">
+		tpsa.id,
+		tpsa.bar_code,
+		tps.series,
+		tpn.pro_name,
+		tp.pro_model,
+		tp.voltage_range, 
+		tp.distribution_price,
+		tp.retail_price,
+		tp.pro_desc,
+		tp.policy,
+		tp.policy_replace
+	</sql>
+	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
 		select
@@ -151,12 +184,14 @@
 	<update id="updateByPrimaryKey" parameterType="com.gubang.entity.ProductSaleInfo">
 		update
 		t_product_sale
-		set 
+		set
 		product_id = #{productId,jdbcType=VARCHAR},
-		customer_id = #{customerId,jdbcType=VARCHAR},
+		customer_id =
+		#{customerId,jdbcType=VARCHAR},
 		bar_code = #{barCode,jdbcType=VARCHAR},
 		product_status = #{productStatus,jdbcType=VARCHAR},
-		is_del = #{isDel,jdbcType=VARCHAR},
+		is_del =
+		#{isDel,jdbcType=VARCHAR},
 		create_by = #{createBy,jdbcType=VARCHAR},
 		create_date =
 		#{createDate,jdbcType=TIMESTAMP},
@@ -172,7 +207,7 @@
 		select
 		count(*)
 		from t_product_sale tps
-		where 
+		where
 		tps.is_del = 'N'
 		and
 		tps.bar_code = #{barCode,jdbcType=VARCHAR}
@@ -188,21 +223,58 @@
 				and tps.bar_code = #{barCode,jdbcType=VARCHAR}
 			</if>
 			<if test='productStatus != null and productStatus != ""'>
-				and	tps.product_status = #{productStatus,jdbcType=VARCHAR}
+				and tps.product_status =
+				#{productStatus,jdbcType=VARCHAR}
 			</if>
 			<if test='id != null and id != ""'>
-				and	tps.id = #{id,jdbcType=VARCHAR}
+				and tps.id = #{id,jdbcType=VARCHAR}
 			</if>
 			<if test='productId != null and productId != ""'>
-				and	tps.product_id = #{productId,jdbcType=VARCHAR}
+				and tps.product_id = #{productId,jdbcType=VARCHAR}
 			</if>
 			<if test='customerId != null and customerId != ""'>
-				and	tps.customer_id = #{customerId,jdbcType=VARCHAR}
+				and tps.customer_id = #{customerId,jdbcType=VARCHAR}
 			</if>
 			<if test='isDel != null and isDel != ""'>
-				and	tps.is_del = #{isDel,jdbcType=VARCHAR}
+				and tps.is_del = #{isDel,jdbcType=VARCHAR}
 			</if>
 		</where>
 	</select>
 	
+	<select id="getProductSaleInfo" resultMap="BaseProductSaleMap"
+		parameterType="com.gubang.vo.ProductSaleVo">
+		select
+		<include refid="Product_Sale_Column_List" />
+		from
+			t_product tp, 
+			t_product_name tpn,
+			t_product_series tps, 
+			t_product_sale tpsa
+			
+		<where>
+			tpsa.product_id = tp.id
+			and
+			tp.pro_name_id = tpn.id
+			and
+			tpn.t_series_id = tps.id
+			and
+			tpsa.is_del = 'N'
+			and
+			tp.del_flag = 'N'
+			<if test='barCode != null and barCode != ""'>
+				and tpsa.bar_code = #{barCode,jdbcType=VARCHAR}
+			</if>
+			<if test='productStatus != null and productStatus != ""'>
+				and tpsa.product_status =
+				#{productStatus,jdbcType=VARCHAR}
+			</if>
+			<if test='productId != null and productId != ""'>
+				and tpsa.product_id = #{productId,jdbcType=VARCHAR}
+			</if>
+			<if test='customerId != null and customerId != ""'>
+				and tpsa.customer_id = #{customerId,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
 </mapper>
