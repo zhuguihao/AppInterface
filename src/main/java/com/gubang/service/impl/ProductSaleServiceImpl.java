@@ -1,6 +1,5 @@
 package com.gubang.service.impl;
 
-import java.util.Calendar;
 import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +55,7 @@ public class ProductSaleServiceImpl implements ProductSaleService {
 			/**
 			 * 流水号判重
 			 */
-			if (productSaleInfoMapper.selectProductSaleByBarcode(params.getBarCode()) > 1) {
+			if (productSaleInfoMapper.selectProductSaleByBarcode(params.getBarCode()) > 0) {
 				return result.setBarCodeError();
 			}
 
@@ -84,6 +83,7 @@ public class ProductSaleServiceImpl implements ProductSaleService {
 			ProductSaleVo psVo = new ProductSaleVo();
 			psVo.setProductId(params.getProductId());
 			psVo.setProductStatus(ApplyCode.APPLY_STORAGE.getCode());
+			psVo.setBarCode(params.getBarCode());
 			return result.setSuccess(productSaleInfoMapper.getProductSaleInfo(psVo));
 		} catch (Exception e) {
 			/**
