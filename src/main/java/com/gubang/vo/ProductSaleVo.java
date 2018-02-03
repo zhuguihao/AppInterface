@@ -1,11 +1,16 @@
 package com.gubang.vo;
 
+import java.util.Date;
+
 public class ProductSaleVo {
 	private String id;
 	private String barCode;
 	private String productId;
 	private String customerId;
 	private String productStatus;
+	private String createBy;
+	private Date createDateStart;
+	private Date createDateEnd;
 
 	public String getId() {
 		return id;
@@ -45,6 +50,30 @@ public class ProductSaleVo {
 
 	public void setProductStatus(String productStatus) {
 		this.productStatus = productStatus;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public Date getCreateDateStart() {
+		return createDateStart;
+	}
+
+	public void setCreateDateStart(Date createDateStart) {
+		this.createDateStart = createDateStart;
+	}
+
+	public Date getCreateDateEnd() {
+		return createDateEnd;
+	}
+
+	public void setCreateDateEnd(Date createDateEnd) {
+		this.createDateEnd = createDateEnd;
 	}
 
 }

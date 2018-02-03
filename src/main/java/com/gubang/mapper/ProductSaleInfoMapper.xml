@@ -274,7 +274,62 @@
 			<if test='customerId != null and customerId != ""'>
 				and tpsa.customer_id = #{customerId,jdbcType=VARCHAR}
 			</if>
+			<if test='createBy != null and createBy != ""'>
+				and tpsa.create_by = #{createBy,jdbcType=VARCHAR}
+			</if>
 		</where>
 	</select>
+	
+	
+	<select id="productSaleInfo" resultMap="BaseProductSaleMap"
+		parameterType="com.gubang.vo.ProductSaleVo">
+		select
+		<include refid="Product_Sale_Column_List" />
+		from
+			t_product tp, 
+			t_product_name tpn,
+			t_product_series tps, 
+			t_product_sale tpsa
+			
+		<where>
+			tpsa.product_id = tp.id
+			and
+			tp.pro_name_id = tpn.id
+			and
+			tpn.t_series_id = tps.id
+			and
+			tpsa.is_del = 'N'
+			and
+			tp.del_flag = 'N'
+			<if test='barCode != null and barCode != ""'>
+				and tpsa.bar_code = #{barCode,jdbcType=VARCHAR}
+			</if>
+			<if test='productStatus != null and productStatus != ""'>
+				and tpsa.product_status =
+				#{productStatus,jdbcType=VARCHAR}
+			</if>
+			<if test='productId != null and productId != ""'>
+				and tpsa.product_id = #{productId,jdbcType=VARCHAR}
+			</if>
+			<if test='customerId != null and customerId != ""'>
+				and tpsa.customer_id = #{customerId,jdbcType=VARCHAR}
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				and tpsa.create_by = #{createBy,jdbcType=VARCHAR}
+			</if>
+			<if test='createDateStart != null and createDateEnd != null'>
+				and 
+					tpsa.create_date
+				between
+					#{createDateStart,jdbcType=DATE} 
+				and
+					#{createDateEnd,jdbcType=DATE}
+			</if>
+		</where>
+		group by 
+			tpsa.create_date 
+		desc
+	</select>
+	
 
 </mapper>

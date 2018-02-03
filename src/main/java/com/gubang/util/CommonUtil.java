@@ -11,8 +11,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.UUID;
-import javax.servlet.http.HttpServletRequest;
-import com.gubang.constant.Constant;
 
 /**
  * 通用工具类
