@@ -8,8 +8,9 @@ package com.gubang.constant;
  */
 public enum ApplyCode {
 
-	APPLY_STORAGE("apply_storage", "入库"),
-	APPLY_OUT_STORAGE("apply_out_storage","出库");
+	APPLY_STORAGE("apply_storage", "入库状态"),
+	APPLY_OUT_STORAGE("apply_out_storage","出库状态"),
+	APPLY_SOLD_PRODUCT("apply_sold_product","售出状态");
 	
 	private ApplyCode(String code, String desc) {
 		this.code = code;

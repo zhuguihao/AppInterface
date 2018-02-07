@@ -21,7 +21,7 @@
 		create_date, update_by,
 		update_date
 	</sql>
-	
+
 	<resultMap id="BaseProductSaleMap" type="com.gubang.vo.GetProductSaleVo">
 		<result column="id" property="id" jdbcType="VARCHAR" />
 		<result column="bar_code" property="barCode" jdbcType="VARCHAR" />
@@ -37,22 +37,28 @@
 		<result column="policy" property="policy" jdbcType="DECIMAL" />
 		<result column="policy_replace" property="policyReplace"
 			jdbcType="DECIMAL" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="product_id" property="productId" jdbcType="VARCHAR" />
+		<result column="after_sale_time" property="afterSaleTime" jdbcType="TIMESTAMP" />
 	</resultMap>
-	
+
 	<sql id="Product_Sale_Column_List">
 		tpsa.id,
 		tpsa.bar_code,
+		tpsa.create_date,
+		tpsa.product_id,
+		tpsa.after_sale_time,
 		tps.series,
 		tpn.pro_name,
 		tp.pro_model,
-		tp.voltage_range, 
+		tp.voltage_range,
 		tp.distribution_price,
 		tp.retail_price,
 		tp.pro_desc,
 		tp.policy,
 		tp.policy_replace
 	</sql>
-	
+
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
 		select
@@ -151,28 +157,28 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductSaleInfo">
 		update t_product_sale
 		<set>
-			<if test="productId != null">
+			<if test='productId != null and productId != ""'>
 				product_id = #{productId,jdbcType=VARCHAR},
 			</if>
-			<if test="customerId != null">
+			<if test='customerId != null and customerId != ""'>
 				customer_id = #{productId,jdbcType=VARCHAR},
 			</if>
-			<if test="barCode != null">
+			<if test='barCode != null and barCode != ""'>
 				bar_code = #{barCode,jdbcType=VARCHAR},
 			</if>
-			<if test="productStatus != null">
+			<if test='productStatus != null and productStatus != ""'>
 				product_status = #{productStatus,jdbcType=VARCHAR},
 			</if>
-			<if test="isDel != null">
+			<if test='afterSaleTime != null and productStatus != ""'>
+				after_sale_time = #{afterSaleTime,jdbcType=VARCHAR},
+			</if>
+			<if test='salesMan != null and productStatus != ""'>
+				sales_man = #{salesMan,jdbcType=VARCHAR},
+			</if>
+			<if test='isDel != null and productStatus != ""'>
 				is_del = #{isDel,jdbcType=VARCHAR},
 			</if>
-			<if test="createBy != null">
-				create_by = #{createBy,jdbcType=VARCHAR},
-			</if>
-			<if test="createDate != null">
-				create_date = #{createDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="updateBy != null">
+			<if test='updateBy != null and productStatus != ""'>
 				update_by = #{updateBy,jdbcType=VARCHAR},
 			</if>
 			<if test="updateDate != null">
@@ -188,8 +194,10 @@
 		product_id = #{productId,jdbcType=VARCHAR},
 		customer_id =
 		#{customerId,jdbcType=VARCHAR},
-		bar_code = #{barCode,jdbcType=VARCHAR},
-		product_status = #{productStatus,jdbcType=VARCHAR},
+		bar_code =
+		#{barCode,jdbcType=VARCHAR},
+		product_status =
+		#{productStatus,jdbcType=VARCHAR},
 		is_del =
 		#{isDel,jdbcType=VARCHAR},
 		create_by = #{createBy,jdbcType=VARCHAR},
@@ -208,7 +216,8 @@
 		count(*)
 		from t_product_sale tps
 		where
-		tps.is_del = 'N'
+		tps.is_del =
+		'N'
 		and
 		tps.bar_code = #{barCode,jdbcType=VARCHAR}
 	</select>
@@ -219,6 +228,7 @@
 		<include refid="Base_Column_List" />
 		from t_product_sale tps
 		<where>
+			tps.is_del = 'N'
 			<if test='barCode != null and barCode != ""'>
 				and tps.bar_code = #{barCode,jdbcType=VARCHAR}
 			</if>
@@ -240,17 +250,17 @@
 			</if>
 		</where>
 	</select>
-	
+
 	<select id="getProductSaleInfo" resultMap="BaseProductSaleMap"
 		parameterType="com.gubang.vo.ProductSaleVo">
 		select
 		<include refid="Product_Sale_Column_List" />
 		from
-			t_product tp, 
-			t_product_name tpn,
-			t_product_series tps, 
-			t_product_sale tpsa
-			
+		t_product tp,
+		t_product_name tpn,
+		t_product_series tps,
+		t_product_sale tpsa
+
 		<where>
 			tpsa.product_id = tp.id
 			and
@@ -279,24 +289,25 @@
 			</if>
 		</where>
 	</select>
-	
-	
+
+
 	<select id="productSaleInfo" resultMap="BaseProductSaleMap"
 		parameterType="com.gubang.vo.ProductSaleVo">
 		select
 		<include refid="Product_Sale_Column_List" />
 		from
-			t_product tp, 
-			t_product_name tpn,
-			t_product_series tps, 
-			t_product_sale tpsa
-			
+		t_product tp,
+		t_product_name tpn,
+		t_product_series tps,
+		t_product_sale tpsa
+
 		<where>
 			tpsa.product_id = tp.id
 			and
 			tp.pro_name_id = tpn.id
 			and
-			tpn.t_series_id = tps.id
+			tpn.t_series_id =
+			tps.id
 			and
 			tpsa.is_del = 'N'
 			and
@@ -318,18 +329,18 @@
 				and tpsa.create_by = #{createBy,jdbcType=VARCHAR}
 			</if>
 			<if test='createDateStart != null and createDateEnd != null'>
-				and 
-					tpsa.create_date
-				between
-					#{createDateStart,jdbcType=DATE} 
 				and
-					#{createDateEnd,jdbcType=DATE}
+				tpsa.create_date
+				between
+				#{createDateStart,jdbcType=DATE}
+				and
+				#{createDateEnd,jdbcType=DATE}
 			</if>
 		</where>
-		group by 
-			tpsa.create_date 
+		group by
+		tpsa.create_date
 		desc
 	</select>
-	
+
 
 </mapper>

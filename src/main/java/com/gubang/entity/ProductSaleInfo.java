@@ -13,6 +13,10 @@ public class ProductSaleInfo {
 
 	private String productStatus;
 
+	private Date afterSaleTime;
+
+	private String salesMan;
+
 	private String isDel;
 
 	private String createBy;
@@ -61,6 +65,22 @@ public class ProductSaleInfo {
 
 	public void setProductStatus(String productStatus) {
 		this.productStatus = productStatus == null ? null : productStatus.trim();
+	}
+
+	public Date getAfterSaleTime() {
+		return afterSaleTime;
+	}
+
+	public void setAfterSaleTime(Date afterSaleTime) {
+		this.afterSaleTime = afterSaleTime;
+	}
+
+	public String getSalesMan() {
+		return salesMan;
+	}
+
+	public void setSalesMan(String salesMan) {
+		this.salesMan = salesMan;
 	}
 
 	public String getIsDel() {

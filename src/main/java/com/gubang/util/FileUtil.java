@@ -175,7 +175,7 @@ public class FileUtil {
 	}
 	
 	public static void mkAlphdirs(String directory) {
-		File f = new File(directory);
+//		File f = new File(directory);
 		for (char c = 'a'; c <= 'z'; c++) {
 			mkdir(directory + c);
 		}

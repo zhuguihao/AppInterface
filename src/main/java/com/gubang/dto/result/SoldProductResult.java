@@ -1,31 +1,16 @@
-package com.gubang.vo;
+package com.gubang.dto.result;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
-public class GetProductSaleVo {
+public class SoldProductResult {
 	private String id;
 	private String barCode;
-	private Date createDate;
-	private Date afterSaleTime;
-	private String productId;
+	private String afterSaleTime;
 	private String series;
 	private String proName;
 	private String proModel;
 	private String voltageRange;
-	private BigDecimal distributionPrice;
-	private BigDecimal retailPrice;
 	private String proDesc;
 	private Integer policy;
 	private Integer policyReplace;
-
-	public String getBarCode() {
-		return barCode;
-	}
-
-	public void setBarCode(String barCode) {
-		this.barCode = barCode;
-	}
 
 	public String getId() {
 		return id;
@@ -35,28 +20,20 @@ public class GetProductSaleVo {
 		this.id = id;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public String getBarCode() {
+		return barCode;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
 	}
 
-	public Date getAfterSaleTime() {
+	public String getAfterSaleTime() {
 		return afterSaleTime;
 	}
 
-	public void setAfterSaleTime(Date afterSaleTime) {
+	public void setAfterSaleTime(String afterSaleTime) {
 		this.afterSaleTime = afterSaleTime;
-	}
-
-	public String getProductId() {
-		return productId;
-	}
-
-	public void setProductId(String productId) {
-		this.productId = productId;
 	}
 
 	public String getSeries() {
@@ -89,22 +66,6 @@ public class GetProductSaleVo {
 
 	public void setVoltageRange(String voltageRange) {
 		this.voltageRange = voltageRange;
-	}
-
-	public BigDecimal getDistributionPrice() {
-		return distributionPrice;
-	}
-
-	public void setDistributionPrice(BigDecimal distributionPrice) {
-		this.distributionPrice = distributionPrice;
-	}
-
-	public BigDecimal getRetailPrice() {
-		return retailPrice;
-	}
-
-	public void setRetailPrice(BigDecimal retailPrice) {
-		this.retailPrice = retailPrice;
 	}
 
 	public String getProDesc() {

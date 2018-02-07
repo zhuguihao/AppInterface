@@ -1,7 +1,5 @@
 package com.gubang.dto.query;
 
-import java.util.Date;
-
 import com.gubang.util.CommonUtil;
 
 public class RegisterQuery {

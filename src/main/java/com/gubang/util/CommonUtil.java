@@ -112,6 +112,26 @@ public class CommonUtil {
 		return date;
 	}
 
+	public static Date addDate(Date date, int addDay, String type) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		switch (type) {
+		case "YEAR":
+			calendar.add(Calendar.YEAR, addDay);
+			break;
+		case "MONTH":
+			calendar.add(Calendar.MONTH, addDay);
+			break;
+		case "DAY":
+			calendar.add(Calendar.DATE, addDay);
+			break;
+		default:
+			break;
+		}
+		date = calendar.getTime();
+		return date;
+	}
+
 	public static Date parseDate(SimpleDateFormat myFmt2, String dateStr) {
 		try {
 			return myFmt2.parse(dateStr);
@@ -127,6 +147,16 @@ public class CommonUtil {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			return dateFormat.format(new Date());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static String getFormatDate(Date date,String fromat) {
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat(fromat);
+			return dateFormat.format(date);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

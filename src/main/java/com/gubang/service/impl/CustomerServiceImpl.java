@@ -4,29 +4,17 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.Constant;
 import com.gubang.entity.CusCompany;
 import com.gubang.entity.Customer;
-import com.gubang.entity.ProductInfo;
-import com.gubang.entity.ProductNameInfo;
-import com.gubang.entity.ProductSeriesInfo;
 import com.gubang.mapper.CusCompanyMapper;
 import com.gubang.mapper.CustomerMapper;
-import com.gubang.mapper.ProductInfoMapper;
-import com.gubang.mapper.ProductNameInfoMapper;
-import com.gubang.mapper.ProductSaleInfoMapper;
-import com.gubang.mapper.ProductSeriesInfoMapper;
 import com.gubang.service.CustomerService;
 import com.gubang.service.RedisService;
 import com.gubang.util.ResultDTO;
@@ -34,7 +22,7 @@ import com.gubang.util.ResultDTO;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-	private final static Logger log = LoggerFactory.getLogger("Admin");
+//	private final static Logger log = LoggerFactory.getLogger("Admin");
 	
 	@Autowired
 	CustomerMapper customerMapper;

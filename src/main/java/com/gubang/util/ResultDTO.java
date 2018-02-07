@@ -58,6 +58,16 @@ public class ResultDTO implements Serializable {
 		return this;
 	}
 	
+	/**
+	 * 根据产品编号和产品状态查询不到产品信息
+	 * @return
+	 */
+	public ResultDTO setNotFoundBarcodeError() {
+		status = ResultCode.NOT_BARCODE_ERROR.getCode();
+		msg = ResultCode.NOT_BARCODE_ERROR.getDesc();
+		return this;
+	}
+	
 	public ResultDTO setParameterInvalid() {
 		status = ResultCode.PARAMETER_ERROR.getCode();
 		msg = ResultCode.PARAMETER_ERROR.getDesc();
@@ -114,6 +124,26 @@ public class ResultDTO implements Serializable {
 	public ResultDTO setBarCodeError() {
 		status = ResultCode.BARCODE_ERROR.getCode();
 		msg = ResultCode.BARCODE_ERROR.getDesc();
+		return this;
+	}
+	
+	/**
+	 * 产品超过售后维修期
+	 * @return
+	 */
+	public ResultDTO setPolicyError() {
+		status = ResultCode.POLICY_ERROR.getCode();
+		msg = ResultCode.POLICY_ERROR.getDesc();
+		return this;
+	}
+	
+	/**
+	 * 产品超过替换期
+	 * @return
+	 */
+	public ResultDTO setPolicyReplaceError() {
+		status = ResultCode.POLICY_REPLACE_ERROR.getCode();
+		msg = ResultCode.POLICY_REPLACE_ERROR.getDesc();
 		return this;
 	}
 
