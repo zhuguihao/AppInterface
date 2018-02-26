@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gubang.mapper.ProductSaleApplyQueryMapper">
+	<resultMap id="BaseResultMap" type="com.gubang.vo.ProductSaleApplyVo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="product_sale_id" property="productSaleId"
+			jdbcType="VARCHAR" />
+		<result column="cus_name" property="cusName" jdbcType="VARCHAR" />
+		<result column="cus_telphone" property="cusTelphone" jdbcType="VARCHAR" />
+		<result column="fault_point" property="faultPoint" jdbcType="VARCHAR" />
+		<result column="apply_status" property="applyStatus" jdbcType="VARCHAR" />
+		<result column="addressee" property="addressee" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="address_phone" property="addressPhone"
+			jdbcType="VARCHAR" />
+		<result column="waybill_number" property="waybillNumber"
+			jdbcType="VARCHAR" />
+		<result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+		<result column="series" property="series" jdbcType="VARCHAR" />
+		<result column="pro_name" property="proName" jdbcType="VARCHAR" />
+		<result column="pro_model" property="proModel" jdbcType="VARCHAR" />
+		<result column="voltage_range" property="voltageRange"
+			jdbcType="VARCHAR" />
+		<result column="distribution_price" property="distributionPrice"
+			jdbcType="DECIMAL" />
+		<result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
+		<result column="pro_desc" property="proDesc" jdbcType="DECIMAL" />
+		<result column="policy" property="policy" jdbcType="DECIMAL" />
+		<result column="policy_replace" property="policyReplace"
+			jdbcType="DECIMAL" />
+		<result column="product_id" property="productId" jdbcType="VARCHAR" />
+		<result column="after_sale_time" property="afterSaleTime"
+			jdbcType="TIMESTAMP" />
+		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		tpsa.id,
+		tpsa.address,
+		tpsa.addressee,
+		tpsa.address_phone,
+		tpsa.apply_status,
+		tpsa.cus_name,
+		tpsa.cus_telphone,
+		tpsa.fault_point,
+		tpsa.waybill_number,
+		tpsa.is_del,
+		tpsa.create_by,
+		tpsa.create_date,
+		tpsa.update_by,
+		tpsa.update_date,
+		tps.id,
+		tps.bar_code,
+		tps.create_date,
+		tps.product_id,
+		tps.after_sale_time,
+		tpse.series,
+		tpn.pro_name,
+		tp.pro_model,
+		tp.voltage_range,
+		tp.distribution_price,
+		tp.retail_price,
+		tp.pro_desc,
+		tp.policy,
+		tp.policy_replace
+	</sql>
+
+	<select id="productSaleApplyByParams" resultMap="BaseResultMap"
+		parameterType="com.gubang.vo.ProductSaleApplyVo">
+		select
+		<include refid="Base_Column_List" />
+		from
+			t_product_sale_apply tpsa,
+			t_product_sale tps,
+			t_product_series tpse,
+			t_product_name tpn,
+			t_product tp
+		<where>
+				tpsa.product_sale_id = tps.id
+			and
+				tps.product_id = tp.id
+			and
+				tp.pro_name_id = tpn.id
+			and
+				tpn.t_series_id = tpse.id
+			and
+				tpsa.is_del = 'N'
+			and
+				tp.tpsa.is_del = 'N'
+			<if test='id != null and id != ""'>
+				and tpsa.id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test='applyStatus != null and applyStatus != ""'>
+				and tpsa.apply_status =
+				#{applyStatus,jdbcType=VARCHAR}
+			</if>
+			<if test='barCode != null and barCode != ""'>
+				and tps.bar_code =
+				#{barCode,jdbcType=VARCHAR}
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				and tpsa.create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+		</where>
+		group by
+			tpsa.create_date
+		desc
+	</select>
+</mapper>

@@ -179,13 +179,17 @@
 		<include refid="Base_Column_List" />
 		from t_product_sale_apply
 		<where>
-			tpsa.is_del = 'N'
+			is_del = 'N'
 			<if test='id != null and id != ""'>
 				and id = #{id,jdbcType=VARCHAR}
 			</if>
 			<if test='productSaleId != null and productSaleId != ""'>
 				and product_sale_id =
 				#{productSaleId,jdbcType=VARCHAR}
+			</if>
+			<if test='applyStatus != null and applyStatus != ""'>
+				and apply_status =
+				#{applyStatus,jdbcType=VARCHAR}
 			</if>
 			<if test='createBy != null and createBy != ""'>
 				and create_by = #{createBy,jdbcType=VARCHAR},

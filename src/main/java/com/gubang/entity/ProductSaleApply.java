@@ -40,11 +40,11 @@ public class ProductSaleApply {
 	 * 运单号
 	 */
 	private String waybillNumber;
-	private String create_by;
-	private Date create_date;
-	private String update_by;
-	private Date update_date;
-	private String is_del;
+	private String createBy;
+	private Date createDate;
+	private String updateBy;
+	private Date updateDate;
+	private String isDel;
 
 	public String getId() {
 		return id;
@@ -126,44 +126,44 @@ public class ProductSaleApply {
 		this.waybillNumber = waybillNumber;
 	}
 
-	public String getCreate_by() {
-		return create_by;
+	public String getCreateBy() {
+		return createBy;
 	}
 
-	public void setCreate_by(String create_by) {
-		this.create_by = create_by;
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
 	}
 
-	public Date getCreate_date() {
-		return create_date;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public String getUpdate_by() {
-		return update_by;
+	public String getUpdateBy() {
+		return updateBy;
 	}
 
-	public void setUpdate_by(String update_by) {
-		this.update_by = update_by;
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
 	}
 
-	public Date getUpdate_date() {
-		return update_date;
+	public Date getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setUpdate_date(Date update_date) {
-		this.update_date = update_date;
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
-	public String getIs_del() {
-		return is_del;
+	public String getIsDel() {
+		return isDel;
 	}
 
-	public void setIs_del(String is_del) {
-		this.is_del = is_del;
+	public void setIsDel(String isDel) {
+		this.isDel = isDel;
 	}
 
 }
