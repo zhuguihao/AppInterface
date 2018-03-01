@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.gubang.config.UserInfoParam;
 import com.gubang.dto.apply.ApplyDto;
+import com.gubang.dto.query.CallBackDto;
 import com.gubang.dto.query.ProductApplyScanDto;
 import com.gubang.entity.UserInfo;
 import com.gubang.service.ProductApplyService;
@@ -60,5 +61,22 @@ public class ProductApplyController {
 			@UserInfoParam UserInfo userInfo, @RequestBody ApplyDto params)
 			throws ParseException, IOException {
 		return productApplyService.subApply(userInfo, params);
+	}
+	
+	/**
+	 * 客户提交售后之后电话回访记录
+	 * @param request
+	 * @param response
+	 * @param userInfo
+	 * @param params
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "callBack", method = RequestMethod.POST)
+	public ResultDTO callBack(HttpServletRequest request, HttpServletResponse response,
+			@UserInfoParam UserInfo userInfo, @RequestBody CallBackDto params)
+			throws ParseException, IOException {
+		return productApplyService.callBack(userInfo, params);
 	}
 }

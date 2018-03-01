@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gubang.mapper.ProductSaleApplySysMapper">
+	<resultMap id="BaseResultMap" type="com.gubang.entity.ProductSaleApplySys">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="product_sale_apply_id" property="productSaleApplyId" jdbcType="VARCHAR" />
+		<result column="apply_user" property="applyUser" jdbcType="VARCHAR" />
+		<result column="apply_desc" property="applyDesc" jdbcType="VARCHAR" />
+		<result column="is_pay" property="isPay" jdbcType="VARCHAR" />
+		<result column="pay_goods" property="payGoods" jdbcType="VARCHAR" />
+		<result column="express_name" property="expressName" jdbcType="VARCHAR" />
+		<result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
+		<result column="express_phone" property="expressPhone" jdbcType="VARCHAR" />
+		<result column="apply_reject_resion" property="applyRejectResion" jdbcType="VARCHAR" />
+		<result column="apply_policy_state" property="applyPolicyState"	jdbcType="VARCHAR" />
+		<result column="is_recipient" property="isRecipient" jdbcType="VARCHAR" />
+		<result column="product_status" property="productStatus" jdbcType="VARCHAR" />
+		<result column="waybill_number" property="waybillNumber" jdbcType="VARCHAR" />
+		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,
+		product_sale_apply_id,
+		apply_user,
+		apply_desc,
+		is_pay,
+		pay_goods,
+		express_name,
+		express_address,
+		express_phone,
+		apply_reject_resion,
+		apply_policy_state,
+		is_recipient,
+		product_status,
+		waybill_number,
+		is_del,
+		create_by,
+		create_date,
+		update_by,
+		update_date
+	</sql>
+
+	<insert id="insert" parameterType="com.gubang.entity.ProductSaleApplySys">
+		insert into
+		t_product_sale_apply_sys (
+		id,
+		product_sale_apply_id,
+		apply_user,
+		apply_desc,
+		is_pay,
+		pay_goods,
+		express_name,
+		express_address,
+		express_phone,
+		apply_reject_resion,
+		apply_policy_state,
+		is_recipient,
+		product_status,
+		waybill_number,
+		is_del,
+		create_by,
+		create_date,
+		update_by,
+		update_date
+		)
+		values
+		(
+		#{id,jdbcType=VARCHAR},
+		#{productSaleApplyId,jdbcType=VARCHAR},
+		#{applyUser,jdbcType=VARCHAR},
+		#{applyDesc,jdbcType=VARCHAR},
+		#{isPay,jdbcType=VARCHAR},
+		#{payGoods,jdbcType=VARCHAR},
+		#{expressName,jdbcType=VARCHAR},
+		#{expressAddress,jdbcType=VARCHAR},
+		#{expressPhone,jdbcType=VARCHAR},
+		#{applyRejectResion,jdbcType=VARCHAR},
+		#{applyPolicyState,jdbcType=VARCHAR},
+		#{isRecipient,jdbcType=VARCHAR},
+		#{productStatus,jdbcType=VARCHAR},
+		#{waybillNumber,jdbcType=VARCHAR},
+		#{isDel,jdbcType=VARCHAR},
+		#{createBy,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=VARCHAR},
+		#{updateDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductSaleApplySys">
+		update t_product_sale_apply_sys
+		<set>
+			<if test='productSaleId != null and productSaleId != ""'>
+				product_sale_id = #{productSaleId,jdbcType=VARCHAR},
+			</if>
+			<if test='productSaleApplyId != null and productSaleApplyId != ""'>
+				product_saleApply_id = #{productSaleApplyId,jdbcType=VARCHAR},
+			</if>
+			<if test='applyUser != null and applyUser != ""'>	
+				apply_user = #{applyUser,jdbcType=VARCHAR},
+			</if>
+			<if test='applyDesc != null and applyDesc != ""'>
+				apply_desc = #{applyDesc,jdbcType=VARCHAR},
+			</if>
+			<if test='isPay != null and isPay != ""'>
+				is_pay = #{isPay,jdbcType=VARCHAR},
+			</if>
+			<if test='payGoods != null and payGoods != ""'>
+				pay_goods = #{payGoods,jdbcType=VARCHAR},
+			</if>
+			<if test='expressName != null and expressName != ""'>
+				express_name = #{expressName,jdbcType=VARCHAR},
+			</if>
+			<if test='expressAddress != null and expressAddress != ""'>
+				express_address = #{expressAddress,jdbcType=VARCHAR},
+			</if>
+			<if test='expressPhone != null and expressPhone != ""'>
+				express_phone = #{expressPhone,jdbcType=VARCHAR},
+			</if>
+			<if test='applyRejectResion != null and applyRejectResion != ""'>
+				apply_reject_resion = #{applyRejectResion,jdbcType=VARCHAR},
+			</if>
+			<if test='applyPolicyState != null and applyPolicyState != ""'>
+				apply_policy_state = #{applyPolicyState,jdbcType=VARCHAR},
+			</if>
+			<if test='isRecipient != null and isRecipient != ""'>
+				is_recipient = #{isRecipient,jdbcType=VARCHAR},
+			</if>
+			<if test='productStatus != null and productStatus != ""'>
+				product_status = #{productStatus,jdbcType=VARCHAR},
+			</if>
+			<if test='waybillNumber != null and waybillNumber != ""'>
+				waybill_number = #{waybillNumber,jdbcType=VARCHAR},
+			</if>
+			<if test='isDel != null and productStatus != ""'>
+				is_del = #{isDel,jdbcType=VARCHAR},
+			</if>
+			<if test='updateBy != null and productStatus != ""'>
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectByProductSaleInfoParams" resultMap="BaseResultMap"
+		parameterType="com.gubang.entity.ProductSaleApplySys">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_sale_apply_sys
+		<where>
+			is_del = 'N'
+			<if test='id != null and id != ""'>
+				and id = #{id,jdbcType=VARCHAR}
+			</if>
+		</where>
+		group by 
+			create_date 
+		desc
+	</select>
+</mapper>

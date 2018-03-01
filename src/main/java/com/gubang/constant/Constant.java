@@ -11,4 +11,14 @@ public class Constant {
 	public static final String DB_TRUE_FLAG = "Y";
 	
 	public static final String DB_FALSE_FLAG = "N";
+	
+	/**
+	 * 其余的用户组菜单
+	 */
+	public static final String NO_USER_MENU_KEY = "OTHER";
+	
+	/**
+	 * 是否需要付费的产品
+	 */
+	public static final String IS_PAY_GOODS = "Y";
 }

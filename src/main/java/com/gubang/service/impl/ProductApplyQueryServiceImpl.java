@@ -7,11 +7,8 @@ import com.gubang.entity.UserInfo;
 import com.gubang.mapper.ProductSaleApplyQueryMapper;
 import com.gubang.service.ProductApplyQueryService;
 import com.gubang.util.ResultDTO;
+import com.gubang.vo.ProductSaleApplyQueryVo;
 import com.gubang.vo.ProductSaleApplyVo;
-
-import java.awt.List;
-import java.util.ArrayList;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +38,31 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 				return result.setNotFoundProduct();
 			}
 			
-			return result.setSuccess(productSaleApplyVo);
+			ProductSaleApplyQueryVo productSaleApplyQueryVo = new ProductSaleApplyQueryVo();
+			productSaleApplyQueryVo.setId(productSaleApplyVo.getId());
+			productSaleApplyQueryVo.setAddress(productSaleApplyVo.getAddress());
+			productSaleApplyQueryVo.setAddressee(productSaleApplyVo.getAddressee());
+			productSaleApplyQueryVo.setAddressPhone(productSaleApplyVo.getAddressPhone());
+			productSaleApplyQueryVo.setAfterSaleTime(productSaleApplyVo.getAfterSaleTime());
+			productSaleApplyQueryVo.setApplyStatus(productSaleApplyVo.getApplyStatus());
+			productSaleApplyQueryVo.setBarCode(productSaleApplyVo.getBarCode());
+			productSaleApplyQueryVo.setCusName(productSaleApplyVo.getCusName());
+			productSaleApplyQueryVo.setCusTelphone(productSaleApplyVo.getCusTelphone());
+			productSaleApplyQueryVo.setCustomerId(productSaleApplyVo.getCustomerId());
+			productSaleApplyQueryVo.setDistributionPrice(productSaleApplyVo.getDistributionPrice());
+			productSaleApplyQueryVo.setFaultPoint(productSaleApplyVo.getFaultPoint());
+			productSaleApplyQueryVo.setPolicy(productSaleApplyVo.getPolicy());
+			productSaleApplyQueryVo.setPolicyReplace(productSaleApplyVo.getPolicyReplace());
+			productSaleApplyQueryVo.setProDesc(productSaleApplyVo.getProDesc());
+			productSaleApplyQueryVo.setProductStatus(productSaleApplyVo.getProductStatus());
+			productSaleApplyQueryVo.setProModel(productSaleApplyVo.getProModel());
+			productSaleApplyQueryVo.setProName(productSaleApplyVo.getProName());
+			productSaleApplyQueryVo.setRetailPrice(productSaleApplyVo.getRetailPrice());
+			productSaleApplyQueryVo.setSeries(productSaleApplyVo.getSeries());
+			productSaleApplyQueryVo.setVoltageRange(productSaleApplyVo.getVoltageRange());
+			productSaleApplyQueryVo.setWaybillNumber(productSaleApplyVo.getWaybillNumber());
+			
+			return result.setSuccess(productSaleApplyQueryVo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(userInfo.getAccount() + "查询售后产品信息失败：" + e.getMessage());

@@ -46,6 +46,8 @@ public class UserInfo implements Serializable {
     private String isDel;
 
     private String isPass;
+    
+    private String groupId;
 
     public String getId() {
         return id;
@@ -198,4 +200,13 @@ public class UserInfo implements Serializable {
     public void setIsPass(String isPass) {
         this.isPass = isPass == null ? null : isPass.trim();
     }
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
 }

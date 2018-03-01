@@ -43,4 +43,6 @@ public class ProductApplyQueryController {
 			throws ParseException, IOException {
 		return productApplyQueryService.sysApply(userInfo, params);
 	}
+	
+	
 }

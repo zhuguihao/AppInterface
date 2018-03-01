@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gubang.mapper.MenuMapper">
+	<resultMap id="BaseResultMap" type="com.gubang.entity.Menu">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+		<result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+		<result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+		<result column="menu_params" property="menuParams" jdbcType="VARCHAR" />
+		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		tsm.id,
+		tsm.menu_url,
+		tsm.menu_icon,
+		tsm.menu_name,
+		tsm.menu_params,
+		tsm.is_del,
+		tsm.create_by,
+		tsm.create_date,
+		tsm.update_by,
+		tsm.update_date
+	</sql>
+
+	<insert id="insert" parameterType="com.gubang.entity.ProductSaleApply">
+		insert into
+		t_product_sale_apply (
+		id,
+		product_sale_id,
+		cus_name,
+		cus_telphone,
+		fault_point,
+		apply_status,
+		addressee,
+		address,
+		address_phone,
+		waybill_number,
+		is_del,
+		create_by,
+		create_date,
+		update_by,
+		update_date
+		)
+		values
+		(
+		#{id,jdbcType=VARCHAR},
+		#{productSaleId,jdbcType=VARCHAR},
+		#{cusName,jdbcType=VARCHAR},
+		#{cusTelphone,jdbcType=VARCHAR},
+		#{faultPoint,jdbcType=VARCHAR},
+		#{applyStatus,jdbcType=VARCHAR},
+		#{addressee,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{addressPhone,jdbcType=VARCHAR},
+		#{waybillNumber,jdbcType=VARCHAR},
+		#{isDel,jdbcType=VARCHAR},
+		#{createBy,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=VARCHAR},
+		#{updateDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.gubang.entity.ProductSaleApply">
+		insert into t_product_sale_apply
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test='id != null and id != ""'>
+				id,
+			</if>
+			<if test='productSaleId != null and productSaleId != ""'>
+				product_sale_id,
+			</if>
+			<if test='cusName != null and cusName != ""'>
+				cus_name,
+			</if>
+			<if test='cusTelphone != null and cusTelphone != ""'>
+				cus_telphone,
+			</if>
+			<if test='faultPoint != null and faultPoint != ""'>
+				fault_point,
+			</if>
+			<if test='applyStatus != null and applyStatus != ""'>
+				apply_status,
+			</if>
+			<if test='addressee != null and addressee != ""'>
+				addressee,
+			</if>
+			<if test='address != null and address != ""'>
+				address,
+			</if>
+			<if test='addressPhone != null and addressPhone != ""'>
+				address_phone,
+			</if>
+			<if test='waybillNumber != null and waybillNumber != ""'>
+				waybill_number,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="isDel != null">
+				#{isDel,jdbcType=VARCHAR},
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test='updateBy != null and updateBy != ""'>
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductSaleApply">
+		update t_product_sale_apply
+		<set>
+			<if test='productSaleId != null and productSaleId != ""'>
+				product_sale_id = #{productSaleId,jdbcType=VARCHAR},
+			</if>
+			<if test='cusName != null and cusName != ""'>
+				cus_name = #{cusName,jdbcType=VARCHAR},
+			</if>
+			<if test='cusTelphone != null and cusTelphone != ""'>
+				cus_telphone = #{cusTelphone,jdbcType=VARCHAR},
+			</if>
+			<if test='faultPoint != null and faultPoint != ""'>
+				fault_point = #{faultPoint,jdbcType=VARCHAR},
+			</if>
+			<if test='applyStatus != null and applyStatus != ""'>
+				apply_status = #{applyStatus,jdbcType=VARCHAR},
+			</if>
+			<if test='addressee != null and addressee != ""'>
+				addressee = #{addressee,jdbcType=VARCHAR},
+			</if>
+			<if test='address != null and address != ""'>
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test='addressPhone != null and addressPhone != ""'>
+				address_phone = #{addressPhone,jdbcType=VARCHAR},
+			</if>
+			<if test='waybillNumber != null and waybillNumber != ""'>
+				waybill_number = #{waybillNumber,jdbcType=VARCHAR},
+			</if>
+			<if test='isDel != null and productStatus != ""'>
+				is_del = #{isDel,jdbcType=VARCHAR},
+			</if>
+			<if test='updateBy != null and productStatus != ""'>
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectMenuByGroup" resultMap="BaseResultMap"
+		parameterType="com.gubang.vo.MenuVo">
+		select
+		<include refid="Base_Column_List" />
+		from
+		t_menu_center tmc,
+		t_sys_menu tsm
+		<where>
+			tmc.t_sys_menu_id = tsm.id
+			and
+			tmc.is_del = 'N'
+			and
+			tsm.is_del = 'N'
+			<if test='groupId != null and groupId != ""'>
+				and tmc.t_sys_group_id = #{groupId,jdbcType=VARCHAR}
+			</if>
+		</where>
+		group by
+			tmc.create_date
+		desc
+	</select>
+</mapper>

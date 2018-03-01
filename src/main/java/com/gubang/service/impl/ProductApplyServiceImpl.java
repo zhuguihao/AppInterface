@@ -7,6 +7,7 @@ import com.gubang.constant.ApplyCode;
 import com.gubang.constant.Constant;
 import com.gubang.constant.SaleApplyCode;
 import com.gubang.dto.apply.ApplyDto;
+import com.gubang.dto.query.CallBackDto;
 import com.gubang.dto.query.ProductApplyScanDto;
 import com.gubang.dto.result.ApplyStatusResult;
 import com.gubang.entity.ProductSaleApply;
@@ -18,7 +19,6 @@ import com.gubang.service.ProductApplyService;
 import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
 import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,13 +63,13 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			if (null == productSaleApply) {
 				return result.setNotFoundProduct();
 			}
-			
+
 			/**
 			 * 返回申请单状态
 			 */
 			ApplyStatusResult applyStatusResult = new ApplyStatusResult();
 			applyStatusResult.setApplyStatus(productSaleApply.getApplyStatus());
-			
+
 			return result.setSuccess(applyStatusResult);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,11 +119,39 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			if (productSaleApplyMapper.insert(record) < 1) {
 				return result.setSystemError();
 			}
+
+			return result.setSuccess(new JSONObject());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(userInfo.getAccount() + "客户提交售后单失败：" + e.getMessage());
+			return result.setSystemError();
+		}
+	}
+
+	@Override
+	public ResultDTO callBack(UserInfo userInfo, CallBackDto params) {
+		ResultDTO result = new ResultDTO();
+		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			if (params.inValid()) {
+				return result.setParameterInvalid();
+			}
+			/**
+			 * 查询产品信息
+			 */
+//			ProductSaleApplyVo record = new ProductSaleApplyVo();
+//			record.setId(params.getProductSaleApplyId());
+//			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParams(record);
+			/**
+			 * 保存电话回访信息
+			 */
 			
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo.getAccount() + "查询售后产品信息失败：" + e.getMessage());
+			log.error(userInfo.getAccount() + "售后单电话回访保存失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}

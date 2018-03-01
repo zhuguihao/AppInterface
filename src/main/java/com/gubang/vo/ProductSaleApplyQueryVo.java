@@ -1,27 +1,19 @@
 package com.gubang.vo;
 
-import java.io.Serializable;
-
-import com.gubang.entity.CommonEntity;
-
-public class ProductSaleApplyVo extends CommonEntity implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class ProductSaleApplyQueryVo {
 	private String id;
-	private String cusName;
-	private String cusTelphone;
-	private String faultPoint;
+	private String barCode;
+	private String customerId;
+	private String productStatus;
 	private String applyStatus;
 	private String address;
 	private String addressee;
 	private String addressPhone;
+	private String cusName;
+	private String cusTelphone;
+	private String faultPoint;
 	private String waybillNumber;
-	private String productId;
-	private String customerId;
-	private String barCode;
-	private String productStatus;
 	private String afterSaleTime;
-	private String saleMan;
 	private String series;
 	private String proName;
 	private String proModel;
@@ -40,28 +32,28 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable{
 		this.id = id;
 	}
 
-	public String getCusName() {
-		return cusName;
+	public String getBarCode() {
+		return barCode;
 	}
 
-	public void setCusName(String cusName) {
-		this.cusName = cusName;
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
 	}
 
-	public String getCusTelphone() {
-		return cusTelphone;
+	public String getCustomerId() {
+		return customerId;
 	}
 
-	public void setCusTelphone(String cusTelphone) {
-		this.cusTelphone = cusTelphone;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 
-	public String getFaultPoint() {
-		return faultPoint;
+	public String getProductStatus() {
+		return productStatus;
 	}
 
-	public void setFaultPoint(String faultPoint) {
-		this.faultPoint = faultPoint;
+	public void setProductStatus(String productStatus) {
+		this.productStatus = productStatus;
 	}
 
 	public String getApplyStatus() {
@@ -96,6 +88,30 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable{
 		this.addressPhone = addressPhone;
 	}
 
+	public String getCusName() {
+		return cusName;
+	}
+
+	public void setCusName(String cusName) {
+		this.cusName = cusName;
+	}
+
+	public String getCusTelphone() {
+		return cusTelphone;
+	}
+
+	public void setCusTelphone(String cusTelphone) {
+		this.cusTelphone = cusTelphone;
+	}
+
+	public String getFaultPoint() {
+		return faultPoint;
+	}
+
+	public void setFaultPoint(String faultPoint) {
+		this.faultPoint = faultPoint;
+	}
+
 	public String getWaybillNumber() {
 		return waybillNumber;
 	}
@@ -104,52 +120,12 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable{
 		this.waybillNumber = waybillNumber;
 	}
 
-	public String getProductId() {
-		return productId;
-	}
-
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}
-
-	public String getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-
-	public String getBarCode() {
-		return barCode;
-	}
-
-	public void setBarCode(String barCode) {
-		this.barCode = barCode;
-	}
-
-	public String getProductStatus() {
-		return productStatus;
-	}
-
-	public void setProductStatus(String productStatus) {
-		this.productStatus = productStatus;
-	}
-
 	public String getAfterSaleTime() {
 		return afterSaleTime;
 	}
 
 	public void setAfterSaleTime(String afterSaleTime) {
 		this.afterSaleTime = afterSaleTime;
-	}
-
-	public String getSaleMan() {
-		return saleMan;
-	}
-
-	public void setSaleMan(String saleMan) {
-		this.saleMan = saleMan;
 	}
 
 	public String getSeries() {
