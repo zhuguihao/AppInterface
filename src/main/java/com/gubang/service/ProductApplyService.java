@@ -1,7 +1,6 @@
 package com.gubang.service;
 
 import com.gubang.dto.apply.ApplyDto;
-import com.gubang.dto.query.CallBackDto;
 import com.gubang.dto.query.ProductApplyScanDto;
 import com.gubang.entity.UserInfo;
 import com.gubang.util.ResultDTO;
@@ -12,5 +11,4 @@ public interface ProductApplyService {
 
 	ResultDTO subApply(UserInfo userInfo, ApplyDto params);
 
-	ResultDTO callBack(UserInfo userInfo, CallBackDto params);
 }
