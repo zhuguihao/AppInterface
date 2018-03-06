@@ -2,6 +2,8 @@ package com.gubang.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.Constant;
 import com.gubang.dto.query.FirstTrialDto;
@@ -46,7 +48,7 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			 */
 			ProductSaleApplySys record = new ProductSaleApplySys();
 			record.setProductSaleApplyId(params.getProductSaleApplyId());
-			if(null == params.getIsPay()){
+			if(!StringUtils.isEmpty(params.getIsPay())){
 				record.setIsPay(Constant.IS_PAY_GOODS);
 				record.setPayGoods(params.getPayGoods());
 			}
