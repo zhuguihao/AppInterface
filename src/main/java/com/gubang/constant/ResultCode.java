@@ -12,6 +12,7 @@ public enum ResultCode {
 	FAIL("fail","失败"),
 	NOT_FOUND("not_found","结果为空"),
 	NOT_FOUND_PRODUCT("not_found_product","当前的产品不存在"),
+	NOT_FOUND_APPLY_PRODUCT("not_found_apply_product","当前的售后产品不存在"),
 	BARCODE_ERROR("barcode_error","当前产品编号已存在"),
 	NOT_BARCODE_ERROR("not_barcode_error","当前产品编号不存在"),
 	PARAMETER_ERROR("invalid_parameter", "参数无效"),

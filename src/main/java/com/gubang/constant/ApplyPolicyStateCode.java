@@ -8,8 +8,8 @@ package com.gubang.constant;
  */
 public enum ApplyPolicyStateCode {
 
-	APPLY_STORAGE("", "维修状态"),
-	APPLY_OUT_STORAGE("apply_out_storage","替换状态");
+	POLICY_STATUS("policy_status", "维修状态"),
+	POLICY_REPLACE_STATUS("policy_replace_status","替换状态");
 	
 	private ApplyPolicyStateCode(String code, String desc) {
 		this.code = code;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.gubang.config.UserInfoParam;
 import com.gubang.dto.apply.ApplyDto;
+import com.gubang.dto.apply.ApplyWayBillDto;
 import com.gubang.dto.query.ProductApplyScanDto;
 import com.gubang.entity.UserInfo;
 import com.gubang.service.ProductApplyService;
@@ -60,6 +61,23 @@ public class ProductApplyController {
 			@UserInfoParam UserInfo userInfo, @RequestBody ApplyDto params)
 			throws ParseException, IOException {
 		return productApplyService.subApply(userInfo, params);
+	}
+	
+	/**
+	 * 提交运单信息
+	 * @param request
+	 * @param response
+	 * @param userInfo
+	 * @param params
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "applyWayBill", method = RequestMethod.POST)
+	public ResultDTO applyWayBill(HttpServletRequest request, HttpServletResponse response,
+			@UserInfoParam UserInfo userInfo, @RequestBody ApplyWayBillDto params)
+			throws ParseException, IOException {
+		return productApplyService.applyWayBill(userInfo, params);
 	}
 	
 }

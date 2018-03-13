@@ -22,22 +22,29 @@ public class FirstTrialDto implements Serializable {
 	 */
 	private String payGoods;
 	/**
-	 * 审批驳回原因
-	 */
-	private String applyRejectResion;
-	/**
 	 * 售后部检查产品状态
 	 */
 	private String productStatus;
+	/**
+	 * 公司收件人
+	 */
+	private String expressName;
+	/**
+	 * 公司收件地址
+	 */
+	private String expressAddress;
+	/**
+	 * 公司收件人联系方式
+	 */
+	private String expressPhone;
 
 	public boolean inValid() {
-		if(null == isPay){
-			return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc) || CommonUtil.isEmpty(applyRejectResion)
+		if (null == isPay) {
+			return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc)
 					|| CommonUtil.isEmpty(productStatus);
 		}
 		return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc) || CommonUtil.isEmpty(isPay)
-				|| CommonUtil.isEmpty(payGoods) || CommonUtil.isEmpty(applyRejectResion)
-				|| CommonUtil.isEmpty(productStatus);
+				|| CommonUtil.isEmpty(payGoods) || CommonUtil.isEmpty(productStatus);
 	}
 
 	public String getProductSaleApplyId() {
@@ -72,20 +79,36 @@ public class FirstTrialDto implements Serializable {
 		this.payGoods = payGoods;
 	}
 
-	public String getApplyRejectResion() {
-		return applyRejectResion;
-	}
-
-	public void setApplyRejectResion(String applyRejectResion) {
-		this.applyRejectResion = applyRejectResion;
-	}
-
 	public String getProductStatus() {
 		return productStatus;
 	}
 
 	public void setProductStatus(String productStatus) {
 		this.productStatus = productStatus;
+	}
+
+	public String getExpressName() {
+		return expressName;
+	}
+
+	public void setExpressName(String expressName) {
+		this.expressName = expressName;
+	}
+
+	public String getExpressAddress() {
+		return expressAddress;
+	}
+
+	public void setExpressAddress(String expressAddress) {
+		this.expressAddress = expressAddress;
+	}
+
+	public String getExpressPhone() {
+		return expressPhone;
+	}
+
+	public void setExpressPhone(String expressPhone) {
+		this.expressPhone = expressPhone;
 	}
 
 }
