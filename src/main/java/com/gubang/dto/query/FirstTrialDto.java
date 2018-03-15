@@ -37,15 +37,10 @@ public class FirstTrialDto implements Serializable {
 	 * 公司收件人联系方式
 	 */
 	private String expressPhone;
-
-	public boolean inValid() {
-		if (null == isPay) {
-			return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc)
-					|| CommonUtil.isEmpty(productStatus);
-		}
-		return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc) || CommonUtil.isEmpty(isPay)
-				|| CommonUtil.isEmpty(payGoods) || CommonUtil.isEmpty(productStatus);
-	}
+	/**
+	 * 初审审批的维修状态（参考）
+	 */
+	private String applyPolicyState;
 
 	public String getProductSaleApplyId() {
 		return productSaleApplyId;
@@ -111,4 +106,20 @@ public class FirstTrialDto implements Serializable {
 		this.expressPhone = expressPhone;
 	}
 
+	public String getApplyPolicyState() {
+		return applyPolicyState;
+	}
+
+	public void setApplyPolicyState(String applyPolicyState) {
+		this.applyPolicyState = applyPolicyState;
+	}
+
+	public boolean inValid() {
+		if (null == isPay) {
+			return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc)
+					|| CommonUtil.isEmpty(productStatus);
+		}
+		return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc) || CommonUtil.isEmpty(isPay)
+				|| CommonUtil.isEmpty(payGoods) || CommonUtil.isEmpty(productStatus);
+	}
 }

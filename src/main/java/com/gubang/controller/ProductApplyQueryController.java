@@ -44,5 +44,10 @@ public class ProductApplyQueryController {
 		return productApplyQueryService.sysApply(userInfo, params);
 	}
 	
-	
+	@RequestMapping(value = "getCommpanyAddress", method = RequestMethod.POST)
+	public ResultDTO getCommpanyAddress(HttpServletRequest request, HttpServletResponse response,
+			@UserInfoParam UserInfo userInfo)
+			throws ParseException, IOException {
+		return productApplyQueryService.getCommpanyAddress(userInfo);
+	}
 }

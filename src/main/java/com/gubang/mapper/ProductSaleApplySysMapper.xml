@@ -95,11 +95,8 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductSaleApplySys">
 		update t_product_sale_apply_sys
 		<set>
-			<if test='productSaleId != null and productSaleId != ""'>
-				product_sale_id = #{productSaleId,jdbcType=VARCHAR},
-			</if>
 			<if test='productSaleApplyId != null and productSaleApplyId != ""'>
-				product_saleApply_id = #{productSaleApplyId,jdbcType=VARCHAR},
+				product_sale_apply_id = #{productSaleApplyId,jdbcType=VARCHAR},
 			</if>
 			<if test='applyUser != null and applyUser != ""'>	
 				apply_user = #{applyUser,jdbcType=VARCHAR},
@@ -159,6 +156,9 @@
 			is_del = 'N'
 			<if test='id != null and id != ""'>
 				and id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test='productSaleApplyId != null and productSaleApplyId != ""'>
+				and product_sale_apply_id = #{productSaleApplyId,jdbcType=VARCHAR}
 			</if>
 		</where>
 		group by 

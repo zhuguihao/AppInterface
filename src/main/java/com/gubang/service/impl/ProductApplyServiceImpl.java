@@ -143,13 +143,24 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			/**
 			 * 查询产品信息
 			 */
-//			ProductSaleApplyVo record = new ProductSaleApplyVo();
-//			record.setId(params.getProductSaleApplyId());
-//			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParams(record);
-//			if (null == productSaleApplyVo) {
-//				return result.setNotFoundApplyProduct();
-//			}
-			return null;
+			ProductSaleApply record = new ProductSaleApply();
+			record.setId(params.getProductSaleApplyId());
+			ProductSaleApply productSaleApply = productSaleApplyMapper.selectByProductSaleInfoParams(record);
+			if (null == productSaleApply) {
+				return result.setNotFoundApplyProduct();
+			}
+			
+			record.setAddress(params.getAddress());
+			record.setAddressee(params.getAddressee());
+			record.setAddressPhone(params.getAddressPhone());
+			record.setWaybillNumber(params.getWaybillNumber());
+			record.setApplyStatus(SaleApplyCode.APPLY_WAY_BILL.getCode());
+			
+			record.setUpdateBy(userInfo.getId());
+			record.setUpdateDate(new Date());
+			productSaleApplyMapper.updateByPrimaryKeySelective(record);
+			
+			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			/**
 			 * 回滚事务

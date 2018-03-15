@@ -7,4 +7,6 @@ import com.gubang.util.ResultDTO;
 public interface ProductApplyQueryService {
 	
 	ResultDTO sysApply(UserInfo userInfo, ProductApplyQueryDto params);
+
+	ResultDTO getCommpanyAddress(UserInfo userInfo);
 }

@@ -9,6 +9,10 @@ public class ApplyWayBillDto implements Serializable {
 	private static final long serialVersionUID = 5L;
 
 	/**
+	 * 售后单ID
+	 */
+	private String productSaleApplyId;
+	/**
 	 * 寄件人信息
 	 */
 	private String addressee;
@@ -24,6 +28,14 @@ public class ApplyWayBillDto implements Serializable {
 	 * 运单号
 	 */
 	private String waybillNumber;
+
+	public String getProductSaleApplyId() {
+		return productSaleApplyId;
+	}
+
+	public void setProductSaleApplyId(String productSaleApplyId) {
+		this.productSaleApplyId = productSaleApplyId;
+	}
 
 	public String getAddressee() {
 		return addressee;

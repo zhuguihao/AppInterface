@@ -69,6 +69,16 @@ public class ResultDTO implements Serializable {
 	}
 	
 	/**
+	 * 根据售后单ID查询不到客服信息
+	 * @return
+	 */
+	public ResultDTO setNotFoundApplySys() {
+		status = ResultCode.NOT_FOUND_APPLY_SYS.getCode();
+		msg = ResultCode.NOT_FOUND_APPLY_SYS.getDesc();
+		return this;
+	}
+	
+	/**
 	 * 根据产品编号和产品状态查询不到产品信息
 	 * @return
 	 */

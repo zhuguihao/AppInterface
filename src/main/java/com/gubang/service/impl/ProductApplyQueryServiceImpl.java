@@ -2,6 +2,8 @@ package com.gubang.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSONObject;
 import com.gubang.dto.query.ProductApplyQueryDto;
 import com.gubang.entity.UserInfo;
 import com.gubang.mapper.ProductSaleApplyQueryMapper;
@@ -68,5 +70,18 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 			log.error(userInfo.getAccount() + "查询售后产品信息失败：" + e.getMessage());
 			return result.setSystemError();
 		}
+	}
+
+	@Override
+	public ResultDTO getCommpanyAddress(UserInfo userInfo) {
+		ResultDTO result = new ResultDTO();
+		if (null == userInfo) {
+			return result.setNotLogin();
+		}
+		JSONObject retObj = new JSONObject();
+		retObj.put("expressName", "公司收件人");
+		retObj.put("expressAddress", "公司收件地址");
+		retObj.put("expressPhone", "公司电话");
+		return result.setSuccess(retObj);
 	}
 }

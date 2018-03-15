@@ -17,6 +17,7 @@ import com.gubang.mapper.ProductSaleApplyMapper;
 import com.gubang.mapper.ProductSaleApplyQueryMapper;
 import com.gubang.mapper.ProductSaleApplySysMapper;
 import com.gubang.service.ProductApplySysService;
+import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
 import com.gubang.vo.ProductSaleApplyVo;
 
@@ -63,6 +64,7 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			 * 保存电话回访信息
 			 */
 			ProductSaleApplySys productSaleApplySys = new ProductSaleApplySys();
+			productSaleApplySys.setId(CommonUtil.getUUid());
 			productSaleApplySys.setProductSaleApplyId(params.getProductSaleApplyId());
 			if (!StringUtils.isEmpty(params.getIsPay())) {
 				productSaleApplySys.setIsPay(Constant.IS_PAY_GOODS);
@@ -72,6 +74,7 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			productSaleApplySys.setExpressName(params.getExpressName());
 			productSaleApplySys.setExpressPhone(params.getExpressPhone());
 			productSaleApplySys.setExpressAddress(params.getExpressAddress());
+			productSaleApplySys.setApplyPolicyState(params.getApplyPolicyState());
 
 			productSaleApplySys.setCreateBy(userInfo.getId());
 			productSaleApplySys.setCreateDate(new Date());
@@ -103,7 +106,6 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public ResultDTO firstTrialReject(UserInfo userInfo, FirstTrialRejectDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
@@ -134,13 +136,32 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			productSaleApply.setUpdateBy(userInfo.getId());
 			productSaleApply.setUpdateDate(new Date());
 			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
+			
+//			ProductSaleApplySys productSaleApplySysVo = new ProductSaleApplySys();
+//			ProductSaleApplySys productSaleApplySys = productSaleApplySysMapper.selectByProductSaleInfoParams(productSaleApplySysVo);
+//			if(null == productSaleApplySys){
+//				/**
+//				 * 不存在当前申请单的客服信息
+//				 */
+//				return result.setNotFoundApplySys();
+//			}
+			
+			/**
+			 * 填写客服拒绝原因
+			 */
+			ProductSaleApplySys productSaleApplySys = new ProductSaleApplySys();
+			productSaleApplySys.setId(CommonUtil.getUUid());
+			productSaleApplySys.setApplyRejectResion(params.getApplyRejectResion());
+			productSaleApplySys.setProductSaleApplyId(params.getProductSaleApplyId());
+			
+			productSaleApplySys.setCreateBy(userInfo.getId());
+			productSaleApplySys.setCreateDate(new Date());
+			productSaleApplySys.setUpdateBy(userInfo.getId());
+			productSaleApplySys.setUpdateDate(new Date());
+			productSaleApplySysMapper.insert(productSaleApplySys);
 
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
-			/**
-			 * 回滚事务
-			 */
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			e.printStackTrace();
 			log.error(userInfo.getAccount() + "售后单初审拒绝保存失败：" + e.getMessage());
 			return result.setSystemError();
