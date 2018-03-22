@@ -6,5 +6,5 @@ import com.gubang.vo.ProductSaleApplyVo;
 
 public interface ProductSaleApplyQueryMapper {
 	List<ProductSaleApplyVo> productSaleApplyByParams(ProductSaleApplyVo record);
-
+	ProductSaleApplyVo productSaleApplyByParam(ProductSaleApplyVo record);
 }

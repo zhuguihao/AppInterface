@@ -55,7 +55,7 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			 */
 			ProductSaleApplyVo record = new ProductSaleApplyVo();
 			record.setId(params.getProductSaleApplyId());
-			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParams(record);
+			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
 			if (null == productSaleApplyVo) {
 				return result.setNotFoundApplyProduct();
 			}
@@ -121,7 +121,7 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			 */
 			ProductSaleApplyVo record = new ProductSaleApplyVo();
 			record.setId(params.getProductSaleApplyId());
-			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParams(record);
+			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
 			if (null == productSaleApplyVo) {
 				return result.setNotFoundApplyProduct();
 			}
