@@ -79,6 +79,16 @@ public class ResultDTO implements Serializable {
 	}
 	
 	/**
+	 * 未找到出售的产品信息
+	 * @return
+	 */
+	public ResultDTO setNotSaleProduct() {
+		status = ResultCode.NOT_SALE_PRODUCT.getCode();
+		msg = ResultCode.NOT_SALE_PRODUCT.getDesc();
+		return this;
+	}
+	
+	/**
 	 * 根据产品编号和产品状态查询不到产品信息
 	 * @return
 	 */

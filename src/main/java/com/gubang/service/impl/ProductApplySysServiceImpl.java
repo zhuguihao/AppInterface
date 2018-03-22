@@ -136,7 +136,7 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			productSaleApply.setUpdateBy(userInfo.getId());
 			productSaleApply.setUpdateDate(new Date());
 			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
-			
+
 //			ProductSaleApplySys productSaleApplySysVo = new ProductSaleApplySys();
 //			ProductSaleApplySys productSaleApplySys = productSaleApplySysMapper.selectByProductSaleInfoParams(productSaleApplySysVo);
 //			if(null == productSaleApplySys){
@@ -145,7 +145,7 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 //				 */
 //				return result.setNotFoundApplySys();
 //			}
-			
+
 			/**
 			 * 填写客服拒绝原因
 			 */

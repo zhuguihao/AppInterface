@@ -44,10 +44,20 @@ public class ProductApplyQueryController {
 		return productApplyQueryService.sysApply(userInfo, params);
 	}
 	
+	/**
+	 * 获取公司邮寄信息
+	 * @param request
+	 * @param response
+	 * @param userInfo
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "getCommpanyAddress", method = RequestMethod.POST)
 	public ResultDTO getCommpanyAddress(HttpServletRequest request, HttpServletResponse response,
 			@UserInfoParam UserInfo userInfo)
 			throws ParseException, IOException {
 		return productApplyQueryService.getCommpanyAddress(userInfo);
 	}
+	
 }

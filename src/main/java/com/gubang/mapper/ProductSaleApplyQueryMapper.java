@@ -1,7 +1,10 @@
 package com.gubang.mapper;
 
+import java.util.List;
+
 import com.gubang.vo.ProductSaleApplyVo;
 
 public interface ProductSaleApplyQueryMapper {
-	ProductSaleApplyVo productSaleApplyByParams(ProductSaleApplyVo record);
+	List<ProductSaleApplyVo> productSaleApplyByParams(ProductSaleApplyVo record);
+
 }

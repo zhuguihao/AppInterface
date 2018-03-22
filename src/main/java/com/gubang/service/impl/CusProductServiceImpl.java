@@ -41,6 +41,13 @@ public class CusProductServiceImpl implements CusProductService {
 			psVo.setProductStatus(ApplyCode.APPLY_SOLD_PRODUCT.getCode());
 			psVo.setBarCode(params.getBarCode());
 			GetProductSaleVo getProductSale = productSaleInfoMapper.getProductSaleInfo(psVo);
+			
+			/**
+			 * 未查询到相关在售产品信息
+			 */
+			if(null == getProductSale){
+				return result.setNotSaleProduct();
+			}
 
 			/**
 			 * 组装返回报文
