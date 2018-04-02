@@ -27,6 +27,20 @@
 		<result column="pro_desc" property="proDesc" jdbcType="DECIMAL" />
 		<result column="policy" property="policy" jdbcType="DECIMAL" />
 		<result column="policy_replace" property="policyReplace" jdbcType="DECIMAL" />
+		
+		<result column="apply_user" property="applyUser" jdbcType="VARCHAR" />
+		<result column="apply_desc" property="applyDesc" jdbcType="VARCHAR" />
+		<result column="is_pay" property="isPay" jdbcType="VARCHAR" />
+		<result column="pay_goods" property="payGoods" jdbcType="VARCHAR" />
+		<result column="express_name" property="expressName" jdbcType="VARCHAR" />
+		<result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
+		<result column="express_phone" property="expressPhone" jdbcType="VARCHAR" />
+		<result column="apply_reject_resion" property="applyRejectResion" jdbcType="VARCHAR" />
+		<result column="apply_policy_state" property="applyPolicyState" jdbcType="VARCHAR" />
+		<result column="is_recipient" property="isRecipient" jdbcType="VARCHAR" />
+		<result column="sysProductStatus" property="sysProductStatus" jdbcType="VARCHAR" />
+		<result column="sysWaybillNumber" property="sysWaybillNumber" jdbcType="VARCHAR" />
+		
 		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
 		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -59,6 +73,18 @@
 		tp.pro_desc,
 		tp.policy,
 		tp.policy_replace,
+		tpsas.apply_user,
+		tpsas.apply_desc,
+		tpsas.is_pay,
+		tpsas.pay_goods,
+		tpsas.express_name,
+		tpsas.express_address,
+		tpsas.express_phone,
+		tpsas.apply_reject_resion,
+		tpsas.apply_policy_state,
+		tpsas.is_recipient,
+		tpsas.product_status sysProductStatus,
+		tpsas.waybill_number sysWaybillNumber,
 		tpsa.is_del,
 		tpsa.create_by,
 		tpsa.create_date,
@@ -67,6 +93,52 @@
 	</sql>
 
 	<select id="productSaleApplyByParams" resultMap="BaseResultMap"
+		parameterType="com.gubang.vo.ProductSaleApplyVo">
+		select
+		<include refid="Base_Column_List" />
+		from
+			t_product_sale_apply tpsa 
+		LEFT JOIN 
+			t_product_sale_apply_sys tpsas 
+		ON
+			tpsa.id = tpsas.product_sale_apply_id,
+			t_product_sale tps,
+			t_product_series tpse,
+			t_product_name tpn,
+			t_product tp
+		<where>
+				tpsa.product_sale_id = tps.id
+			and
+				tps.product_id = tp.id
+			and
+				tp.pro_name_id = tpn.id
+			and
+				tpn.t_series_id = tpse.id
+			and
+				tpsa.is_del = 'N'
+			and
+				tp.del_flag = 'N'
+			<if test='id != null and id != ""'>
+				and tpsa.id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test='applyStatus != null and applyStatus != "" and applyStatus != "all" '>
+				and tpsa.apply_status =
+				#{applyStatus,jdbcType=VARCHAR}
+			</if>
+			<if test='barCode != null and barCode != ""'>
+				and tps.bar_code =
+				#{barCode,jdbcType=VARCHAR}
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				and tpsa.create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+		</where>
+		group by
+			tpsa.create_date
+		desc
+	</select>
+	
+	<select id="productSaleApplyByParam" resultMap="BaseResultMap"
 		parameterType="com.gubang.vo.ProductSaleApplyVo">
 		select
 		<include refid="Base_Column_List" />

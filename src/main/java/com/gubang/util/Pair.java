@@ -22,6 +22,7 @@ public class Pair<A , B>    {
 
 	public boolean equals(Object obj) {
 		if(obj != null && obj instanceof Pair<?, ?>){
+			@SuppressWarnings("unchecked")
 			Pair<A, B> other = (Pair<A, B>)obj;
 			if(!(first == other.first || 
 					(first != null && first.equals(other.first))|| 

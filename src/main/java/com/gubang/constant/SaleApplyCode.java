@@ -11,7 +11,13 @@ public enum SaleApplyCode {
 	FIRST_TRIAL("first_trial", "售后人员初审"),
 	THE_TRIAL_PASS("the_trial_pass", "初审通过"),
 	THE_TRIAL_REJECT("the_trial_reject","初审拒绝"),
-	APPLY_WAY_BILL("apply_way_bill", "客户填写运单号");
+	APPLY_WAY_BILL("apply_way_bill", "客户填写运单号"),
+	COURIER_TRACKING("courier_tracking","客户快递跟踪"),
+	COMPANY_COURIER_TRACKING("company_courier_tracking","公司快递跟踪"),
+	AFTERSALE_DEPARTMENT("aftersale_department","售后部"),
+	COURIER_DEPARTMENT("courier_department","售后部寄件"),
+	FINSH_APPLY("finsh_apply","售后单完成");
+	
 	
 	private SaleApplyCode(String code, String desc) {
 		this.code = code;

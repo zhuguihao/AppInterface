@@ -31,6 +31,24 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable{
 	private String proDesc;
 	private Long policy;
 	private Long policyReplace;
+	
+	private String applyUser;
+	private String applyDesc;
+	private String isPay;
+	private String payGoods;
+	private String expressName;
+	private String expressAddress;
+	private String expressPhone;
+	private String applyRejectResion;
+	private String applyPolicyState;
+	private String isRecipient;
+	/**
+	 * 售后判断维修状态
+	 */
+	private String sysProductStatus;
+	private String sysWaybillNumber;
+	
+	
 
 	public String getId() {
 		return id;
@@ -224,4 +242,100 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable{
 		this.policyReplace = policyReplace;
 	}
 
+	public String getApplyUser() {
+		return applyUser;
+	}
+
+	public void setApplyUser(String applyUser) {
+		this.applyUser = applyUser;
+	}
+
+	public String getApplyDesc() {
+		return applyDesc;
+	}
+
+	public void setApplyDesc(String applyDesc) {
+		this.applyDesc = applyDesc;
+	}
+
+	public String getIsPay() {
+		return isPay;
+	}
+
+	public void setIsPay(String isPay) {
+		this.isPay = isPay;
+	}
+
+	public String getPayGoods() {
+		return payGoods;
+	}
+
+	public void setPayGoods(String payGoods) {
+		this.payGoods = payGoods;
+	}
+
+	public String getExpressName() {
+		return expressName;
+	}
+
+	public void setExpressName(String expressName) {
+		this.expressName = expressName;
+	}
+
+	public String getExpressAddress() {
+		return expressAddress;
+	}
+
+	public void setExpressAddress(String expressAddress) {
+		this.expressAddress = expressAddress;
+	}
+
+	public String getExpressPhone() {
+		return expressPhone;
+	}
+
+	public void setExpressPhone(String expressPhone) {
+		this.expressPhone = expressPhone;
+	}
+
+	public String getApplyRejectResion() {
+		return applyRejectResion;
+	}
+
+	public void setApplyRejectResion(String applyRejectResion) {
+		this.applyRejectResion = applyRejectResion;
+	}
+
+	public String getApplyPolicyState() {
+		return applyPolicyState;
+	}
+
+	public void setApplyPolicyState(String applyPolicyState) {
+		this.applyPolicyState = applyPolicyState;
+	}
+
+	public String getIsRecipient() {
+		return isRecipient;
+	}
+
+	public void setIsRecipient(String isRecipient) {
+		this.isRecipient = isRecipient;
+	}
+
+	public String getSysProductStatus() {
+		return sysProductStatus;
+	}
+
+	public void setSysProductStatus(String sysProductStatus) {
+		this.sysProductStatus = sysProductStatus;
+	}
+
+	public String getSysWaybillNumber() {
+		return sysWaybillNumber;
+	}
+
+	public void setSysWaybillNumber(String sysWaybillNumber) {
+		this.sysWaybillNumber = sysWaybillNumber;
+	}
+	
 }

@@ -26,4 +26,8 @@ public class ProductApplyQueryDto {
 	public boolean inValid() {
 		return CommonUtil.isEmpty(barCode) || CommonUtil.isEmpty(applyStatus);
 	}
+	
+	public boolean hasStatus() {
+		return CommonUtil.isEmpty(applyStatus);
+	}
 }

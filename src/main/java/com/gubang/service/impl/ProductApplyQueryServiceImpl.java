@@ -35,6 +35,9 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 				return result.setNotLogin();
 			}
 
+			if(params.hasStatus()){
+				return result.setParameterInvalid();
+			}
 			/**
 			 * 查询当前产品编号的申请单
 			 */
@@ -42,7 +45,35 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 			record.setApplyStatus(params.getApplyStatus());
 			List<ProductSaleApplyVo> productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParams(record);
 			
+			/**
+			 * 所有的单子
+			 */
 			JSONArray productSaleApplyArr = new JSONArray();
+			/**
+			 * 售后初审单
+			 */
+			JSONArray firstTrialArr = new JSONArray();
+			/**
+			 * 客户快递跟踪
+			 */
+			JSONArray courierTrackingArr = new JSONArray();
+			/**
+			 * 公司快递跟踪
+			 */
+			JSONArray companyCourierTrackingArr = new JSONArray();
+			/**
+			 * 售后部
+			 */
+			JSONArray aftersaledepartmentArr = new JSONArray();
+			/**
+			 * 售后部寄件
+			 */
+			JSONArray courierDepartmentArr = new JSONArray();
+			/**
+			 * 售后单完成
+			 */
+			JSONArray finshApplyArr = new JSONArray();
+			
 			for (ProductSaleApplyVo item:productSaleApplyVo) {
 				ProductSaleApplyQueryVo productSaleApplyQueryVo = new ProductSaleApplyQueryVo();
 				productSaleApplyQueryVo.setId(item.getId());
@@ -67,10 +98,81 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 				productSaleApplyQueryVo.setSeries(item.getSeries());
 				productSaleApplyQueryVo.setVoltageRange(item.getVoltageRange());
 				productSaleApplyQueryVo.setWaybillNumber(item.getWaybillNumber());
+				
+				productSaleApplyQueryVo.setApplyUser(item.getApplyUser());
+				productSaleApplyQueryVo.setApplyDesc(item.getApplyDesc());
+				productSaleApplyQueryVo.setIsPay(item.getIsPay());
+				productSaleApplyQueryVo.setPayGoods(item.getPayGoods());
+				productSaleApplyQueryVo.setExpressAddress(item.getExpressAddress());
+				productSaleApplyQueryVo.setExpressName(item.getExpressName());
+				productSaleApplyQueryVo.setExpressPhone(item.getExpressPhone());
+				productSaleApplyQueryVo.setApplyRejectResion(item.getApplyRejectResion());
+				productSaleApplyQueryVo.setApplyPolicyState(item.getApplyPolicyState());
+				productSaleApplyQueryVo.setIsRecipient(item.getIsRecipient());
+				productSaleApplyQueryVo.setSysProductStatus(item.getSysProductStatus());
+				productSaleApplyQueryVo.setSysWaybillNumber(item.getSysWaybillNumber());
+				
+				if(SaleApplyCode.FIRST_TRIAL.getCode().equals(item.getApplyStatus())){
+					firstTrialArr.add(productSaleApplyQueryVo);
+				}else if(SaleApplyCode.COURIER_TRACKING.getCode().equals(item.getApplyStatus())){
+					courierTrackingArr.add(productSaleApplyQueryVo);
+				}else if(SaleApplyCode.COMPANY_COURIER_TRACKING.getCode().equals(item.getApplyStatus())){
+					companyCourierTrackingArr.add(productSaleApplyQueryVo);
+				}else if(SaleApplyCode.AFTERSALE_DEPARTMENT.getCode().equals(item.getApplyStatus())){
+					aftersaledepartmentArr.add(productSaleApplyQueryVo);
+				}else if(SaleApplyCode.COURIER_DEPARTMENT.getCode().equals(item.getApplyStatus())){
+					courierDepartmentArr.add(productSaleApplyQueryVo);
+				}else if(SaleApplyCode.FINSH_APPLY.getCode().equals(item.getApplyStatus())){
+					finshApplyArr.add(productSaleApplyQueryVo);
+				}
+				
 				productSaleApplyArr.add(productSaleApplyQueryVo);
 			}
+			JSONArray retArr = new JSONArray();
+			
+			JSONObject retObj = new JSONObject();
+			retObj.put("key", "all");
+			retObj.put("value", "全部");
+			retObj.put("list", productSaleApplyArr);
+			retArr.add(retObj);
+			
+			retObj = new JSONObject();
+			retObj.put("key", SaleApplyCode.FIRST_TRIAL.getCode());
+			retObj.put("value", SaleApplyCode.FIRST_TRIAL.getDesc());
+			retObj.put("list", firstTrialArr);
+			retArr.add(retObj);
+			
+			retObj = new JSONObject();
+			retObj.put("key", SaleApplyCode.COURIER_TRACKING.getCode());
+			retObj.put("value", SaleApplyCode.COURIER_TRACKING.getDesc());
+			retObj.put("list", courierTrackingArr);
+			retArr.add(retObj);
+			
+			retObj = new JSONObject();
+			retObj.put("key", SaleApplyCode.COMPANY_COURIER_TRACKING.getCode());
+			retObj.put("value", SaleApplyCode.COMPANY_COURIER_TRACKING.getDesc());
+			retObj.put("list", companyCourierTrackingArr);
+			retArr.add(retObj);
+			
+			retObj = new JSONObject();
+			retObj.put("key", SaleApplyCode.AFTERSALE_DEPARTMENT.getCode());
+			retObj.put("value", SaleApplyCode.AFTERSALE_DEPARTMENT.getDesc());
+			retObj.put("list", aftersaledepartmentArr);
+			retArr.add(retObj);
+			
+			retObj = new JSONObject();
+			retObj.put("key", SaleApplyCode.COURIER_DEPARTMENT.getCode());
+			retObj.put("value", SaleApplyCode.COURIER_DEPARTMENT.getDesc());
+			retObj.put("list", courierDepartmentArr);
+			retArr.add(retObj);
+			
+			retObj = new JSONObject();
+			retObj.put("key", SaleApplyCode.FINSH_APPLY.getCode());
+			retObj.put("value", SaleApplyCode.FINSH_APPLY.getDesc());
+			retObj.put("list", finshApplyArr);
+			retArr.add(retObj);
 
-			return result.setSuccess(productSaleApplyArr);
+			return result.setSuccess(retArr);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(userInfo.getAccount() + "查询售后产品信息失败：" + e.getMessage());
