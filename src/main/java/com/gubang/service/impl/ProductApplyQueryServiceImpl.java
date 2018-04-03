@@ -34,17 +34,14 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 			if (null == userInfo) {
 				return result.setNotLogin();
 			}
-
-			if(params.hasStatus()){
-				return result.setParameterInvalid();
-			}
+			
 			/**
 			 * 查询当前产品编号的申请单
 			 */
 			ProductSaleApplyVo record = new ProductSaleApplyVo();
 			record.setApplyStatus(params.getApplyStatus());
 			List<ProductSaleApplyVo> productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParams(record);
-			
+
 			/**
 			 * 所有的单子
 			 */
@@ -73,8 +70,8 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 			 * 售后单完成
 			 */
 			JSONArray finshApplyArr = new JSONArray();
-			
-			for (ProductSaleApplyVo item:productSaleApplyVo) {
+
+			for (ProductSaleApplyVo item : productSaleApplyVo) {
 				ProductSaleApplyQueryVo productSaleApplyQueryVo = new ProductSaleApplyQueryVo();
 				productSaleApplyQueryVo.setId(item.getId());
 				productSaleApplyQueryVo.setAddress(item.getAddress());
@@ -98,7 +95,7 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 				productSaleApplyQueryVo.setSeries(item.getSeries());
 				productSaleApplyQueryVo.setVoltageRange(item.getVoltageRange());
 				productSaleApplyQueryVo.setWaybillNumber(item.getWaybillNumber());
-				
+
 				productSaleApplyQueryVo.setApplyUser(item.getApplyUser());
 				productSaleApplyQueryVo.setApplyDesc(item.getApplyDesc());
 				productSaleApplyQueryVo.setIsPay(item.getIsPay());
@@ -111,61 +108,61 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 				productSaleApplyQueryVo.setIsRecipient(item.getIsRecipient());
 				productSaleApplyQueryVo.setSysProductStatus(item.getSysProductStatus());
 				productSaleApplyQueryVo.setSysWaybillNumber(item.getSysWaybillNumber());
-				
-				if(SaleApplyCode.FIRST_TRIAL.getCode().equals(item.getApplyStatus())){
+
+				if (SaleApplyCode.FIRST_TRIAL.getCode().equals(item.getApplyStatus())) {
 					firstTrialArr.add(productSaleApplyQueryVo);
-				}else if(SaleApplyCode.COURIER_TRACKING.getCode().equals(item.getApplyStatus())){
+				} else if (SaleApplyCode.COURIER_TRACKING.getCode().equals(item.getApplyStatus())) {
 					courierTrackingArr.add(productSaleApplyQueryVo);
-				}else if(SaleApplyCode.COMPANY_COURIER_TRACKING.getCode().equals(item.getApplyStatus())){
+				} else if (SaleApplyCode.COMPANY_COURIER_TRACKING.getCode().equals(item.getApplyStatus())) {
 					companyCourierTrackingArr.add(productSaleApplyQueryVo);
-				}else if(SaleApplyCode.AFTERSALE_DEPARTMENT.getCode().equals(item.getApplyStatus())){
+				} else if (SaleApplyCode.AFTERSALE_DEPARTMENT.getCode().equals(item.getApplyStatus())) {
 					aftersaledepartmentArr.add(productSaleApplyQueryVo);
-				}else if(SaleApplyCode.COURIER_DEPARTMENT.getCode().equals(item.getApplyStatus())){
+				} else if (SaleApplyCode.COURIER_DEPARTMENT.getCode().equals(item.getApplyStatus())) {
 					courierDepartmentArr.add(productSaleApplyQueryVo);
-				}else if(SaleApplyCode.FINSH_APPLY.getCode().equals(item.getApplyStatus())){
+				} else if (SaleApplyCode.FINSH_APPLY.getCode().equals(item.getApplyStatus())) {
 					finshApplyArr.add(productSaleApplyQueryVo);
 				}
-				
+
 				productSaleApplyArr.add(productSaleApplyQueryVo);
 			}
 			JSONArray retArr = new JSONArray();
-			
+
 			JSONObject retObj = new JSONObject();
 			retObj.put("key", "all");
 			retObj.put("value", "全部");
 			retObj.put("list", productSaleApplyArr);
 			retArr.add(retObj);
-			
+
 			retObj = new JSONObject();
 			retObj.put("key", SaleApplyCode.FIRST_TRIAL.getCode());
 			retObj.put("value", SaleApplyCode.FIRST_TRIAL.getDesc());
 			retObj.put("list", firstTrialArr);
 			retArr.add(retObj);
-			
+
 			retObj = new JSONObject();
 			retObj.put("key", SaleApplyCode.COURIER_TRACKING.getCode());
 			retObj.put("value", SaleApplyCode.COURIER_TRACKING.getDesc());
 			retObj.put("list", courierTrackingArr);
 			retArr.add(retObj);
-			
+
 			retObj = new JSONObject();
 			retObj.put("key", SaleApplyCode.COMPANY_COURIER_TRACKING.getCode());
 			retObj.put("value", SaleApplyCode.COMPANY_COURIER_TRACKING.getDesc());
 			retObj.put("list", companyCourierTrackingArr);
 			retArr.add(retObj);
-			
+
 			retObj = new JSONObject();
 			retObj.put("key", SaleApplyCode.AFTERSALE_DEPARTMENT.getCode());
 			retObj.put("value", SaleApplyCode.AFTERSALE_DEPARTMENT.getDesc());
 			retObj.put("list", aftersaledepartmentArr);
 			retArr.add(retObj);
-			
+
 			retObj = new JSONObject();
 			retObj.put("key", SaleApplyCode.COURIER_DEPARTMENT.getCode());
 			retObj.put("value", SaleApplyCode.COURIER_DEPARTMENT.getDesc());
 			retObj.put("list", courierDepartmentArr);
 			retArr.add(retObj);
-			
+
 			retObj = new JSONObject();
 			retObj.put("key", SaleApplyCode.FINSH_APPLY.getCode());
 			retObj.put("value", SaleApplyCode.FINSH_APPLY.getDesc());
@@ -191,22 +188,5 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 		retObj.put("expressAddress", "公司收件地址");
 		retObj.put("expressPhone", "公司电话");
 		return result.setSuccess(retObj);
-	}
-
-	public JSONArray getApplyCenter(){
-		JSONArray array = new JSONArray();
-		JSONObject obj = new JSONObject();
-		obj.put("key", SaleApplyCode.FIRST_TRIAL.getCode());
-		obj.put("value", SaleApplyCode.FIRST_TRIAL.getDesc());
-		array.add(obj);
-		obj = new JSONObject();
-		obj.put("key", SaleApplyCode.APPLY_WAY_BILL.getCode());
-		obj.put("value", SaleApplyCode.APPLY_WAY_BILL.getDesc());
-		array.add(obj);
-		obj = new JSONObject();
-		obj.put("key", "all");
-		obj.put("value", "所有审批件");
-		array.add(obj);
-		return array;
 	}
 }

@@ -61,17 +61,10 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			ProductSaleApply record = new ProductSaleApply();
 			record.setProductSaleId(productSaleInfo.getId());
 			ProductSaleApply productSaleApply = productSaleApplyMapper.selectByProductSaleInfoParams(record);
-			if (null == productSaleApply) {
-				return result.setNotFoundProduct();
-			}
-
-			/**
-			 * 返回申请单状态
-			 */
 			ApplyStatusResult applyStatusResult = new ApplyStatusResult();
-			applyStatusResult.setApplyStatus(productSaleApply.getApplyStatus());
-
+			applyStatusResult.setApplyStatus(productSaleApply==null?null:productSaleApply.getApplyStatus());
 			return result.setSuccess(applyStatusResult);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(userInfo.getAccount() + "查询售后产品信息失败：" + e.getMessage());
@@ -149,17 +142,17 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			if (null == productSaleApply) {
 				return result.setNotFoundApplyProduct();
 			}
-			
+
 			record.setAddress(params.getAddress());
 			record.setAddressee(params.getAddressee());
 			record.setAddressPhone(params.getAddressPhone());
 			record.setWaybillNumber(params.getWaybillNumber());
 			record.setApplyStatus(SaleApplyCode.APPLY_WAY_BILL.getCode());
-			
+
 			record.setUpdateBy(userInfo.getId());
 			record.setUpdateDate(new Date());
 			productSaleApplyMapper.updateByPrimaryKeySelective(record);
-			
+
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			/**
