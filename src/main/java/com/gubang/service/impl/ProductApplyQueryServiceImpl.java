@@ -134,7 +134,6 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 				} else if (SaleApplyCode.THE_TRIAL_PASS.getCode().equals(item.getApplyStatus())) {
 					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.THE_TRIAL_PASS.getDesc());
 				}
-				
 
 				productSaleApplyArr.add(productSaleApplyQueryVo);
 			}

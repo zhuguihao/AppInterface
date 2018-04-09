@@ -8,6 +8,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.Constant;
 import com.gubang.constant.SaleApplyCode;
+import com.gubang.dto.apply.FirstTrialPassDto;
 import com.gubang.dto.apply.FirstTrialRejectDto;
 import com.gubang.dto.query.FirstTrialDto;
 import com.gubang.entity.ProductSaleApply;
@@ -117,10 +118,11 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			}
 
 			/**
-			 * 查询产品信息
+			 * 查询是否存在该笔等待拒绝初审的单据
 			 */
 			ProductSaleApplyVo record = new ProductSaleApplyVo();
 			record.setId(params.getProductSaleApplyId());
+			record.setApplyStatus(SaleApplyCode.FIRST_TRIAL.getCode());
 			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
 			if (null == productSaleApplyVo) {
 				return result.setNotFoundApplyProduct();
@@ -155,6 +157,48 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(userInfo.getAccount() + "售后单初审拒绝保存失败：" + e.getMessage());
+			return result.setSystemError();
+		}
+	}
+
+	@Override
+	public ResultDTO firstTrialPass(UserInfo userInfo, FirstTrialPassDto params) {
+		ResultDTO result = new ResultDTO();
+		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			if (params.inValid()) {
+				return result.setParameterInvalid();
+			}
+			
+			/**
+			 * 查询是否存在该笔等待通过初审的单据
+			 */
+			ProductSaleApplyVo record = new ProductSaleApplyVo();
+			record.setId(params.getProductSaleApplyId());
+			record.setApplyStatus(SaleApplyCode.FIRST_TRIAL.getCode());
+			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
+			if (null == productSaleApplyVo) {
+				return result.setNotFoundApplyProduct();
+			}
+			
+			/**
+			 * 修改当前售后单的状态
+			 */
+			ProductSaleApply productSaleApply = new ProductSaleApply();
+			productSaleApply.setId(params.getProductSaleApplyId());
+			productSaleApply.setApplyStatus(SaleApplyCode.THE_TRIAL_PASS.getCode());
+
+			productSaleApply.setUpdateBy(userInfo.getId());
+			productSaleApply.setUpdateDate(new Date());
+			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
+			
+			
+			return result.setSuccess(new JSONObject());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(userInfo.getAccount() + "售后单初审通过保存失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}

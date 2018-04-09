@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.gubang.config.UserInfoParam;
+import com.gubang.dto.apply.FirstTrialPassDto;
 import com.gubang.dto.apply.FirstTrialRejectDto;
 import com.gubang.dto.query.FirstTrialDto;
 import com.gubang.entity.UserInfo;
@@ -60,6 +61,13 @@ public class ProductApplySysController {
 			@UserInfoParam UserInfo userInfo, @RequestBody FirstTrialRejectDto params)
 			throws ParseException, IOException {
 		return productApplySysService.firstTrialReject(userInfo, params);
+	}
+	
+	@RequestMapping(value = "firstTrialPass", method = RequestMethod.POST)
+	public ResultDTO firstTrialPass(HttpServletRequest request, HttpServletResponse response,
+			@UserInfoParam UserInfo userInfo, @RequestBody FirstTrialPassDto params)
+			throws ParseException, IOException {
+		return productApplySysService.firstTrialPass(userInfo, params);
 	}
 	
 }
