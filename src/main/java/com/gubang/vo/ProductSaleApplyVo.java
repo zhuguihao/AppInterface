@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import com.gubang.entity.CommonEntity;
 
-public class ProductSaleApplyVo extends CommonEntity implements Serializable{
-	
+public class ProductSaleApplyVo extends CommonEntity implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String cusName;
@@ -31,7 +31,7 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable{
 	private String proDesc;
 	private Long policy;
 	private Long policyReplace;
-	
+
 	private String applyUser;
 	private String applyDesc;
 	private String isPay;
@@ -47,8 +47,6 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable{
 	 */
 	private String sysProductStatus;
 	private String sysWaybillNumber;
-	
-	
 
 	public String getId() {
 		return id;
@@ -337,5 +335,5 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable{
 	public void setSysWaybillNumber(String sysWaybillNumber) {
 		this.sysWaybillNumber = sysWaybillNumber;
 	}
-	
+
 }

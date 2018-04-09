@@ -110,18 +110,31 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 				productSaleApplyQueryVo.setSysWaybillNumber(item.getSysWaybillNumber());
 
 				if (SaleApplyCode.FIRST_TRIAL.getCode().equals(item.getApplyStatus())) {
+					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.FIRST_TRIAL.getDesc());
 					firstTrialArr.add(productSaleApplyQueryVo);
 				} else if (SaleApplyCode.COURIER_TRACKING.getCode().equals(item.getApplyStatus())) {
+					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.COURIER_TRACKING.getDesc());
 					courierTrackingArr.add(productSaleApplyQueryVo);
 				} else if (SaleApplyCode.COMPANY_COURIER_TRACKING.getCode().equals(item.getApplyStatus())) {
+					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.COMPANY_COURIER_TRACKING.getDesc());
 					companyCourierTrackingArr.add(productSaleApplyQueryVo);
 				} else if (SaleApplyCode.AFTERSALE_DEPARTMENT.getCode().equals(item.getApplyStatus())) {
+					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.AFTERSALE_DEPARTMENT.getDesc());
 					aftersaledepartmentArr.add(productSaleApplyQueryVo);
 				} else if (SaleApplyCode.COURIER_DEPARTMENT.getCode().equals(item.getApplyStatus())) {
+					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.COURIER_DEPARTMENT.getDesc());
 					courierDepartmentArr.add(productSaleApplyQueryVo);
 				} else if (SaleApplyCode.FINSH_APPLY.getCode().equals(item.getApplyStatus())) {
+					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.FINSH_APPLY.getDesc());
 					finshApplyArr.add(productSaleApplyQueryVo);
+				} else if (SaleApplyCode.THE_TRIAL_REJECT.getCode().equals(item.getApplyStatus())) {
+					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.THE_TRIAL_REJECT.getDesc());
+				} else if (SaleApplyCode.APPLY_WAY_BILL.getCode().equals(item.getApplyStatus())) {
+					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.APPLY_WAY_BILL.getDesc());
+				} else if (SaleApplyCode.THE_TRIAL_PASS.getCode().equals(item.getApplyStatus())) {
+					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.THE_TRIAL_PASS.getDesc());
 				}
+				
 
 				productSaleApplyArr.add(productSaleApplyQueryVo);
 			}

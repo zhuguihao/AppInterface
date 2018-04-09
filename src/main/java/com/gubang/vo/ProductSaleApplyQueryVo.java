@@ -6,6 +6,7 @@ public class ProductSaleApplyQueryVo {
 	private String customerId;
 	private String productStatus;
 	private String applyStatus;
+	private String applyStatusDesc;
 	private String address;
 	private String addressee;
 	private String addressPhone;
@@ -81,6 +82,14 @@ public class ProductSaleApplyQueryVo {
 
 	public void setApplyStatus(String applyStatus) {
 		this.applyStatus = applyStatus;
+	}
+
+	public String getApplyStatusDesc() {
+		return applyStatusDesc;
+	}
+
+	public void setApplyStatusDesc(String applyStatusDesc) {
+		this.applyStatusDesc = applyStatusDesc;
 	}
 
 	public String getAddress() {

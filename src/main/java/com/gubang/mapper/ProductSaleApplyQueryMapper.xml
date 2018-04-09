@@ -143,7 +143,11 @@
 		select
 		<include refid="Base_Column_List" />
 		from
-			t_product_sale_apply tpsa,
+			t_product_sale_apply tpsa 
+		LEFT JOIN 
+			t_product_sale_apply_sys tpsas 
+		ON
+			tpsa.id = tpsas.product_sale_apply_id,
 			t_product_sale tps,
 			t_product_series tpse,
 			t_product_name tpn,
