@@ -35,11 +35,9 @@ public class WebLogAspect {
 		log.info("NGINX转发前 IP : " + request.getHeader("service_ip"));
 		// 获取传入目标方法的参数
 		Object[] args = joinPoint.getArgs();
-		if(args.length>2){
-			log.info("入参为" + JSONArray.toJSONString(args[2]));
+		for (int i = 2; i < args.length; i++) {
+			log.info("入参为" + JSONArray.toJSONString(args[i]));
 		}
-		
-
 	}
 
 	@AfterReturning(returning = "ret", pointcut = "webLog()")

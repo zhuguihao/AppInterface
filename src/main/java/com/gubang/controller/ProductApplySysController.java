@@ -63,6 +63,16 @@ public class ProductApplySysController {
 		return productApplySysService.firstTrialReject(userInfo, params);
 	}
 	
+	/**
+	 * 初审通过
+	 * @param request
+	 * @param response
+	 * @param userInfo
+	 * @param params
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "firstTrialPass", method = RequestMethod.POST)
 	public ResultDTO firstTrialPass(HttpServletRequest request, HttpServletResponse response,
 			@UserInfoParam UserInfo userInfo, @RequestBody FirstTrialPassDto params)
