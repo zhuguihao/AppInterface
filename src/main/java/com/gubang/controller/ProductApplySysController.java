@@ -31,6 +31,7 @@ public class ProductApplySysController {
 
 	/**
 	 * 初审
+	 * 
 	 * @param request
 	 * @param response
 	 * @param userInfo
@@ -41,13 +42,13 @@ public class ProductApplySysController {
 	 */
 	@RequestMapping(value = "firstTrial", method = RequestMethod.POST)
 	public ResultDTO firstTrial(HttpServletRequest request, HttpServletResponse response,
-			@UserInfoParam UserInfo userInfo, @RequestBody FirstTrialDto params)
-			throws ParseException, IOException {
+			@UserInfoParam UserInfo userInfo, @RequestBody FirstTrialDto params) throws ParseException, IOException {
 		return productApplySysService.firstTrial(userInfo, params);
 	}
-	
+
 	/**
 	 * 初审拒绝
+	 * 
 	 * @param request
 	 * @param response
 	 * @param userInfo
@@ -62,9 +63,10 @@ public class ProductApplySysController {
 			throws ParseException, IOException {
 		return productApplySysService.firstTrialReject(userInfo, params);
 	}
-	
+
 	/**
 	 * 初审通过
+	 * 
 	 * @param request
 	 * @param response
 	 * @param userInfo
@@ -79,5 +81,5 @@ public class ProductApplySysController {
 			throws ParseException, IOException {
 		return productApplySysService.firstTrialPass(userInfo, params);
 	}
-	
+
 }

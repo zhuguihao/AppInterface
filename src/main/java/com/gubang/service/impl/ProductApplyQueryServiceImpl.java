@@ -196,6 +196,7 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 			return result.setNotLogin();
 		}
 		JSONObject retObj = new JSONObject();
+		retObj.put("companyName", "公司名称");
 		retObj.put("expressName", "公司收件人");
 		retObj.put("expressAddress", "公司收件地址");
 		retObj.put("expressPhone", "公司电话");

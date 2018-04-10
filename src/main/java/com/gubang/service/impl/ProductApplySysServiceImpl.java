@@ -56,6 +56,7 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			 */
 			ProductSaleApplyVo record = new ProductSaleApplyVo();
 			record.setId(params.getProductSaleApplyId());
+			record.setApplyStatus(SaleApplyCode.FIRST_TRIAL.getCode());
 			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
 			if (null == productSaleApplyVo) {
 				return result.setNotFoundApplyProduct();
@@ -161,6 +162,9 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 		}
 	}
 
+	/**
+	 * 重复过初审  需要删除
+	 */
 	@Override
 	public ResultDTO firstTrialPass(UserInfo userInfo, FirstTrialPassDto params) {
 		ResultDTO result = new ResultDTO();
@@ -202,4 +206,5 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			return result.setSystemError();
 		}
 	}
+
 }

@@ -9,9 +9,9 @@ public class ApplyWayBillDto implements Serializable {
 	private static final long serialVersionUID = 5L;
 
 	/**
-	 * 售后单ID
+	 * 产品条形码
 	 */
-	private String productSaleApplyId;
+	private String barCode;
 	/**
 	 * 寄件人信息
 	 */
@@ -29,12 +29,12 @@ public class ApplyWayBillDto implements Serializable {
 	 */
 	private String waybillNumber;
 
-	public String getProductSaleApplyId() {
-		return productSaleApplyId;
+	public String getBarCode() {
+		return barCode;
 	}
 
-	public void setProductSaleApplyId(String productSaleApplyId) {
-		this.productSaleApplyId = productSaleApplyId;
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
 	}
 
 	public String getAddressee() {
@@ -70,8 +70,8 @@ public class ApplyWayBillDto implements Serializable {
 	}
 
 	public boolean inValid() {
-		return CommonUtil.isEmpty(addressee) || CommonUtil.isEmpty(address) || CommonUtil.isEmpty(addressPhone)
-				|| CommonUtil.isEmpty(waybillNumber);
+		return CommonUtil.isEmpty(barCode) || CommonUtil.isEmpty(addressee) || CommonUtil.isEmpty(address)
+				|| CommonUtil.isEmpty(addressPhone) || CommonUtil.isEmpty(waybillNumber);
 	}
 
 }

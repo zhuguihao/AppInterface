@@ -2,7 +2,6 @@ package com.gubang.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.ApplyCode;
 import com.gubang.constant.Constant;
@@ -15,10 +14,13 @@ import com.gubang.entity.ProductSaleApply;
 import com.gubang.entity.ProductSaleInfo;
 import com.gubang.entity.UserInfo;
 import com.gubang.mapper.ProductSaleApplyMapper;
+import com.gubang.mapper.ProductSaleApplyQueryMapper;
 import com.gubang.mapper.ProductSaleInfoMapper;
 import com.gubang.service.ProductApplyService;
 import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
+import com.gubang.vo.ProductSaleApplyVo;
+
 import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,8 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 	private ProductSaleInfoMapper productSaleInfoMapper;
 	@Autowired
 	private ProductSaleApplyMapper productSaleApplyMapper;
+	@Autowired
+	private ProductSaleApplyQueryMapper productSaleApplyQueryMapper;
 
 	private final static Logger log = LoggerFactory.getLogger("Admin");
 
@@ -132,35 +136,37 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
-
+			
 			/**
-			 * 查询产品信息
+			 * 查询是否存在该笔等待客户提交快递单的单据
 			 */
-			ProductSaleApply record = new ProductSaleApply();
-			record.setId(params.getProductSaleApplyId());
-			ProductSaleApply productSaleApply = productSaleApplyMapper.selectByProductSaleInfoParams(record);
-			if (null == productSaleApply) {
+			ProductSaleApplyVo record = new ProductSaleApplyVo();
+			record.setApplyStatus(SaleApplyCode.THE_TRIAL_PASS.getCode());
+			record.setBarCode(params.getBarCode());
+			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
+			if (null == productSaleApplyVo) {
 				return result.setNotFoundApplyProduct();
 			}
+			
+			/**
+			 * 填写客户快递单信息
+			 */
+			ProductSaleApply productSaleApply = new ProductSaleApply();
+			productSaleApply.setId(productSaleApplyVo.getId());
+			productSaleApply.setApplyStatus(SaleApplyCode.COURIER_TRACKING.getCode());
+			productSaleApply.setWaybillNumber(params.getWaybillNumber());
+			productSaleApply.setAddressee(params.getAddressee());
+			productSaleApply.setAddress(params.getAddress());
+			productSaleApply.setAddressPhone(params.getAddressPhone());
 
-			record.setAddress(params.getAddress());
-			record.setAddressee(params.getAddressee());
-			record.setAddressPhone(params.getAddressPhone());
-			record.setWaybillNumber(params.getWaybillNumber());
-			record.setApplyStatus(SaleApplyCode.APPLY_WAY_BILL.getCode());
-
-			record.setUpdateBy(userInfo.getId());
-			record.setUpdateDate(new Date());
-			productSaleApplyMapper.updateByPrimaryKeySelective(record);
-
+			productSaleApply.setUpdateBy(userInfo.getId());
+			productSaleApply.setUpdateDate(new Date());
+			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
+			
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
-			/**
-			 * 回滚事务
-			 */
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			e.printStackTrace();
-			log.error(userInfo.getAccount() + "售后单初审拒绝保存失败：" + e.getMessage());
+			log.error(userInfo.getAccount() + "售后单客户快递单保存失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}
