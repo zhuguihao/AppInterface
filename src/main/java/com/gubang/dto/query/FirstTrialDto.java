@@ -5,9 +5,7 @@ import java.io.Serializable;
 import com.gubang.util.CommonUtil;
 
 public class FirstTrialDto implements Serializable {
-
-	private static final long serialVersionUID = 3L;
-
+	private static final long serialVersionUID = 6399850814827963466L;
 	private String productSaleApplyId;
 	/**
 	 * 回访内容
