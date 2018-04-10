@@ -34,7 +34,7 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 			if (null == userInfo) {
 				return result.setNotLogin();
 			}
-			
+
 			/**
 			 * 查询当前产品编号的申请单
 			 */
@@ -129,8 +129,6 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 					finshApplyArr.add(productSaleApplyQueryVo);
 				} else if (SaleApplyCode.THE_TRIAL_REJECT.getCode().equals(item.getApplyStatus())) {
 					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.THE_TRIAL_REJECT.getDesc());
-				} else if (SaleApplyCode.APPLY_WAY_BILL.getCode().equals(item.getApplyStatus())) {
-					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.APPLY_WAY_BILL.getDesc());
 				} else if (SaleApplyCode.THE_TRIAL_PASS.getCode().equals(item.getApplyStatus())) {
 					productSaleApplyQueryVo.setApplyStatusDesc(SaleApplyCode.THE_TRIAL_PASS.getDesc());
 				}
