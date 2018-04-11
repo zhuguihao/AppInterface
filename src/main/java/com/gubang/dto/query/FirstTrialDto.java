@@ -114,10 +114,9 @@ public class FirstTrialDto implements Serializable {
 
 	public boolean inValid() {
 		if (null == isPay) {
-			return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc)
-					|| CommonUtil.isEmpty(productStatus);
+			return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc);
 		}
 		return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc) || CommonUtil.isEmpty(isPay)
-				|| CommonUtil.isEmpty(payGoods) || CommonUtil.isEmpty(productStatus);
+				|| CommonUtil.isEmpty(payGoods);
 	}
 }

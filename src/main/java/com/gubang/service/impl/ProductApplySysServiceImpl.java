@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.Constant;
 import com.gubang.constant.SaleApplyCode;
@@ -68,11 +67,10 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			ProductSaleApplySys productSaleApplySys = new ProductSaleApplySys();
 			productSaleApplySys.setId(CommonUtil.getUUid());
 			productSaleApplySys.setProductSaleApplyId(params.getProductSaleApplyId());
-			if (!StringUtils.isEmpty(params.getIsPay())) {
-				productSaleApplySys.setIsPay(Constant.IS_PAY_GOODS);
-				productSaleApplySys.setPayGoods(params.getPayGoods());
-			}
+			productSaleApplySys.setIsPay(Constant.IS_PAY_GOODS);
+			productSaleApplySys.setPayGoods(params.getPayGoods());
 			productSaleApplySys.setApplyUser(userInfo.getId());
+			productSaleApplySys.setApplyDesc(params.getApplyDesc());
 			productSaleApplySys.setExpressName(params.getExpressName());
 			productSaleApplySys.setExpressPhone(params.getExpressPhone());
 			productSaleApplySys.setExpressAddress(params.getExpressAddress());
