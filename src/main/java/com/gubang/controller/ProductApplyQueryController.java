@@ -60,4 +60,19 @@ public class ProductApplyQueryController {
 		return productApplyQueryService.getCommpanyAddress(userInfo);
 	}
 	
+	/**
+	 * 获取维修状态码
+	 * @param request
+	 * @param response
+	 * @param userInfo
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "getApplyPolicyStateCode", method = RequestMethod.POST)
+	public ResultDTO getApplyPolicyStateCode(HttpServletRequest request, HttpServletResponse response,
+			@UserInfoParam UserInfo userInfo)
+			throws ParseException, IOException {
+		return productApplyQueryService.getApplyPolicyStateCode(userInfo);
+	}
 }

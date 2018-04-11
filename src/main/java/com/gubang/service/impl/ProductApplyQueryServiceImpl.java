@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.gubang.constant.ApplyPolicyStateCode;
 import com.gubang.constant.SaleApplyCode;
 import com.gubang.dto.query.ProductApplyQueryDto;
 import com.gubang.entity.UserInfo;
@@ -199,5 +200,23 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 		retObj.put("expressAddress", "公司收件地址");
 		retObj.put("expressPhone", "公司电话");
 		return result.setSuccess(retObj);
+	}
+
+	@Override
+	public ResultDTO getApplyPolicyStateCode(UserInfo userInfo) {
+		ResultDTO result = new ResultDTO();
+		if (null == userInfo) {
+			return result.setNotLogin();
+		}
+		JSONArray retArr = new JSONArray();
+		JSONObject retObj = new JSONObject();
+		retObj.put("key", ApplyPolicyStateCode.POLICY_REPLACE_STATUS.getCode());
+		retObj.put("value", ApplyPolicyStateCode.POLICY_REPLACE_STATUS.getDesc());
+		retArr.add(retObj);
+		retObj = new JSONObject();
+		retObj.put("key", ApplyPolicyStateCode.POLICY_STATUS.getCode());
+		retObj.put("value", ApplyPolicyStateCode.POLICY_STATUS.getDesc());
+		retArr.add(retObj);
+		return result.setSuccess(retArr);
 	}
 }

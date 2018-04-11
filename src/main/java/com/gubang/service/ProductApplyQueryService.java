@@ -10,4 +10,6 @@ public interface ProductApplyQueryService {
 
 	ResultDTO getCommpanyAddress(UserInfo userInfo);
 
+	ResultDTO getApplyPolicyStateCode(UserInfo userInfo);
+
 }
