@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.gubang.config.UserInfoParam;
-import com.gubang.dto.apply.FirstTrialPassDto;
 import com.gubang.dto.apply.FirstTrialRejectDto;
+import com.gubang.dto.apply.SignExpressDto;
 import com.gubang.dto.query.FirstTrialDto;
 import com.gubang.entity.UserInfo;
 import com.gubang.service.ProductApplySysService;
@@ -65,8 +65,7 @@ public class ProductApplySysController {
 	}
 
 	/**
-	 * 初审通过
-	 * 
+	 * 签收客户快递
 	 * @param request
 	 * @param response
 	 * @param userInfo
@@ -75,11 +74,27 @@ public class ProductApplySysController {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "firstTrialPass", method = RequestMethod.POST)
+	@RequestMapping(value = "signExpress", method = RequestMethod.POST)
 	public ResultDTO firstTrialPass(HttpServletRequest request, HttpServletResponse response,
-			@UserInfoParam UserInfo userInfo, @RequestBody FirstTrialPassDto params)
+			@UserInfoParam UserInfo userInfo, @RequestBody SignExpressDto params)
 			throws ParseException, IOException {
-		return productApplySysService.firstTrialPass(userInfo, params);
+		return productApplySysService.signExpress(userInfo, params);
 	}
 
+	/**
+	 * 驳回客户快递
+	 * @param request
+	 * @param response
+	 * @param userInfo
+	 * @param params
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "rejExpress", method = RequestMethod.POST)
+	public ResultDTO rejExpress(HttpServletRequest request, HttpServletResponse response,
+			@UserInfoParam UserInfo userInfo, @RequestBody SignExpressDto params)
+			throws ParseException, IOException {
+		return productApplySysService.rejExpress(userInfo, params);
+	}
 }

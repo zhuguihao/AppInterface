@@ -7,8 +7,8 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.Constant;
 import com.gubang.constant.SaleApplyCode;
-import com.gubang.dto.apply.FirstTrialPassDto;
 import com.gubang.dto.apply.FirstTrialRejectDto;
+import com.gubang.dto.apply.SignExpressDto;
 import com.gubang.dto.query.FirstTrialDto;
 import com.gubang.entity.ProductSaleApply;
 import com.gubang.entity.ProductSaleApplySys;
@@ -160,11 +160,8 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 		}
 	}
 
-	/**
-	 * 重复过初审  需要删除
-	 */
 	@Override
-	public ResultDTO firstTrialPass(UserInfo userInfo, FirstTrialPassDto params) {
+	public ResultDTO signExpress(UserInfo userInfo, SignExpressDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
 			if (null == userInfo) {
@@ -173,34 +170,78 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
-			
+
 			/**
-			 * 查询是否存在该笔等待通过初审的单据
+			 * 查询是否存在等待签收的单据
 			 */
 			ProductSaleApplyVo record = new ProductSaleApplyVo();
 			record.setId(params.getProductSaleApplyId());
-			record.setApplyStatus(SaleApplyCode.FIRST_TRIAL.getCode());
+			record.setApplyStatus(SaleApplyCode.COURIER_TRACKING.getCode());
 			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
 			if (null == productSaleApplyVo) {
 				return result.setNotFoundApplyProduct();
 			}
-			
+
 			/**
-			 * 修改当前售后单的状态
+			 * 签收客户快递
 			 */
 			ProductSaleApply productSaleApply = new ProductSaleApply();
 			productSaleApply.setId(params.getProductSaleApplyId());
-			productSaleApply.setApplyStatus(SaleApplyCode.THE_TRIAL_PASS.getCode());
+			productSaleApply.setApplyStatus(SaleApplyCode.AFTERSALE_DEPARTMENT.getCode());
 
 			productSaleApply.setUpdateBy(userInfo.getId());
 			productSaleApply.setUpdateDate(new Date());
 			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
-			
-			
+
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo.getAccount() + "售后单初审通过保存失败：" + e.getMessage());
+			log.error(userInfo.getAccount() + "售后单签收客户快递保存失败：" + e.getMessage());
+			return result.setSystemError();
+		}
+	}
+
+	@Override
+	public ResultDTO rejExpress(UserInfo userInfo, SignExpressDto params) {
+		ResultDTO result = new ResultDTO();
+		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			if (params.inValid()) {
+				return result.setParameterInvalid();
+			}
+
+			/**
+			 * 查询是否存在等待签收的单据
+			 */
+			ProductSaleApplyVo record = new ProductSaleApplyVo();
+			record.setId(params.getProductSaleApplyId());
+			record.setApplyStatus(SaleApplyCode.COURIER_TRACKING.getCode());
+			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
+			if (null == productSaleApplyVo) {
+				return result.setNotFoundApplyProduct();
+			}
+
+			/**
+			 * 拒绝签收客户快递
+			 */
+			ProductSaleApply productSaleApply = new ProductSaleApply();
+			productSaleApply.setId(params.getProductSaleApplyId());
+			productSaleApply.setApplyStatus(SaleApplyCode.AFTERSALE_DEPARTMENT.getCode());
+			productSaleApply.setWaybillNumber("");
+			productSaleApply.setAddressee("");
+			productSaleApply.setAddress("");
+			productSaleApply.setAddressPhone("");
+
+			productSaleApply.setUpdateBy(userInfo.getId());
+			productSaleApply.setUpdateDate(new Date());
+			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
+
+			return result.setSuccess(new JSONObject());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(userInfo.getAccount() + "售后单拒绝签收客户快递保存失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}

@@ -47,6 +47,10 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable {
 	 */
 	private String sysProductStatus;
 	private String sysWaybillNumber;
+	/**
+	 * 返回前端添加状态值描述
+	 */
+	private String applyStatusDesc;
 
 	public String getId() {
 		return id;
@@ -334,6 +338,14 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable {
 
 	public void setSysWaybillNumber(String sysWaybillNumber) {
 		this.sysWaybillNumber = sysWaybillNumber;
+	}
+
+	public String getApplyStatusDesc() {
+		return applyStatusDesc;
+	}
+
+	public void setApplyStatusDesc(String applyStatusDesc) {
+		this.applyStatusDesc = applyStatusDesc;
 	}
 
 }
