@@ -128,6 +128,8 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 					item.setApplyStatusDesc(SaleApplyCode.THE_TRIAL_REJECT.getDesc());
 				} else if (SaleApplyCode.THE_TRIAL_PASS.getCode().equals(item.getApplyStatus())) {
 					item.setApplyStatusDesc(SaleApplyCode.THE_TRIAL_PASS.getDesc());
+				} else if (SaleApplyCode.COURIER_TRACKING_REJECT.getCode().equals(item.getApplyStatus())) {
+					item.setApplyStatusDesc(SaleApplyCode.COURIER_TRACKING_REJECT.getDesc());
 				}
 
 				productSaleApplyArr.add(item);
