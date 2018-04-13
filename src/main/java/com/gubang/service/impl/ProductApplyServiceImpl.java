@@ -66,7 +66,7 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			record.setProductSaleId(productSaleInfo.getId());
 			ProductSaleApply productSaleApply = productSaleApplyMapper.selectByProductSaleInfoParams(record);
 			ApplyStatusResult applyStatusResult = new ApplyStatusResult();
-			applyStatusResult.setApplyStatus(productSaleApply==null?null:productSaleApply.getApplyStatus());
+			applyStatusResult.setApplyStatus(productSaleApply == null ? null : productSaleApply.getApplyStatus());
 			return result.setSuccess(applyStatusResult);
 
 		} catch (Exception e) {
@@ -136,18 +136,26 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
-			
+
 			/**
 			 * 查询是否存在该笔等待客户提交快递单的单据
 			 */
 			ProductSaleApplyVo record = new ProductSaleApplyVo();
-			record.setApplyStatus(SaleApplyCode.THE_TRIAL_PASS.getCode());
 			record.setBarCode(params.getBarCode());
 			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
+
 			if (null == productSaleApplyVo) {
 				return result.setNotFoundApplyProduct();
 			}
 			
+			/**
+			 * 订单状态不是初审通过或者快递单被驳回状态的
+			 */
+			if (!(SaleApplyCode.THE_TRIAL_PASS.getCode().equals(productSaleApplyVo.getApplyStatus())
+					|| SaleApplyCode.THE_TRIAL_PASS.getCode().equals(productSaleApplyVo.getApplyStatus()))) {
+				return result.setNotFoundApplyProduct();
+			}
+
 			/**
 			 * 填写客户快递单信息
 			 */
@@ -162,7 +170,7 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			productSaleApply.setUpdateBy(userInfo.getId());
 			productSaleApply.setUpdateDate(new Date());
 			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
-			
+
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
