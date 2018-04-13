@@ -139,7 +139,7 @@
 			<if test='cusName != null and cusName != ""'>
 				cus_name = #{cusName,jdbcType=VARCHAR},
 			</if>
-			<if test='cusTelphone != null and cusTelphone != ""'>
+			<if test='cusTelphone != nullcusTelphone != ""'>
 				cus_telphone = #{cusTelphone,jdbcType=VARCHAR},
 			</if>
 			<if test='faultPoint != null and faultPoint != ""'>
@@ -148,16 +148,16 @@
 			<if test='applyStatus != null and applyStatus != ""'>
 				apply_status = #{applyStatus,jdbcType=VARCHAR},
 			</if>
-			<if test='addressee != null and addressee != ""'>
+			<if test='addressee != null'>
 				addressee = #{addressee,jdbcType=VARCHAR},
 			</if>
-			<if test='address != null and address != ""'>
+			<if test='address != null'>
 				address = #{address,jdbcType=VARCHAR},
 			</if>
-			<if test='addressPhone != null and addressPhone != ""'>
+			<if test='addressPhone != null'>
 				address_phone = #{addressPhone,jdbcType=VARCHAR},
 			</if>
-			<if test='waybillNumber != null and waybillNumber != ""'>
+			<if test='waybillNumber != null'>
 				waybill_number = #{waybillNumber,jdbcType=VARCHAR},
 			</if>
 			<if test='isDel != null and isDel != ""'>
