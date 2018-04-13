@@ -10,6 +10,7 @@ public enum SaleApplyCode {
 
 	FIRST_TRIAL("first_trial", "售后初审"),
 	THE_TRIAL_PASS("the_trial_pass", "初审通过"),
+	COURIER_TRACKING_REJECT("courier_tracking_reject", "快递驳回"),
 	THE_TRIAL_REJECT("the_trial_reject","初审拒绝"),
 	COURIER_TRACKING("courier_tracking","客户快递"),
 	COMPANY_COURIER_TRACKING("company_courier_tracking","公司快递"),

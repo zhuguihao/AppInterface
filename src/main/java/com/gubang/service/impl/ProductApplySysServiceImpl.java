@@ -224,11 +224,11 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			}
 
 			/**
-			 * 拒绝签收客户快递
+			 * 驳回签收客户快递
 			 */
 			ProductSaleApply productSaleApply = new ProductSaleApply();
 			productSaleApply.setId(params.getProductSaleApplyId());
-			productSaleApply.setApplyStatus(SaleApplyCode.AFTERSALE_DEPARTMENT.getCode());
+			productSaleApply.setApplyStatus(SaleApplyCode.COURIER_TRACKING_REJECT.getCode());
 			productSaleApply.setWaybillNumber("");
 			productSaleApply.setAddressee("");
 			productSaleApply.setAddress("");
