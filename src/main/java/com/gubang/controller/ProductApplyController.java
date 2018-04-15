@@ -80,4 +80,21 @@ public class ProductApplyController {
 		return productApplyService.applyWayBill(userInfo, params);
 	}
 	
+	/**
+	 * 客户签收已维修完毕的产品
+	 * @param request
+	 * @param response
+	 * @param userInfo
+	 * @param params
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "signTacking", method = RequestMethod.POST)
+	public ResultDTO signTacking(HttpServletRequest request, HttpServletResponse response,
+			@UserInfoParam UserInfo userInfo, @RequestBody ProductApplyScanDto params)
+			throws ParseException, IOException {
+		return productApplyService.signTacking(userInfo, params);
+	}
+	
 }

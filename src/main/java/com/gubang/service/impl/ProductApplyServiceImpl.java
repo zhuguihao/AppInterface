@@ -147,12 +147,12 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			if (null == productSaleApplyVo) {
 				return result.setNotFoundApplyProduct();
 			}
-			
+
 			/**
 			 * 订单状态不是初审通过或者快递单被驳回状态的
 			 */
 			if (!(SaleApplyCode.THE_TRIAL_PASS.getCode().equals(productSaleApplyVo.getApplyStatus())
-					|| SaleApplyCode.THE_TRIAL_PASS.getCode().equals(productSaleApplyVo.getApplyStatus()))) {
+					|| SaleApplyCode.COURIER_TRACKING_REJECT.getCode().equals(productSaleApplyVo.getApplyStatus()))) {
 				return result.setNotFoundApplyProduct();
 			}
 
@@ -175,6 +175,54 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(userInfo.getAccount() + "售后单客户快递单保存失败：" + e.getMessage());
+			return result.setSystemError();
+		}
+	}
+
+	@Override
+	public ResultDTO signTacking(UserInfo userInfo, ProductApplyScanDto params) {
+		ResultDTO result = new ResultDTO();
+		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			if (params.inValid()) {
+				return result.setParameterInvalid();
+			}
+
+			/**
+			 * 查询是否存在该笔等待客户提交快递单的单据
+			 */
+			ProductSaleApplyVo record = new ProductSaleApplyVo();
+			record.setBarCode(params.getBarCode());
+			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
+
+			if (null == productSaleApplyVo) {
+				return result.setNotFoundApplyProduct();
+			}
+
+			/**
+			 * 订单状态不是待客户签收的
+			 */
+			if (!SaleApplyCode.COMPANY_COURIER_TRACKING.getCode().equals(productSaleApplyVo.getApplyStatus())) {
+				return result.setNotFoundApplyProduct();
+			}
+
+			/**
+			 * 客户签收快递，完成售后
+			 */
+			ProductSaleApply productSaleApply = new ProductSaleApply();
+			productSaleApply.setId(productSaleApplyVo.getId());
+			productSaleApply.setApplyStatus(SaleApplyCode.FINSH_APPLY.getCode());
+
+			productSaleApply.setUpdateBy(userInfo.getId());
+			productSaleApply.setUpdateDate(new Date());
+			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
+
+			return result.setSuccess(new JSONObject());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(userInfo.getAccount() + "售后单客户签收产品保存失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}

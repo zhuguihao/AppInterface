@@ -13,9 +13,9 @@ public enum SaleApplyCode {
 	COURIER_TRACKING_REJECT("courier_tracking_reject", "快递驳回"),
 	THE_TRIAL_REJECT("the_trial_reject","初审拒绝"),
 	COURIER_TRACKING("courier_tracking","客户快递"),
-	COMPANY_COURIER_TRACKING("company_courier_tracking","公司快递"),
 	AFTERSALE_DEPARTMENT("aftersale_department","售后部"),
 	COURIER_DEPARTMENT("courier_department","售后寄件"),
+	COMPANY_COURIER_TRACKING("company_courier_tracking","公司快递"),
 	FINSH_APPLY("finsh_apply","售后完成");
 	
 	

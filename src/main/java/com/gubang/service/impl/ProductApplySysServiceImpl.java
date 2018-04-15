@@ -246,4 +246,86 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 		}
 	}
 
+	@Override
+	public ResultDTO afterDepartmentPass(UserInfo userInfo, SignExpressDto params) {
+		ResultDTO result = new ResultDTO();
+		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			if (params.inValid()) {
+				return result.setParameterInvalid();
+			}
+
+			/**
+			 * 查询是否存在等待维修的单据
+			 */
+			ProductSaleApplyVo record = new ProductSaleApplyVo();
+			record.setId(params.getProductSaleApplyId());
+			record.setApplyStatus(SaleApplyCode.AFTERSALE_DEPARTMENT.getCode());
+			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
+			if (null == productSaleApplyVo) {
+				return result.setNotFoundApplyProduct();
+			}
+
+			/**
+			 * 完成维修，通知发货
+			 */
+			ProductSaleApply productSaleApply = new ProductSaleApply();
+			productSaleApply.setId(params.getProductSaleApplyId());
+			productSaleApply.setApplyStatus(SaleApplyCode.COURIER_DEPARTMENT.getCode());
+
+			productSaleApply.setUpdateBy(userInfo.getId());
+			productSaleApply.setUpdateDate(new Date());
+			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
+
+			return result.setSuccess(new JSONObject());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(userInfo.getAccount() + "售后单售后部维修保存失败：" + e.getMessage());
+			return result.setSystemError();
+		}
+	}
+
+	@Override
+	public ResultDTO courierDepartmentPass(UserInfo userInfo, SignExpressDto params) {
+		ResultDTO result = new ResultDTO();
+		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			if (params.inValid()) {
+				return result.setParameterInvalid();
+			}
+
+			/**
+			 * 查询是否存在等待售后部门寄件的单据
+			 */
+			ProductSaleApplyVo record = new ProductSaleApplyVo();
+			record.setId(params.getProductSaleApplyId());
+			record.setApplyStatus(SaleApplyCode.COURIER_DEPARTMENT.getCode());
+			ProductSaleApplyVo productSaleApplyVo = productSaleApplyQueryMapper.productSaleApplyByParam(record);
+			if (null == productSaleApplyVo) {
+				return result.setNotFoundApplyProduct();
+			}
+
+			/**
+			 * 通知客户已经寄件
+			 */
+			ProductSaleApply productSaleApply = new ProductSaleApply();
+			productSaleApply.setId(params.getProductSaleApplyId());
+			productSaleApply.setApplyStatus(SaleApplyCode.COMPANY_COURIER_TRACKING.getCode());
+
+			productSaleApply.setUpdateBy(userInfo.getId());
+			productSaleApply.setUpdateDate(new Date());
+			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
+
+			return result.setSuccess(new JSONObject());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(userInfo.getAccount() + "售后单售后部寄件保存失败：" + e.getMessage());
+			return result.setSystemError();
+		}
+	}
+
 }

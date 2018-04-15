@@ -155,12 +155,6 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 			retArr.add(retObj);
 
 			retObj = new JSONObject();
-			retObj.put("key", SaleApplyCode.COMPANY_COURIER_TRACKING.getCode());
-			retObj.put("value", SaleApplyCode.COMPANY_COURIER_TRACKING.getDesc());
-			retObj.put("list", companyCourierTrackingArr);
-			retArr.add(retObj);
-
-			retObj = new JSONObject();
 			retObj.put("key", SaleApplyCode.AFTERSALE_DEPARTMENT.getCode());
 			retObj.put("value", SaleApplyCode.AFTERSALE_DEPARTMENT.getDesc());
 			retObj.put("list", aftersaledepartmentArr);
@@ -170,6 +164,12 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 			retObj.put("key", SaleApplyCode.COURIER_DEPARTMENT.getCode());
 			retObj.put("value", SaleApplyCode.COURIER_DEPARTMENT.getDesc());
 			retObj.put("list", courierDepartmentArr);
+			retArr.add(retObj);
+			
+			retObj = new JSONObject();
+			retObj.put("key", SaleApplyCode.COMPANY_COURIER_TRACKING.getCode());
+			retObj.put("value", SaleApplyCode.COMPANY_COURIER_TRACKING.getDesc());
+			retObj.put("list", companyCourierTrackingArr);
 			retArr.add(retObj);
 
 			retObj = new JSONObject();

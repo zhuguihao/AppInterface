@@ -97,4 +97,38 @@ public class ProductApplySysController {
 			throws ParseException, IOException {
 		return productApplySysService.rejExpress(userInfo, params);
 	}
+	
+	/**
+	 * 售后部完成维修
+	 * @param request
+	 * @param response
+	 * @param userInfo
+	 * @param params
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "afterDepartmentPass", method = RequestMethod.POST)
+	public ResultDTO afterDepartmentPass(HttpServletRequest request, HttpServletResponse response,
+			@UserInfoParam UserInfo userInfo, @RequestBody SignExpressDto params)
+			throws ParseException, IOException {
+		return productApplySysService.afterDepartmentPass(userInfo, params);
+	}
+	
+	/**
+	 * 售后部门寄件
+	 * @param request
+	 * @param response
+	 * @param userInfo
+	 * @param params
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "courierDepartmentPass", method = RequestMethod.POST)
+	public ResultDTO courierDepartmentPass(HttpServletRequest request, HttpServletResponse response,
+			@UserInfoParam UserInfo userInfo, @RequestBody SignExpressDto params)
+			throws ParseException, IOException {
+		return productApplySysService.courierDepartmentPass(userInfo, params);
+	}
 }

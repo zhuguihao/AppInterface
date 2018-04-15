@@ -15,4 +15,8 @@ public interface ProductApplySysService {
 	ResultDTO signExpress(UserInfo userInfo, SignExpressDto params);
 
 	ResultDTO rejExpress(UserInfo userInfo, SignExpressDto params);
+
+	ResultDTO afterDepartmentPass(UserInfo userInfo, SignExpressDto params);
+
+	ResultDTO courierDepartmentPass(UserInfo userInfo, SignExpressDto params);
 }

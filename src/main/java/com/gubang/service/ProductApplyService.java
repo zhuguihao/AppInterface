@@ -14,4 +14,6 @@ public interface ProductApplyService {
 
 	ResultDTO applyWayBill(UserInfo userInfo, ApplyWayBillDto params);
 
+	ResultDTO signTacking(UserInfo userInfo, ProductApplyScanDto params);
+
 }
