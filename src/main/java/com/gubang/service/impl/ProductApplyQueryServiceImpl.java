@@ -189,9 +189,6 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 	@Override
 	public ResultDTO getCommpanyAddress(UserInfo userInfo) {
 		ResultDTO result = new ResultDTO();
-		if (null == userInfo) {
-			return result.setNotLogin();
-		}
 		JSONObject retObj = new JSONObject();
 		retObj.put("companyName", "公司名称");
 		retObj.put("expressName", "公司收件人");
