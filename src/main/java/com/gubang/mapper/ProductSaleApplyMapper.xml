@@ -180,6 +180,7 @@
 		from t_product_sale_apply
 		<where>
 			is_del = 'N'
+			and apply_status != 'finsh_apply'
 			<if test='id != null and id != ""'>
 				and id = #{id,jdbcType=VARCHAR}
 			</if>

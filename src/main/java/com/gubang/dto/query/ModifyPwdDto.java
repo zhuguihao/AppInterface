@@ -5,7 +5,7 @@ import com.gubang.util.CommonUtil;
 public class ModifyPwdDto {
 
 	private String account;
-	private String oldPassword;
+	private String openId;
 	private String password;
 
 	public String getAccount() {
@@ -16,12 +16,12 @@ public class ModifyPwdDto {
 		this.account = account;
 	}
 
-	public String getOldPassword() {
-		return oldPassword;
+	public String getOpenId() {
+		return openId;
 	}
 
-	public void setOldPassword(String oldPassword) {
-		this.oldPassword = oldPassword;
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 	public String getPassword() {
@@ -33,6 +33,6 @@ public class ModifyPwdDto {
 	}
 
 	public boolean inValid() {
-		return CommonUtil.isEmpty(account) || CommonUtil.isEmpty(oldPassword)||CommonUtil.isEmpty(password);
+		return CommonUtil.isEmpty(account) || CommonUtil.isEmpty(openId) || CommonUtil.isEmpty(password);
 	}
 }

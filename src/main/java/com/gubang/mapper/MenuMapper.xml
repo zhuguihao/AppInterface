@@ -178,7 +178,6 @@
 			</if>
 		</where>
 		group by
-			tmc.create_date
-		desc
+			tsm.index
 	</select>
 </mapper>

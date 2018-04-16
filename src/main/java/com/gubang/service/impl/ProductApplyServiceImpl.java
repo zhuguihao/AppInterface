@@ -41,9 +41,6 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 	public ResultDTO checkStatus(UserInfo userInfo, ProductApplyScanDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			if (null == userInfo) {
-				return result.setNotLogin();
-			}
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
@@ -71,7 +68,7 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo.getAccount() + "查询售后产品信息失败：" + e.getMessage());
+			log.error(userInfo==null?"":userInfo.getAccount() + "查询售后产品信息失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}
@@ -80,9 +77,6 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 	public ResultDTO subApply(UserInfo userInfo, ApplyDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			if (null == userInfo) {
-				return result.setNotLogin();
-			}
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
@@ -109,9 +103,9 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			record.setCusTelphone(params.getCusTelphone());
 			record.setApplyStatus(SaleApplyCode.FIRST_TRIAL.getCode());
 			record.setIsDel(Constant.DB_FALSE_FLAG);
-			record.setCreateBy(userInfo.getId());
+			record.setCreateBy(userInfo==null?"":userInfo.getId());
 			record.setCreateDate(new Date());
-			record.setUpdateBy(userInfo.getId());
+			record.setUpdateBy(userInfo==null?"":userInfo.getId());
 			record.setUpdateDate(new Date());
 
 			if (productSaleApplyMapper.insert(record) < 1) {
@@ -121,7 +115,7 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo.getAccount() + "客户提交售后单失败：" + e.getMessage());
+			log.error(userInfo==null?"":userInfo.getAccount() + "客户提交售后单失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}
@@ -130,9 +124,6 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 	public ResultDTO applyWayBill(UserInfo userInfo, ApplyWayBillDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			if (null == userInfo) {
-				return result.setNotLogin();
-			}
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
@@ -167,14 +158,14 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			productSaleApply.setAddress(params.getAddress());
 			productSaleApply.setAddressPhone(params.getAddressPhone());
 
-			productSaleApply.setUpdateBy(userInfo.getId());
+			productSaleApply.setUpdateBy(userInfo==null?"":userInfo.getId());
 			productSaleApply.setUpdateDate(new Date());
 			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
 
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo.getAccount() + "售后单客户快递单保存失败：" + e.getMessage());
+			log.error(userInfo==null?"":userInfo.getAccount() + "售后单客户快递单保存失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}
@@ -183,9 +174,6 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 	public ResultDTO signTacking(UserInfo userInfo, ProductApplyScanDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			if (null == userInfo) {
-				return result.setNotLogin();
-			}
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
@@ -215,14 +203,14 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			productSaleApply.setId(productSaleApplyVo.getId());
 			productSaleApply.setApplyStatus(SaleApplyCode.FINSH_APPLY.getCode());
 
-			productSaleApply.setUpdateBy(userInfo.getId());
+			productSaleApply.setUpdateBy(userInfo==null?"":userInfo.getId());
 			productSaleApply.setUpdateDate(new Date());
 			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
 
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo.getAccount() + "售后单客户签收产品保存失败：" + e.getMessage());
+			log.error(userInfo==null?"":userInfo.getAccount() + "售后单客户签收产品保存失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}

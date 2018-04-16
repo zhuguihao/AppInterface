@@ -164,6 +164,8 @@
 				tpsa.is_del = 'N'
 			and
 				tp.del_flag = 'N'
+			and
+				tpsa.apply_status != 'finsh_apply'
 			<if test='id != null and id != ""'>
 				and tpsa.id = #{id,jdbcType=VARCHAR}
 			</if>

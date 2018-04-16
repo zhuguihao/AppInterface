@@ -18,7 +18,7 @@ public class ModifyPwdResult {
 	}
 	
 	public ModifyPwdResult setOldPwdError() {
-		modifyResult = "旧密码错误";
+		modifyResult = "微信号不同，请联系客服";
 		return this;
 	}
 

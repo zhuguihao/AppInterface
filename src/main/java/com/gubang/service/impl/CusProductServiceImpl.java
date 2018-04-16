@@ -28,9 +28,6 @@ public class CusProductServiceImpl implements CusProductService {
 	public ResultDTO getProductInfoByBarcode(UserInfo userInfo, CusProductQueryDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			if (null == userInfo) {
-				return result.setNotLogin();
-			}
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
@@ -67,7 +64,7 @@ public class CusProductServiceImpl implements CusProductService {
 			return result.setSuccess(soldProductResult);
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo.getAccount() + "查询售后产品信息：" + e.getMessage());
+			log.error(userInfo==null?"":userInfo.getAccount() + "查询售后产品信息：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}

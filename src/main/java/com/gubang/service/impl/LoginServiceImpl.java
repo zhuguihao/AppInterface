@@ -134,7 +134,10 @@ public class LoginServiceImpl implements LoginService {
 			return resultDTO.setFail(result);
 		}
 		
-		if(userEntity.getPassword().equals(CommonUtil.md5(params.getOldPassword()))){
+		/**
+		 * 判断是否是注册时的微信号
+		 */
+		if(userEntity.getOpenId().equals(CommonUtil.md5(params.getOpenId()))){
 			result.setOldPwdError();
 			return resultDTO.setFail(result);
 		}
