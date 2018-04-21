@@ -46,26 +46,42 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			}
 
 			/**
-			 * status:apply_sold_product（售出状态） 查询售出状态的产品
+			 * 查询当前产品编号的的产品信息
 			 */
 			ProductSaleInfo productSaleInfo = new ProductSaleInfo();
 			productSaleInfo.setBarCode(params.getBarCode());
-			productSaleInfo.setProductStatus(ApplyCode.APPLY_SOLD_PRODUCT.getCode());
+//			productSaleInfo.setProductStatus(ApplyCode.APPLY_SOLD_PRODUCT.getCode());
 			productSaleInfo = productSaleInfoMapper.selectByProductSaleInfoParams(productSaleInfo);
+			/**
+			 * 不存在
+			 */
 			if (null == productSaleInfo) {
 				return result.setNotFoundProduct();
 			}
-
+			
 			/**
-			 * 查询当前产品编号的申请单
+			 * 售出状态(可售后)
 			 */
-			ProductSaleApply record = new ProductSaleApply();
-			record.setProductSaleId(productSaleInfo.getId());
-			ProductSaleApply productSaleApply = productSaleApplyMapper.selectByProductSaleInfoParams(record);
-			ApplyStatusResult applyStatusResult = new ApplyStatusResult();
-			applyStatusResult.setApplyStatus(productSaleApply == null ? null : productSaleApply.getApplyStatus());
-			return result.setSuccess(applyStatusResult);
-
+			if(ApplyCode.APPLY_OUT_STORAGE.getCode().equals(productSaleInfo.getProductStatus())){
+				ApplyStatusResult applyStatusResult = new ApplyStatusResult();
+				applyStatusResult.setApplyStatus(productSaleInfo.getProductStatus());
+				return result.setSuccess(applyStatusResult);
+			}
+			/**
+			 * 出库状态
+			 */
+			if(ApplyCode.APPLY_SOLD_PRODUCT.getCode().equals(productSaleInfo.getProductStatus())){
+				/**
+				 * 查询当前产品编号的申请单
+				 */
+				ProductSaleApply record = new ProductSaleApply();
+				record.setProductSaleId(productSaleInfo.getId());
+				ProductSaleApply productSaleApply = productSaleApplyMapper.selectByProductSaleInfoParams(record);
+				ApplyStatusResult applyStatusResult = new ApplyStatusResult();
+				applyStatusResult.setApplyStatus(productSaleApply == null ? null : productSaleApply.getApplyStatus());
+				return result.setSuccess(applyStatusResult);
+			}
+			return result.setNotFoundProduct();
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(userInfo==null?"":userInfo.getAccount() + "查询售后产品信息失败：" + e.getMessage());
