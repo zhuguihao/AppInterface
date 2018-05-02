@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.gubang</groupId>
-    <artifactId>customer-service</artifactId>
-    <version>1.0.0</version>
+	<groupId>com.gubang</groupId>
+	<artifactId>customer-service</artifactId>
+	<version>1.0.0</version>
 
-    <!-- Inherit defaults from Spring Boot -->
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.9.RELEASE</version>
-    </parent>
+	<!-- Inherit defaults from Spring Boot -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.9.RELEASE</version>
+	</parent>
 
-	
-    <!-- Add typical dependencies for a web application -->
-    <dependencies>
-    
-    	<dependency>
+
+	<!-- Add typical dependencies for a web application -->
+	<dependencies>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-		
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        
-      	<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+
 		<dependency>
-		    <groupId>com.alibaba</groupId>
-		    <artifactId>fastjson</artifactId>
-		    <version>1.2.37</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.37</version>
 		</dependency>
 
 
 		<dependency>
-		    <groupId>com.alibaba</groupId>
-		    <artifactId>druid</artifactId>
-		    <version>1.0.7</version>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.7</version>
 		</dependency>
-	
+
 		<dependency>
-		    <groupId>org.mybatis.spring.boot</groupId>
-		    <artifactId>mybatis-spring-boot-starter</artifactId>
-		    <version>1.0.1</version>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.0.1</version>
 		</dependency>
 
 		<dependency>
@@ -57,21 +57,27 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-    </dependencies>
+		<!-- aliyun oss -->
+		<dependency>
+			<groupId>com.aliyun.oss</groupId>
+			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>2.8.2</version>
+		</dependency>
+	</dependencies>
 
-	<build> 
+	<build>
 		<resources>
-			 <resource>
+			<resource>
 				<directory>src/main/resources</directory>
-				<excludes> 
-					<exclude>*</exclude> 
+				<excludes>
+					<exclude>*</exclude>
 				</excludes>
 			</resource>
 			<resource>
@@ -100,7 +106,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
@@ -108,14 +114,14 @@
 					<target>1.8</target>
 					<encoding>utf-8</encoding>
 					<compilerArguments>
-			            <extdirs>lib</extdirs>
-			        </compilerArguments>
+						<extdirs>lib</extdirs>
+					</compilerArguments>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-    
-    <repositories>
+
+	<repositories>
 		<repository>
 			<id>alimaven</id>
 			<name>aliyun maven</name>
@@ -123,20 +129,20 @@
 		</repository>
 	</repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-snapshots</id>
-            <url>http://repo.spring.io/snapshot</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>spring-milestones</id>
-            <url>http://repo.spring.io/milestone</url>
-        </pluginRepository>
-    </pluginRepositories>
-    
-    <properties>
-    <tomcat.version>8.0.33</tomcat.version>
-    <start-class>com.gubang.Application</start-class>
-</properties>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<url>http://repo.spring.io/snapshot</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<url>http://repo.spring.io/milestone</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<properties>
+		<tomcat.version>8.0.33</tomcat.version>
+		<start-class>com.gubang.Application</start-class>
+	</properties>
 
 </project>

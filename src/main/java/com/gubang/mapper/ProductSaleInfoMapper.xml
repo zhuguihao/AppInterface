@@ -169,16 +169,16 @@
 			<if test='productStatus != null and productStatus != ""'>
 				product_status = #{productStatus,jdbcType=VARCHAR},
 			</if>
-			<if test='afterSaleTime != null and productStatus != ""'>
+			<if test='afterSaleTime != null and afterSaleTime != ""'>
 				after_sale_time = #{afterSaleTime,jdbcType=VARCHAR},
 			</if>
-			<if test='salesMan != null and productStatus != ""'>
+			<if test='salesMan != null and salesMan != ""'>
 				sales_man = #{salesMan,jdbcType=VARCHAR},
 			</if>
-			<if test='isDel != null and productStatus != ""'>
+			<if test='isDel != null and isDel != ""'>
 				is_del = #{isDel,jdbcType=VARCHAR},
 			</if>
-			<if test='updateBy != null and productStatus != ""'>
+			<if test='updateBy != null and updateBy != ""'>
 				update_by = #{updateBy,jdbcType=VARCHAR},
 			</if>
 			<if test="updateDate != null">
