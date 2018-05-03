@@ -1,15 +1,14 @@
 package com.gubang.controller;
 
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.gubang.config.UserInfoParam;
 import com.gubang.dto.query.DownloadDto;
 import com.gubang.dto.query.UploadDto;
@@ -42,7 +41,7 @@ public class UtilController {
 	}
 	
 	/**
-	 * 下载OSS文件
+	 * 获取OSS下载地址
 	 * @param request
 	 * @param response
 	 * @param params
@@ -50,8 +49,13 @@ public class UtilController {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/download", method = RequestMethod.GET)
-	public Object download(HttpServletRequest request, HttpServletResponse response,DownloadDto params) throws ParseException, IOException {
-		return utilService.download(params);
+	@RequestMapping(value = "/downloadUrl", method = RequestMethod.GET)
+	public URL downloadUrl(HttpServletRequest request, HttpServletResponse response,DownloadDto params) throws ParseException, IOException {
+		return utilService.downloadUrl(params);
+	}
+	
+	@RequestMapping(value = "/downLoadStream", method = RequestMethod.GET)
+	public void downLoadStream(HttpServletRequest request, HttpServletResponse response,DownloadDto params) throws ParseException, IOException {
+		utilService.downLoadStream(response,params);
 	}
 }

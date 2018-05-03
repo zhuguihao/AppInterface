@@ -13,9 +13,10 @@ import com.gubang.service.UtilService;
 import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
 import net.sf.json.JSONObject;
-
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class UtilServiceImpl implements UtilService {
 
 	private final static Logger log = LoggerFactory.getLogger("Admin");
-	
+
 	@Autowired
 	private OssService ossService;
 	@Autowired
@@ -47,10 +48,11 @@ public class UtilServiceImpl implements UtilService {
 			 * 获取文件中的类型
 			 */
 			String type = "";
-			if(fileName.indexOf(".")>-1){
-				type = fileName.substring(fileName.lastIndexOf("."), fileName.length())=="."?"":fileName.substring(fileName.lastIndexOf("."), fileName.length());
+			if (fileName.indexOf(".") > -1) {
+				type = fileName.substring(fileName.lastIndexOf("."), fileName.length()) == "." ? ""
+						: fileName.substring(fileName.lastIndexOf("."), fileName.length());
 			}
-			fileName = CommonUtil.getFormatDate(new Date(), "yyyyMM/")+CommonUtil.getUUid()+type;
+			fileName = CommonUtil.getFormatDate(new Date(), "yyyyMM/") + CommonUtil.getUUid() + type;
 			/**
 			 * 入库保存当前文件信息
 			 */
@@ -64,7 +66,7 @@ public class UtilServiceImpl implements UtilService {
 			file.setCreateDate(new Date());
 			file.setUpdateBy(userInfo.getId());
 			file.setUpdateDate(new Date());
-			
+
 			tFileMapper.insert(file);
 			/**
 			 * 创建OSS文件
@@ -77,30 +79,30 @@ public class UtilServiceImpl implements UtilService {
 			 * 上传到OSS服务器
 			 */
 			ossService.ossUpload(oss);
-			
+
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo==null?"":userInfo.getAccount() + "上传OSS服务器失败：" + e.getMessage());
+			log.error(userInfo == null ? "" : userInfo.getAccount() + "上传OSS服务器失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}
 
 	@Override
-	public Object download(DownloadDto params) {
+	public URL downloadUrl(DownloadDto params) {
 		try {
 			if (params.inValid()) {
 				return null;
 			}
 			TFile file = new TFile();
 			file.setFileId(params.getFileId());
-			
+
 			TFile filelist = tFileMapper.selectByFileParams(file);
-			
-			if(null == filelist){
+
+			if (null == filelist) {
 				return null;
 			}
-			
+
 			OssDto oss = new OssDto();
 			oss.setBucketName("gbbucket");
 			oss.setFileName(filelist.getFileName());
@@ -110,7 +112,7 @@ public class UtilServiceImpl implements UtilService {
 			calendar.add(Calendar.MONTH, 10);
 			expiration = calendar.getTime();
 			oss.setExpiration(expiration);
-			
+
 			return ossService.downLoadUrl(oss);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -118,5 +120,28 @@ public class UtilServiceImpl implements UtilService {
 			return null;
 		}
 	}
-	
+
+	@Override
+	public void downLoadStream(HttpServletResponse response, DownloadDto params) {
+		try {
+			TFile file = new TFile();
+			file.setFileId(params.getFileId());
+			TFile filelist = tFileMapper.selectByFileParams(file);
+
+			OssDto oss = new OssDto();
+			oss.setBucketName("gbbucket");
+			oss.setFileName(filelist.getFileName());
+			Date expiration = new Date(System.currentTimeMillis());
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(expiration);
+			calendar.add(Calendar.MONTH, 10);
+			expiration = calendar.getTime();
+			oss.setExpiration(expiration);
+			ossService.downLoadStream(response,oss);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }
