@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gubang.config.UserInfoParam;
+import com.gubang.dto.query.DownloadDto;
 import com.gubang.dto.query.UploadDto;
 import com.gubang.entity.UserInfo;
 import com.gubang.service.UtilService;
@@ -38,5 +39,19 @@ public class UtilController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public ResultDTO upload(HttpServletRequest request, HttpServletResponse response,@UserInfoParam UserInfo userInfo,UploadDto params) throws ParseException, IOException {
 		return utilService.upload(userInfo,params);
+	}
+	
+	/**
+	 * 下载OSS文件
+	 * @param request
+	 * @param response
+	 * @param params
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/download", method = RequestMethod.GET)
+	public Object download(HttpServletRequest request, HttpServletResponse response,DownloadDto params) throws ParseException, IOException {
+		return utilService.download(params);
 	}
 }

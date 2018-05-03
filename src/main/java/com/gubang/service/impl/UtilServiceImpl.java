@@ -2,6 +2,7 @@ package com.gubang.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.gubang.dto.query.DownloadDto;
 import com.gubang.dto.query.OssDto;
 import com.gubang.dto.query.UploadDto;
 import com.gubang.entity.TFile;
@@ -11,11 +12,10 @@ import com.gubang.service.OssService;
 import com.gubang.service.UtilService;
 import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
-
 import net.sf.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,6 +83,39 @@ public class UtilServiceImpl implements UtilService {
 			e.printStackTrace();
 			log.error(userInfo==null?"":userInfo.getAccount() + "上传OSS服务器失败：" + e.getMessage());
 			return result.setSystemError();
+		}
+	}
+
+	@Override
+	public Object download(DownloadDto params) {
+		try {
+			if (params.inValid()) {
+				return null;
+			}
+			TFile file = new TFile();
+			file.setFileId(params.getFileId());
+			
+			TFile filelist = tFileMapper.selectByFileParams(file);
+			
+			if(null == filelist){
+				return null;
+			}
+			
+			OssDto oss = new OssDto();
+			oss.setBucketName("gbbucket");
+			oss.setFileName(filelist.getFileName());
+			Date expiration = new Date(System.currentTimeMillis());
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(expiration);
+			calendar.add(Calendar.MONTH, 10);
+			expiration = calendar.getTime();
+			oss.setExpiration(expiration);
+			
+			return ossService.downLoadUrl(oss);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
 	}
 	
