@@ -5,18 +5,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.druid.util.StringUtils;
 
-public class UploadDto implements Serializable {
+public class ApplyImageDto implements Serializable {
 	private static final long serialVersionUID = -947018389819441284L;
-	private MultipartFile file;
 	private String applyId;
-
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
+	private MultipartFile file;
 
 	public String getApplyId() {
 		return applyId;
@@ -24,6 +16,14 @@ public class UploadDto implements Serializable {
 
 	public void setApplyId(String applyId) {
 		this.applyId = applyId;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 	public boolean inValid() {

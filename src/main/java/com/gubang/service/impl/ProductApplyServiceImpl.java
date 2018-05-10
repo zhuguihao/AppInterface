@@ -8,7 +8,9 @@ import com.gubang.constant.Constant;
 import com.gubang.constant.SaleApplyCode;
 import com.gubang.dto.apply.ApplyDto;
 import com.gubang.dto.apply.ApplyWayBillDto;
+import com.gubang.dto.query.ApplyImageDto;
 import com.gubang.dto.query.ProductApplyScanDto;
+import com.gubang.dto.query.UploadDto;
 import com.gubang.dto.result.ApplyStatusResult;
 import com.gubang.entity.ProductSaleApply;
 import com.gubang.entity.ProductSaleInfo;
@@ -17,10 +19,10 @@ import com.gubang.mapper.ProductSaleApplyMapper;
 import com.gubang.mapper.ProductSaleApplyQueryMapper;
 import com.gubang.mapper.ProductSaleInfoMapper;
 import com.gubang.service.ProductApplyService;
+import com.gubang.service.UtilService;
 import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
 import com.gubang.vo.ProductSaleApplyVo;
-
 import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,8 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 	private ProductSaleApplyMapper productSaleApplyMapper;
 	@Autowired
 	private ProductSaleApplyQueryMapper productSaleApplyQueryMapper;
+	@Autowired
+	private UtilService utilService;
 
 	private final static Logger log = LoggerFactory.getLogger("Admin");
 
@@ -50,7 +54,7 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			 */
 			ProductSaleInfo productSaleInfo = new ProductSaleInfo();
 			productSaleInfo.setBarCode(params.getBarCode());
-//			productSaleInfo.setProductStatus(ApplyCode.APPLY_SOLD_PRODUCT.getCode());
+			// productSaleInfo.setProductStatus(ApplyCode.APPLY_SOLD_PRODUCT.getCode());
 			productSaleInfo = productSaleInfoMapper.selectByProductSaleInfoParams(productSaleInfo);
 			/**
 			 * 不存在
@@ -58,11 +62,11 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			if (null == productSaleInfo) {
 				return result.setNotFoundProduct();
 			}
-			
+
 			/**
 			 * 售出状态(可售后)
 			 */
-			if(ApplyCode.APPLY_OUT_STORAGE.getCode().equals(productSaleInfo.getProductStatus())){
+			if (ApplyCode.APPLY_OUT_STORAGE.getCode().equals(productSaleInfo.getProductStatus())) {
 				ApplyStatusResult applyStatusResult = new ApplyStatusResult();
 				applyStatusResult.setApplyStatus(productSaleInfo.getProductStatus());
 				return result.setSuccess(applyStatusResult);
@@ -70,7 +74,7 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			/**
 			 * 出库状态
 			 */
-			if(ApplyCode.APPLY_SOLD_PRODUCT.getCode().equals(productSaleInfo.getProductStatus())){
+			if (ApplyCode.APPLY_SOLD_PRODUCT.getCode().equals(productSaleInfo.getProductStatus())) {
 				/**
 				 * 查询当前产品编号的申请单
 				 */
@@ -84,7 +88,7 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			return result.setNotFoundProduct();
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo==null?"":userInfo.getAccount() + "查询售后产品信息失败：" + e.getMessage());
+			log.error(userInfo == null ? "" : userInfo.getAccount() + "查询售后产品信息失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}
@@ -119,19 +123,20 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			record.setCusTelphone(params.getCusTelphone());
 			record.setApplyStatus(SaleApplyCode.FIRST_TRIAL.getCode());
 			record.setIsDel(Constant.DB_FALSE_FLAG);
-			record.setCreateBy(userInfo==null?"":userInfo.getId());
+			record.setCreateBy(userInfo == null ? "" : userInfo.getId());
 			record.setCreateDate(new Date());
-			record.setUpdateBy(userInfo==null?"":userInfo.getId());
+			record.setUpdateBy(userInfo == null ? "" : userInfo.getId());
 			record.setUpdateDate(new Date());
 
 			if (productSaleApplyMapper.insert(record) < 1) {
 				return result.setSystemError();
 			}
-
-			return result.setSuccess(new JSONObject());
+			ApplyDto apply = new ApplyDto();
+			apply.setApplyId(record.getId());
+			return result.setSuccess(apply);
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo==null?"":userInfo.getAccount() + "客户提交售后单失败：" + e.getMessage());
+			log.error(userInfo == null ? "" : userInfo.getAccount() + "客户提交售后单失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}
@@ -174,14 +179,14 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			productSaleApply.setAddress(params.getAddress());
 			productSaleApply.setAddressPhone(params.getAddressPhone());
 
-			productSaleApply.setUpdateBy(userInfo==null?"":userInfo.getId());
+			productSaleApply.setUpdateBy(userInfo == null ? "" : userInfo.getId());
 			productSaleApply.setUpdateDate(new Date());
 			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
 
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo==null?"":userInfo.getAccount() + "售后单客户快递单保存失败：" + e.getMessage());
+			log.error(userInfo == null ? "" : userInfo.getAccount() + "售后单客户快递单保存失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}
@@ -219,14 +224,36 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 			productSaleApply.setId(productSaleApplyVo.getId());
 			productSaleApply.setApplyStatus(SaleApplyCode.FINSH_APPLY.getCode());
 
-			productSaleApply.setUpdateBy(userInfo==null?"":userInfo.getId());
+			productSaleApply.setUpdateBy(userInfo == null ? "" : userInfo.getId());
 			productSaleApply.setUpdateDate(new Date());
 			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
 
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(userInfo==null?"":userInfo.getAccount() + "售后单客户签收产品保存失败：" + e.getMessage());
+			log.error(userInfo == null ? "" : userInfo.getAccount() + "售后单客户签收产品保存失败：" + e.getMessage());
+			return result.setSystemError();
+		}
+	}
+
+	@Override
+	public ResultDTO applyImage(UserInfo userInfo, ApplyImageDto params) {
+		ResultDTO result = new ResultDTO();
+		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			if (params.inValid()) {
+				return result.setParameterInvalid();
+			}
+			UploadDto upload = new UploadDto();
+			upload.setFile(params.getFile());
+			upload.setApplyId(params.getApplyId());
+			utilService.upload(userInfo, upload);
+			return result.setSuccess(new JSONObject());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(userInfo == null ? "" : userInfo.getAccount() + "售后单客户保存故障图失败：" + e.getMessage());
 			return result.setSystemError();
 		}
 	}

@@ -6,12 +6,12 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.OSSObject;
 import com.gubang.dto.query.OssDto;
 import com.gubang.service.OssService;
-import java.io.BufferedReader;
+import com.gubang.util.CommonUtil;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
@@ -36,31 +36,33 @@ public class OssServiceImpl implements OssService {
 	@Override
 	public URL downLoadUrl(OssDto params) {
 		OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-		URL downLoadUrl = ossClient.generatePresignedUrl(params.getBucketName(), params.getFileName() , params.getExpiration());
+		URL downLoadUrl = ossClient.generatePresignedUrl(params.getBucketName(), params.getFileName(),
+				params.getExpiration());
+		ossClient.shutdown();
 		return downLoadUrl;
 	}
 
 	@Override
-	public void downLoadStream(HttpServletResponse response,OssDto params) throws IOException {
+	public String downLoadStream(HttpServletResponse response, OssDto params) throws IOException {
 		// 创建OSSClient实例
 		OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
 		OSSObject ossObject = ossClient.getObject(params.getBucketName(), params.getFileName());
 		// 读Object内容
 		System.out.println("Object content:");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(ossObject.getObjectContent()));
-		ServletOutputStream output = response.getOutputStream();
-		String line = null;
-		while (true) {
-			line = reader.readLine();
-		    if (line == null) break;
-		    System.out.println(line);
-			output.write(line.getBytes());
-			output.write(line.getBytes("UTF-8"));
-		}
-		
-		//数据读取完成后，获取的流一定要显示close，否则会造成资源泄露
-		reader.close();
+		InputStream in = ossObject.getObjectContent();
+		 byte[] bytes = new byte[in.available()];
+		 in.read(bytes, 0, in.available());
+		 in.close();
+	        byte[] data = bytes;
+	        response.setContentType("image/png");
+	        OutputStream out = response.getOutputStream();
+	        out.write(data);
+	        out.flush();
+	        out.close();
+		// 将文件中的内容读入到数组中
+         in.read(bytes);
 		// 关闭client
 		ossClient.shutdown();
+		return CommonUtil.Encoder(bytes);
 	}
 }

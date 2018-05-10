@@ -2,15 +2,20 @@ package com.gubang.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.ApplyPolicyStateCode;
 import com.gubang.constant.SaleApplyCode;
 import com.gubang.dto.query.ProductApplyQueryDto;
+import com.gubang.entity.TFile;
 import com.gubang.entity.UserInfo;
 import com.gubang.mapper.ProductSaleApplyQueryMapper;
+import com.gubang.mapper.TFileMapper;
 import com.gubang.service.ProductApplyQueryService;
 import com.gubang.util.ResultDTO;
+import com.gubang.vo.FileUrlVo;
 import com.gubang.vo.ProductSaleApplyVo;
 import java.util.List;
 import org.slf4j.Logger;
@@ -21,6 +26,8 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 
 	@Autowired
 	private ProductSaleApplyQueryMapper productSaleApplyQueryMapper;
+	@Autowired
+	private TFileMapper tFileMapper;
 
 	private final static Logger log = LoggerFactory.getLogger("Admin");
 
@@ -69,42 +76,43 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 			JSONArray finshApplyArr = new JSONArray();
 
 			for (ProductSaleApplyVo item : productSaleApplyVo) {
-//				ProductSaleApplyQueryVo productSaleApplyQueryVo = new ProductSaleApplyQueryVo();
-//				productSaleApplyQueryVo.setId(item.getId());
-//				productSaleApplyQueryVo.setAddress(item.getAddress());
-//				productSaleApplyQueryVo.setAddressee(item.getAddressee());
-//				productSaleApplyQueryVo.setAddressPhone(item.getAddressPhone());
-//				productSaleApplyQueryVo.setAfterSaleTime(item.getAfterSaleTime());
-//				productSaleApplyQueryVo.setApplyStatus(item.getApplyStatus());
-//				productSaleApplyQueryVo.setBarCode(item.getBarCode());
-//				productSaleApplyQueryVo.setCusName(item.getCusName());
-//				productSaleApplyQueryVo.setCusTelphone(item.getCusTelphone());
-//				productSaleApplyQueryVo.setCustomerId(item.getCustomerId());
-//				productSaleApplyQueryVo.setDistributionPrice(item.getDistributionPrice());
-//				productSaleApplyQueryVo.setFaultPoint(item.getFaultPoint());
-//				productSaleApplyQueryVo.setPolicy(item.getPolicy());
-//				productSaleApplyQueryVo.setPolicyReplace(item.getPolicyReplace());
-//				productSaleApplyQueryVo.setProDesc(item.getProDesc());
-//				productSaleApplyQueryVo.setProductStatus(item.getProductStatus());
-//				productSaleApplyQueryVo.setProModel(item.getProModel());
-//				productSaleApplyQueryVo.setProName(item.getProName());
-//				productSaleApplyQueryVo.setRetailPrice(item.getRetailPrice());
-//				productSaleApplyQueryVo.setSeries(item.getSeries());
-//				productSaleApplyQueryVo.setVoltageRange(item.getVoltageRange());
-//				productSaleApplyQueryVo.setWaybillNumber(item.getWaybillNumber());
-//
-//				productSaleApplyQueryVo.setApplyUser(item.getApplyUser());
-//				productSaleApplyQueryVo.setApplyDesc(item.getApplyDesc());
-//				productSaleApplyQueryVo.setIsPay(item.getIsPay());
-//				productSaleApplyQueryVo.setPayGoods(item.getPayGoods());
-//				productSaleApplyQueryVo.setExpressAddress(item.getExpressAddress());
-//				productSaleApplyQueryVo.setExpressName(item.getExpressName());
-//				productSaleApplyQueryVo.setExpressPhone(item.getExpressPhone());
-//				productSaleApplyQueryVo.setApplyRejectResion(item.getApplyRejectResion());
-//				productSaleApplyQueryVo.setApplyPolicyState(item.getApplyPolicyState());
-//				productSaleApplyQueryVo.setIsRecipient(item.getIsRecipient());
-//				productSaleApplyQueryVo.setSysProductStatus(item.getSysProductStatus());
-//				productSaleApplyQueryVo.setSysWaybillNumber(item.getSysWaybillNumber());
+				// ProductSaleApplyQueryVo productSaleApplyQueryVo = new
+				// ProductSaleApplyQueryVo();
+				// productSaleApplyQueryVo.setId(item.getId());
+				// productSaleApplyQueryVo.setAddress(item.getAddress());
+				// productSaleApplyQueryVo.setAddressee(item.getAddressee());
+				// productSaleApplyQueryVo.setAddressPhone(item.getAddressPhone());
+				// productSaleApplyQueryVo.setAfterSaleTime(item.getAfterSaleTime());
+				// productSaleApplyQueryVo.setApplyStatus(item.getApplyStatus());
+				// productSaleApplyQueryVo.setBarCode(item.getBarCode());
+				// productSaleApplyQueryVo.setCusName(item.getCusName());
+				// productSaleApplyQueryVo.setCusTelphone(item.getCusTelphone());
+				// productSaleApplyQueryVo.setCustomerId(item.getCustomerId());
+				// productSaleApplyQueryVo.setDistributionPrice(item.getDistributionPrice());
+				// productSaleApplyQueryVo.setFaultPoint(item.getFaultPoint());
+				// productSaleApplyQueryVo.setPolicy(item.getPolicy());
+				// productSaleApplyQueryVo.setPolicyReplace(item.getPolicyReplace());
+				// productSaleApplyQueryVo.setProDesc(item.getProDesc());
+				// productSaleApplyQueryVo.setProductStatus(item.getProductStatus());
+				// productSaleApplyQueryVo.setProModel(item.getProModel());
+				// productSaleApplyQueryVo.setProName(item.getProName());
+				// productSaleApplyQueryVo.setRetailPrice(item.getRetailPrice());
+				// productSaleApplyQueryVo.setSeries(item.getSeries());
+				// productSaleApplyQueryVo.setVoltageRange(item.getVoltageRange());
+				// productSaleApplyQueryVo.setWaybillNumber(item.getWaybillNumber());
+				//
+				// productSaleApplyQueryVo.setApplyUser(item.getApplyUser());
+				// productSaleApplyQueryVo.setApplyDesc(item.getApplyDesc());
+				// productSaleApplyQueryVo.setIsPay(item.getIsPay());
+				// productSaleApplyQueryVo.setPayGoods(item.getPayGoods());
+				// productSaleApplyQueryVo.setExpressAddress(item.getExpressAddress());
+				// productSaleApplyQueryVo.setExpressName(item.getExpressName());
+				// productSaleApplyQueryVo.setExpressPhone(item.getExpressPhone());
+				// productSaleApplyQueryVo.setApplyRejectResion(item.getApplyRejectResion());
+				// productSaleApplyQueryVo.setApplyPolicyState(item.getApplyPolicyState());
+				// productSaleApplyQueryVo.setIsRecipient(item.getIsRecipient());
+				// productSaleApplyQueryVo.setSysProductStatus(item.getSysProductStatus());
+				// productSaleApplyQueryVo.setSysWaybillNumber(item.getSysWaybillNumber());
 
 				if (SaleApplyCode.FIRST_TRIAL.getCode().equals(item.getApplyStatus())) {
 					item.setApplyStatusDesc(SaleApplyCode.FIRST_TRIAL.getDesc());
@@ -131,7 +139,18 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 				} else if (SaleApplyCode.COURIER_TRACKING_REJECT.getCode().equals(item.getApplyStatus())) {
 					item.setApplyStatusDesc(SaleApplyCode.COURIER_TRACKING_REJECT.getDesc());
 				}
-
+				TFile file = new TFile();
+				file.setApplyId(item.getId());
+				List<TFile> files = tFileMapper.selectByFileParams(file);
+				JSONArray fileUrls = new JSONArray();
+				for (TFile fileUrl : files) {
+					if (!StringUtils.isEmpty(fileUrl.getDownLoadUrl())) {
+						FileUrlVo fileUrlVo = new FileUrlVo();
+						fileUrlVo.setImageUrl(fileUrl.getDownLoadUrl());
+						fileUrls.add(fileUrlVo);
+					}
+				}
+				item.setFile(fileUrls);
 				productSaleApplyArr.add(item);
 			}
 			JSONArray retArr = new JSONArray();
@@ -165,7 +184,7 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 			retObj.put("value", SaleApplyCode.COURIER_DEPARTMENT.getDesc());
 			retObj.put("list", courierDepartmentArr);
 			retArr.add(retObj);
-			
+
 			retObj = new JSONObject();
 			retObj.put("key", SaleApplyCode.COMPANY_COURIER_TRACKING.getCode());
 			retObj.put("value", SaleApplyCode.COMPANY_COURIER_TRACKING.getDesc());

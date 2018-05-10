@@ -12,6 +12,10 @@ public class TFile extends CommonEntity implements Serializable {
 	 */
 	private String fileId;
 	/**
+	 * 客户售后表ID
+	 */
+	private String applyId;
+	/**
 	 * 原文件名
 	 */
 	private String fileOrginalName;
@@ -27,6 +31,10 @@ public class TFile extends CommonEntity implements Serializable {
 	 * 文件类型
 	 */
 	private String fileType;
+	/**
+	 * 下载地址-仅限公共权限文件夹下的文件
+	 */
+	private String downLoadUrl;
 	private String createBy;
 	private Date createDate;
 	private String updateBy;
@@ -47,6 +55,14 @@ public class TFile extends CommonEntity implements Serializable {
 
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
+	}
+
+	public String getApplyId() {
+		return applyId;
+	}
+
+	public void setApplyId(String applyId) {
+		this.applyId = applyId;
 	}
 
 	public String getFileOrginalName() {
@@ -79,6 +95,14 @@ public class TFile extends CommonEntity implements Serializable {
 
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
+	}
+
+	public String getDownLoadUrl() {
+		return downLoadUrl;
+	}
+
+	public void setDownLoadUrl(String downLoadUrl) {
+		this.downLoadUrl = downLoadUrl;
 	}
 
 	public String getCreateBy() {

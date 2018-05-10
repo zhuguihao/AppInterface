@@ -11,5 +11,5 @@ public interface OssService {
 
 	public URL downLoadUrl(OssDto params);
 	
-	public void downLoadStream(HttpServletResponse response, OssDto params)  throws IOException ;
+	public String downLoadStream(HttpServletResponse response, OssDto params)  throws IOException ;
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gubang.config.UserInfoParam;
 import com.gubang.dto.apply.ApplyDto;
 import com.gubang.dto.apply.ApplyWayBillDto;
+import com.gubang.dto.query.ApplyImageDto;
 import com.gubang.dto.query.ProductApplyScanDto;
 import com.gubang.entity.UserInfo;
 import com.gubang.service.ProductApplyService;
@@ -95,6 +96,23 @@ public class ProductApplyController {
 			@UserInfoParam UserInfo userInfo, @RequestBody ProductApplyScanDto params)
 			throws ParseException, IOException {
 		return productApplyService.signTacking(userInfo, params);
+	}
+	
+	/**
+	 * 上传故障图
+	 * @param request
+	 * @param response
+	 * @param userInfo
+	 * @param params
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "applyImage", method = RequestMethod.POST)
+	public ResultDTO applyImage(HttpServletRequest request, HttpServletResponse response,
+			@UserInfoParam UserInfo userInfo, ApplyImageDto params)
+			throws ParseException, IOException {
+		return productApplyService.applyImage(userInfo, params);
 	}
 	
 }

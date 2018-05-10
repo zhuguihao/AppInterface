@@ -4,6 +4,10 @@ import com.gubang.util.CommonUtil;
 
 public class ApplyDto {
 	/**
+	 * 售后单ID
+	 */
+	private String applyId;
+	/**
 	 * 客户姓名
 	 */
 	private String cusName;
@@ -16,6 +20,14 @@ public class ApplyDto {
 	 */
 	private String faultPoint;
 	private String barCode;
+
+	public String getApplyId() {
+		return applyId;
+	}
+
+	public void setApplyId(String applyId) {
+		this.applyId = applyId;
+	}
 
 	public String getCusName() {
 		return cusName;

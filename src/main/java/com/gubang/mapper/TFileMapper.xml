@@ -4,11 +4,13 @@
 	<resultMap id="BaseResultMap" type="com.gubang.entity.TFile">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="file_id" property="fileId" jdbcType="VARCHAR" />
+		<result column="apply_id" property="applyId" jdbcType="VARCHAR" />
 		<result column="file_orginal_name" property="fileOrginalName"
 			jdbcType="VARCHAR" />
 		<result column="file_name" property="fileName" jdbcType="VARCHAR" />
 		<result column="file_size" property="fileSize" jdbcType="BIGINT" />
 		<result column="file_type" property="fileType" jdbcType="VARCHAR" />
+		<result column="down_load_url" property="downLoadUrl" jdbcType="VARCHAR" />
 		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
 		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -19,10 +21,12 @@
 	<sql id="Base_Column_List">
 		id,
 		file_id,
+		apply_id,
 		file_orginal_name,
 		file_name,
 		file_size,
 		file_type,
+		down_load_url,
 		is_del,
 		create_by,
 		create_date,
@@ -34,10 +38,12 @@
 		insert into
 		t_file (
 		file_id,
+		apply_id,
 		file_orginal_name,
 		file_name,
 		file_size,
 		file_type,
+		down_load_url,
 		create_by,
 		create_date,
 		update_by,
@@ -46,10 +52,12 @@
 		values
 		(
 		#{fileId,jdbcType=VARCHAR},
+		#{applyId,jdbcType=VARCHAR},
 		#{fileOrginalName,jdbcType=VARCHAR},
 		#{fileName,jdbcType=VARCHAR},
 		#{fileSize,jdbcType=VARCHAR},
 		#{fileType,jdbcType=VARCHAR},
+		#{downLoadUrl,jdbcType=VARCHAR},
 		#{createBy,jdbcType=VARCHAR},
 		#{createDate,jdbcType=TIMESTAMP},
 		#{updateBy,jdbcType=VARCHAR},
@@ -94,6 +102,9 @@
 			is_del = 'N'
 			<if test='fileId != null and fileId != ""'>
 				and file_id = #{fileId,jdbcType=VARCHAR}
+			</if>
+			<if test='applyId != null and applyId != ""'>
+				and apply_id = #{applyId,jdbcType=VARCHAR}
 			</if>
 		</where>
 		group by

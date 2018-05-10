@@ -11,8 +11,6 @@ import com.gubang.mapper.TFileMapper;
 import com.gubang.service.OssService;
 import com.gubang.service.UtilService;
 import com.gubang.util.CommonUtil;
-import com.gubang.util.ResultDTO;
-import net.sf.json.JSONObject;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,61 +29,55 @@ public class UtilServiceImpl implements UtilService {
 	private TFileMapper tFileMapper;
 
 	@Override
-	public ResultDTO upload(UserInfo userInfo, UploadDto params) {
-		ResultDTO result = new ResultDTO();
-		try {
-			if (null == userInfo) {
-				return result.setNotLogin();
-			}
-			if (params.inValid()) {
-				return result.setParameterInvalid();
-			}
-			/**
-			 * 获取文件中的原名称
-			 */
-			String fileName = params.getFile().getOriginalFilename();
-			/**
-			 * 获取文件中的类型
-			 */
-			String type = "";
-			if (fileName.indexOf(".") > -1) {
-				type = fileName.substring(fileName.lastIndexOf("."), fileName.length()) == "." ? ""
-						: fileName.substring(fileName.lastIndexOf("."), fileName.length());
-			}
-			fileName = CommonUtil.getFormatDate(new Date(), "yyyyMM/") + CommonUtil.getUUid() + type;
-			/**
-			 * 入库保存当前文件信息
-			 */
-			TFile file = new TFile();
-			file.setFileId(CommonUtil.getUUid());
-			file.setFileName(fileName);
-			file.setFileOrginalName(params.getFile().getOriginalFilename());
-			file.setFileSize(params.getFile().getSize());
-			file.setFileType(type);
-			file.setCreateBy(userInfo.getId());
-			file.setCreateDate(new Date());
-			file.setUpdateBy(userInfo.getId());
-			file.setUpdateDate(new Date());
-
-			tFileMapper.insert(file);
-			/**
-			 * 创建OSS文件
-			 */
-			OssDto oss = new OssDto();
-			oss.setBucketName("gbbucket");
-			oss.setFile(params.getFile().getBytes());
-			oss.setFileName(fileName);
-			/**
-			 * 上传到OSS服务器
-			 */
-			ossService.ossUpload(oss);
-
-			return result.setSuccess(new JSONObject());
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(userInfo == null ? "" : userInfo.getAccount() + "上传OSS服务器失败：" + e.getMessage());
-			return result.setSystemError();
+	public void upload(UserInfo userInfo, UploadDto params) throws Exception {
+		/**
+		 * 获取文件中的原名称
+		 */
+		String fileName = params.getFile().getOriginalFilename();
+		/**
+		 * 获取文件中的类型
+		 */
+		String type = "";
+		if (fileName.indexOf(".") > -1) {
+			type = fileName.substring(fileName.lastIndexOf("."), fileName.length()) == "." ? ""
+					: fileName.substring(fileName.lastIndexOf("."), fileName.length());
 		}
+		fileName = CommonUtil.getFormatDate(new Date(), "yyyyMM/") + CommonUtil.getUUid() + type;
+		/**
+		 * 入库保存当前文件信息
+		 */
+		TFile file = new TFile();
+		file.setFileId(CommonUtil.getUUid());
+		file.setApplyId(params.getApplyId());
+		file.setFileName(fileName);
+		file.setFileOrginalName(params.getFile().getOriginalFilename());
+		file.setFileSize(params.getFile().getSize());
+		file.setFileType(type);
+		/**
+		 * 创建OSS文件
+		 */
+		OssDto oss = new OssDto();
+		oss.setBucketName("gbbucket");
+		oss.setFile(params.getFile().getBytes());
+		oss.setFileName(fileName);
+		/**
+		 * 上传到OSS服务器
+		 */
+		ossService.ossUpload(oss);
+		Date expiration = new Date(System.currentTimeMillis());
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(expiration);
+		calendar.add(Calendar.MONTH, 10);
+		expiration = calendar.getTime();
+		oss.setExpiration(expiration);
+		file.setDownLoadUrl(ossService.downLoadUrl(oss).toString());
+		file.setCreateBy(userInfo.getId());
+		file.setCreateDate(new Date());
+		file.setUpdateBy(userInfo.getId());
+		file.setUpdateDate(new Date());
+
+		tFileMapper.insert(file);
+		
 	}
 
 	@Override
@@ -97,15 +89,15 @@ public class UtilServiceImpl implements UtilService {
 			TFile file = new TFile();
 			file.setFileId(params.getFileId());
 
-			TFile filelist = tFileMapper.selectByFileParams(file);
+//			TFile filelist = tFileMapper.selectByFileParams(file);
 
-			if (null == filelist) {
-				return null;
-			}
+//			if (null == filelist) {
+//				return null;
+//			}
 
 			OssDto oss = new OssDto();
 			oss.setBucketName("gbbucket");
-			oss.setFileName(filelist.getFileName());
+//			oss.setFileName(filelist.getFileName());
 			Date expiration = new Date(System.currentTimeMillis());
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(expiration);
@@ -117,30 +109,33 @@ public class UtilServiceImpl implements UtilService {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.info("获取OSS下载地址");
 			return null;
 		}
 	}
 
 	@Override
-	public void downLoadStream(HttpServletResponse response, DownloadDto params) {
+	public String downLoadStream(HttpServletResponse response, DownloadDto params) {
 		try {
 			TFile file = new TFile();
 			file.setFileId(params.getFileId());
-			TFile filelist = tFileMapper.selectByFileParams(file);
+//			TFile filelist = tFileMapper.selectByFileParams(file);
 
 			OssDto oss = new OssDto();
 			oss.setBucketName("gbbucket");
-			oss.setFileName(filelist.getFileName());
+//			oss.setFileName(filelist.getFileName());
+			oss.setFileName("201805/0504d42fed2d4436b85f981427e2948a.jpg");
 			Date expiration = new Date(System.currentTimeMillis());
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(expiration);
 			calendar.add(Calendar.MONTH, 10);
 			expiration = calendar.getTime();
 			oss.setExpiration(expiration);
-			ossService.downLoadStream(response,oss);
+			return ossService.downLoadStream(response, oss);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 	}
 

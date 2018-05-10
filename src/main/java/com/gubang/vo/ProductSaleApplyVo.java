@@ -1,7 +1,7 @@
 package com.gubang.vo;
 
 import java.io.Serializable;
-
+import com.alibaba.fastjson.JSONArray;
 import com.gubang.entity.CommonEntity;
 
 public class ProductSaleApplyVo extends CommonEntity implements Serializable {
@@ -51,6 +51,10 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable {
 	 * 返回前端添加状态值描述
 	 */
 	private String applyStatusDesc;
+	/**
+	 * 故障图列表
+	 */
+	private JSONArray file;
 
 	public String getId() {
 		return id;
@@ -346,6 +350,14 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable {
 
 	public void setApplyStatusDesc(String applyStatusDesc) {
 		this.applyStatusDesc = applyStatusDesc;
+	}
+
+	public JSONArray getFile() {
+		return file;
+	}
+
+	public void setFile(JSONArray file) {
+		this.file = file;
 	}
 
 }

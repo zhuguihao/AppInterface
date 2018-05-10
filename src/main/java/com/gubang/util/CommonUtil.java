@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.UUID;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  * 通用工具类
@@ -18,6 +20,7 @@ import java.util.UUID;
  * @author liangwenhan
  *
  */
+@SuppressWarnings({ "unused", "restriction" })
 public class CommonUtil {
 
 	public static String getStackTrace(Throwable exception) {
@@ -170,5 +173,10 @@ public class CommonUtil {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static String Encoder(byte[] bytes) {
+		// TODO Auto-generated method stub
+		return new BASE64Encoder().encode(bytes);
 	}
 }
