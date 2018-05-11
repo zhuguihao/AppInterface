@@ -133,7 +133,7 @@
 				and tpsa.create_by = #{createBy,jdbcType=VARCHAR},
 			</if>
 		</where>
-		group by
+		order by
 			tpsa.create_date
 		desc
 	</select>
@@ -181,7 +181,7 @@
 				and tpsa.create_by = #{createBy,jdbcType=VARCHAR},
 			</if>
 		</where>
-		group by
+		order by
 			tpsa.create_date
 		desc
 	</select>

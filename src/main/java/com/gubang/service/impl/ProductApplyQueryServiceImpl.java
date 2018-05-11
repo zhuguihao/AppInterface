@@ -2,7 +2,6 @@ package com.gubang.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -15,7 +14,6 @@ import com.gubang.mapper.ProductSaleApplyQueryMapper;
 import com.gubang.mapper.TFileMapper;
 import com.gubang.service.ProductApplyQueryService;
 import com.gubang.util.ResultDTO;
-import com.gubang.vo.FileUrlVo;
 import com.gubang.vo.ProductSaleApplyVo;
 import java.util.List;
 import org.slf4j.Logger;
@@ -145,9 +143,9 @@ public class ProductApplyQueryServiceImpl implements ProductApplyQueryService {
 				JSONArray fileUrls = new JSONArray();
 				for (TFile fileUrl : files) {
 					if (!StringUtils.isEmpty(fileUrl.getDownLoadUrl())) {
-						FileUrlVo fileUrlVo = new FileUrlVo();
-						fileUrlVo.setImageUrl(fileUrl.getDownLoadUrl());
-						fileUrls.add(fileUrlVo);
+//						FileUrlVo fileUrlVo = new FileUrlVo();
+//						fileUrlVo.setImageUrl(fileUrl.getDownLoadUrl());
+						fileUrls.add(fileUrl.getDownLoadUrl());
 					}
 				}
 				item.setFile(fileUrls);

@@ -196,7 +196,7 @@
 				and create_by = #{createBy,jdbcType=VARCHAR},
 			</if>
 		</where>
-		group by 
+		order by 
 			create_date 
 		desc
 	</select>

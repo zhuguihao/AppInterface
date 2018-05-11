@@ -107,7 +107,7 @@
 				and apply_id = #{applyId,jdbcType=VARCHAR}
 			</if>
 		</where>
-		group by
+		order by
 		create_date
 		desc
 	</select>

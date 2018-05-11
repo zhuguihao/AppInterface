@@ -161,7 +161,7 @@
 				and product_sale_apply_id = #{productSaleApplyId,jdbcType=VARCHAR}
 			</if>
 		</where>
-		group by 
+		order by 
 			create_date 
 		desc
 	</select>

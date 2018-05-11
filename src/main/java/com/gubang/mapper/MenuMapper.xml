@@ -177,7 +177,7 @@
 				and tmc.t_sys_group_id = #{groupId,jdbcType=VARCHAR}
 			</if>
 		</where>
-		group by
+		order by
 			tsm.index
 	</select>
 </mapper>
