@@ -39,6 +39,10 @@ public class FirstTrialDto implements Serializable {
 	 * 初审审批的维修状态（参考）
 	 */
 	private String applyPolicyState;
+	/**
+	 * 是否直接寄配件，将会绕过维修部
+	 */
+	private String isMailingAccessories;
 
 	public String getProductSaleApplyId() {
 		return productSaleApplyId;
@@ -112,11 +116,19 @@ public class FirstTrialDto implements Serializable {
 		this.applyPolicyState = applyPolicyState;
 	}
 
+	public String getIsMailingAccessories() {
+		return isMailingAccessories;
+	}
+
+	public void setIsMailingAccessories(String isMailingAccessories) {
+		this.isMailingAccessories = isMailingAccessories;
+	}
+
 	public boolean inValid() {
 		if (null == isPay) {
-			return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc);
+			return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc) || CommonUtil.isEmpty(isMailingAccessories);
 		}
 		return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc) || CommonUtil.isEmpty(isPay)
-				|| CommonUtil.isEmpty(payGoods);
+				|| CommonUtil.isEmpty(payGoods) || CommonUtil.isEmpty(isMailingAccessories);
 	}
 }

@@ -21,4 +21,8 @@ public class Constant {
 	 * 是否需要付费的产品
 	 */
 	public static final String IS_PAY_GOODS = "Y";
+	/**
+	 * 是否直寄配件
+	 */
+	public static final String IS_MAILING_ACCESSORIES = "Y";
 }
