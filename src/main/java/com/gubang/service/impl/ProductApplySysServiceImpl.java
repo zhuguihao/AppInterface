@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.gubang.constant.Constant;
 import com.gubang.constant.SaleApplyCode;
@@ -323,6 +325,19 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			productSaleApply.setUpdateBy(userInfo.getId());
 			productSaleApply.setUpdateDate(new Date());
 			productSaleApplyMapper.updateByPrimaryKeySelective(productSaleApply);
+			
+			if(!StringUtils.isEmpty(params.getPartsList())){
+				/**
+				 * 添加配件寄送列表
+				 */
+				ProductSaleApplySys productSaleApplySys = new ProductSaleApplySys();
+				productSaleApplySys.setProductSaleApplyId(params.getProductSaleApplyId());
+				productSaleApplySys.setPartsList(params.getPartsList());
+
+				productSaleApplySys.setUpdateBy(userInfo.getId());
+				productSaleApplySys.setUpdateDate(new Date());
+				productSaleApplySysMapper.updateByPrimaryKeySelective(productSaleApplySys);
+			}
 
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {

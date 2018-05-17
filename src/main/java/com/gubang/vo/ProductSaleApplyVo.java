@@ -55,6 +55,10 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable {
 	 * 故障图列表
 	 */
 	private JSONArray file;
+	/**
+	 * 配件列表
+	 */
+	private String partsList;
 
 	public String getId() {
 		return id;
@@ -358,6 +362,14 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable {
 
 	public void setFile(JSONArray file) {
 		this.file = file;
+	}
+
+	public String getPartsList() {
+		return partsList;
+	}
+
+	public void setPartsList(String partsList) {
+		this.partsList = partsList;
 	}
 
 }

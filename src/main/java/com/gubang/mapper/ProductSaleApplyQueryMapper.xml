@@ -40,6 +40,7 @@
 		<result column="is_recipient" property="isRecipient" jdbcType="VARCHAR" />
 		<result column="sysProductStatus" property="sysProductStatus" jdbcType="VARCHAR" />
 		<result column="sysWaybillNumber" property="sysWaybillNumber" jdbcType="VARCHAR" />
+		<result column="parts_ist" property="partsList" jdbcType="VARCHAR" />
 		
 		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
 		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
@@ -85,6 +86,7 @@
 		tpsas.is_recipient,
 		tpsas.product_status sysProductStatus,
 		tpsas.waybill_number sysWaybillNumber,
+		tpsas.parts_ist,
 		tpsa.is_del,
 		tpsa.create_by,
 		tpsa.create_date,

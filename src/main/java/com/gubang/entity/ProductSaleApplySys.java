@@ -59,6 +59,10 @@ public class ProductSaleApplySys extends CommonEntity implements Serializable {
 	 * 运单号
 	 */
 	private String waybillNumber;
+	/**
+	 * 配件列表
+	 */
+	private String partsList;
 
 	public String getId() {
 		return id;
@@ -170,6 +174,14 @@ public class ProductSaleApplySys extends CommonEntity implements Serializable {
 
 	public void setWaybillNumber(String waybillNumber) {
 		this.waybillNumber = waybillNumber;
+	}
+
+	public String getPartsList() {
+		return partsList;
+	}
+
+	public void setPartsList(String partsList) {
+		this.partsList = partsList;
 	}
 
 }

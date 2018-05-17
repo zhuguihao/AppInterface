@@ -21,6 +21,8 @@
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
 		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
 		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		
+		<result column="parts_list" property="partsList" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
@@ -38,6 +40,7 @@
 		is_recipient,
 		product_status,
 		waybill_number,
+		parts_list,
 		is_del,
 		create_by,
 		create_date,
@@ -62,6 +65,7 @@
 		is_recipient,
 		product_status,
 		waybill_number,
+		parts_list,
 		is_del,
 		create_by,
 		create_date,
@@ -84,6 +88,7 @@
 		#{isRecipient,jdbcType=VARCHAR},
 		#{productStatus,jdbcType=VARCHAR},
 		#{waybillNumber,jdbcType=VARCHAR},
+		#{partsList,jdbcType=VARCHAR},
 		#{isDel,jdbcType=VARCHAR},
 		#{createBy,jdbcType=VARCHAR},
 		#{createDate,jdbcType=TIMESTAMP},
@@ -133,6 +138,9 @@
 			</if>
 			<if test='waybillNumber != null and waybillNumber != ""'>
 				waybill_number = #{waybillNumber,jdbcType=VARCHAR},
+			</if>
+			<if test='partsList != null and partsList != ""'>
+				parts_list = #{partsList,jdbcType=VARCHAR},
 			</if>
 			<if test='isDel != null and isDel != ""'>
 				is_del = #{isDel,jdbcType=VARCHAR},
