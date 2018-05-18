@@ -86,7 +86,7 @@
 		tpsas.is_recipient,
 		tpsas.product_status sysProductStatus,
 		tpsas.waybill_number sysWaybillNumber,
-		tpsas.parts_ist,
+		tpsas.parts_list,
 		tpsa.is_del,
 		tpsa.create_by,
 		tpsa.create_date,

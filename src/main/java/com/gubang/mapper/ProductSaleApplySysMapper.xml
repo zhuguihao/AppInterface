@@ -100,9 +100,6 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductSaleApplySys">
 		update t_product_sale_apply_sys
 		<set>
-			<if test='productSaleApplyId != null and productSaleApplyId != ""'>
-				product_sale_apply_id = #{productSaleApplyId,jdbcType=VARCHAR},
-			</if>
 			<if test='applyUser != null and applyUser != ""'>	
 				apply_user = #{applyUser,jdbcType=VARCHAR},
 			</if>
@@ -152,7 +149,7 @@
 				update_date = #{updateDate,jdbcType=TIMESTAMP},
 			</if>
 		</set>
-		where id = #{id,jdbcType=VARCHAR}
+		where product_sale_apply_id = #{productSaleApplyId,jdbcType=VARCHAR}
 	</update>
 
 	<select id="selectByProductSaleInfoParams" resultMap="BaseResultMap"

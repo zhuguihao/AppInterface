@@ -15,6 +15,7 @@ import com.gubang.dto.apply.SignExpressDto;
 import com.gubang.dto.query.FirstTrialDto;
 import com.gubang.entity.UserInfo;
 import com.gubang.service.ProductApplySysService;
+import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
 
 /**
