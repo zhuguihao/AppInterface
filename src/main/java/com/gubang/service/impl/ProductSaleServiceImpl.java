@@ -189,9 +189,14 @@ public class ProductSaleServiceImpl implements ProductSaleService {
 
 			ProductSaleVo psVo = new ProductSaleVo();
 			psVo.setCreateBy(userInfo.getId());
-			Date date = new Date();
-			psVo.setCreateDateStart(date);
-			psVo.setCreateDateEnd(CommonUtil.getAnotherDate(date, 1));
+
+			/**
+			 * 修改为查询当前任所有的数据
+			 * 20180525
+			 */
+//			Date date = new Date();
+//			psVo.setCreateDateStart(date);
+//			psVo.setCreateDateEnd(CommonUtil.getAnotherDate(date, 1));
 			psVo.setProductStatus(ApplyCode.APPLY_STORAGE.getCode());
 			return result.setSuccess(productSaleInfoMapper.productSaleInfo(psVo));
 		} catch (Exception e) {
@@ -212,9 +217,13 @@ public class ProductSaleServiceImpl implements ProductSaleService {
 
 			ProductSaleVo psVo = new ProductSaleVo();
 			psVo.setCreateBy(userInfo.getId());
-			Date date = new Date();
-			psVo.setCreateDateStart(date);
-			psVo.setCreateDateEnd(CommonUtil.getAnotherDate(date, 1));
+			/**
+			 * 查询当前人所有的数据
+			 * 20180525
+			 */
+//			Date date = new Date();
+//			psVo.setCreateDateStart(date);
+//			psVo.setCreateDateEnd(CommonUtil.getAnotherDate(date, 1));
 			psVo.setProductStatus(ApplyCode.APPLY_OUT_STORAGE.getCode());
 			return result.setSuccess(productSaleInfoMapper.productSaleInfo(psVo));
 		} catch (Exception e) {
@@ -333,9 +342,13 @@ public class ProductSaleServiceImpl implements ProductSaleService {
 
 			ProductSaleVo psVo = new ProductSaleVo();
 			psVo.setCreateBy(userInfo.getId());
-			Date date = new Date();
-			psVo.setCreateDateStart(date);
-			psVo.setCreateDateEnd(CommonUtil.getAnotherDate(date, 1));
+			/**
+			 * 查询当前人所有的信息
+			 * 20180525
+			 */
+//			Date date = new Date();
+//			psVo.setCreateDateStart(date);
+//			psVo.setCreateDateEnd(CommonUtil.getAnotherDate(date, 1));
 			psVo.setProductStatus(ApplyCode.APPLY_SOLD_PRODUCT.getCode());
 			List<GetProductSaleVo> productSaleInfo = productSaleInfoMapper.productSaleInfo(psVo);
 			JSONArray retArr = new JSONArray();
