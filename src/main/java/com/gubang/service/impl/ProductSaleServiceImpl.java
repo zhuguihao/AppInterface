@@ -227,7 +227,6 @@ public class ProductSaleServiceImpl implements ProductSaleService {
 			psVo.setProductStatus(ApplyCode.APPLY_OUT_STORAGE.getCode());
 			return result.setSuccess(productSaleInfoMapper.productSaleInfo(psVo));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			log.error("查询操作者当日出库信息失败：" + e.getMessage());
 			return result.setSystemError();
