@@ -34,3 +34,31 @@
 17:47:37.478 [http-nio-7777-exec-1] INFO  Admin - request IP : 0:0:0:0:0:0:0:1 
 17:47:37.484 [http-nio-7777-exec-1] INFO  Admin - NGINX转发前 IP : null 
 17:47:37.610 [http-nio-7777-exec-1] INFO  Admin - 出参为"helloWord" 
+17:38:10.481 [http-nio-9999-exec-2] INFO  Admin - request url : http://localhost:9999/appService/serviceCenter/getDict 
+17:38:10.516 [http-nio-9999-exec-2] INFO  Admin - request IP : 0:0:0:0:0:0:0:1 
+17:38:10.516 [http-nio-9999-exec-2] INFO  Admin - NGINX转发前 IP : null 
+17:38:10.689 [http-nio-9999-exec-2] INFO  Admin - 出参为"helloWord" 
+17:39:10.991 [http-nio-9999-exec-4] INFO  Admin - request url : http://localhost:9999/appService/serviceCenter/getDict 
+17:39:10.992 [http-nio-9999-exec-4] INFO  Admin - request IP : 0:0:0:0:0:0:0:1 
+17:39:10.992 [http-nio-9999-exec-4] INFO  Admin - NGINX转发前 IP : null 
+17:39:10.992 [http-nio-9999-exec-4] INFO  Admin - 出参为"helloWord" 
+17:41:36.514 [http-nio-9999-exec-2] INFO  Admin - request url : http://localhost:9999/appService/serviceCenter/getDict 
+17:41:36.518 [http-nio-9999-exec-2] INFO  Admin - request IP : 0:0:0:0:0:0:0:1 
+17:41:36.518 [http-nio-9999-exec-2] INFO  Admin - NGINX转发前 IP : null 
+17:41:36.759 [http-nio-9999-exec-2] INFO  Admin - 出参为"helloWord" 
+17:43:18.864 [http-nio-9999-exec-2] INFO  Admin - request url : http://localhost:9999/appService/serviceCenter/getDict 
+17:43:18.867 [http-nio-9999-exec-2] INFO  Admin - request IP : 0:0:0:0:0:0:0:1 
+17:43:18.867 [http-nio-9999-exec-2] INFO  Admin - NGINX转发前 IP : null 
+17:43:19.076 [http-nio-9999-exec-2] INFO  Admin - 出参为"helloWord" 
+17:44:11.111 [http-nio-9999-exec-5] INFO  Admin - request url : http://localhost:9999/appService/serviceCenter/getDict 
+17:44:11.112 [http-nio-9999-exec-5] INFO  Admin - request IP : 0:0:0:0:0:0:0:1 
+17:44:11.112 [http-nio-9999-exec-5] INFO  Admin - NGINX转发前 IP : null 
+17:44:11.112 [http-nio-9999-exec-5] INFO  Admin - 出参为"helloWord" 
+18:27:39.726 [http-nio-9999-exec-7] INFO  Admin - request url : http://192.168.1.184:9999/appService/ 
+18:27:39.728 [http-nio-9999-exec-7] INFO  Admin - request IP : 192.168.1.184 
+18:27:39.728 [http-nio-9999-exec-7] INFO  Admin - NGINX转发前 IP : null 
+18:27:40.350 [http-nio-9999-exec-7] INFO  Admin - 出参为"helloWord" 
+18:27:40.396 [http-nio-9999-exec-8] INFO  Admin - request url : http://192.168.1.184:9999/appService/ 
+18:27:40.396 [http-nio-9999-exec-8] INFO  Admin - request IP : 192.168.1.184 
+18:27:40.396 [http-nio-9999-exec-8] INFO  Admin - NGINX转发前 IP : null 
+18:27:40.396 [http-nio-9999-exec-8] INFO  Admin - 出参为"helloWord" 
