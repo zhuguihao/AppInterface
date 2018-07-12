@@ -65,7 +65,7 @@
 		#{updateDate,jdbcType=TIMESTAMP}
 		)
 	</insert>
-	
+
 	<insert id="insertSelective" parameterType="com.gubang.entity.ProductSaleApply">
 		insert into t_product_sale_apply
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -118,56 +118,44 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductSaleApply">
-		update t_product_sale_apply
+	<update id="editDict" parameterType="com.gubang.entity.Dict">
+		update
+		t_dict_tree td
 		<set>
-			<if test='productSaleId != null and productSaleId != ""'>
-				product_sale_id = #{productSaleId,jdbcType=VARCHAR},
+			<if test='code != null and code != ""'>
+				td.code = #{code,jdbcType=VARCHAR},
 			</if>
-			<if test='cusName != null and cusName != ""'>
-				cus_name = #{cusName,jdbcType=VARCHAR},
+			<if test='value != null and value != ""'>
+				td.value = #{value,jdbcType=VARCHAR},
 			</if>
-			<if test='cusTelphone != null and cusTelphone != ""'>
-				cus_telphone = #{cusTelphone,jdbcType=VARCHAR},
+			<if test='remarks != null and remarks != ""'>
+				td.remarks = #{remarks,jdbcType=VARCHAR},
 			</if>
-			<if test='faultPoint != null and faultPoint != ""'>
-				fault_point = #{faultPoint,jdbcType=VARCHAR},
-			</if>
-			<if test='applyStatus != null and applyStatus != ""'>
-				apply_status = #{applyStatus,jdbcType=VARCHAR},
-			</if>
-			<if test='addressee != null and addressee != ""'>
-				addressee = #{addressee,jdbcType=VARCHAR},
-			</if>
-			<if test='address != null and address != ""'>
-				address = #{address,jdbcType=VARCHAR},
-			</if>
-			<if test='addressPhone != null and addressPhone != ""'>
-				address_phone = #{addressPhone,jdbcType=VARCHAR},
-			</if>
-			<if test='waybillNumber != null and waybillNumber != ""'>
-				waybill_number = #{waybillNumber,jdbcType=VARCHAR},
-			</if>
-			<if test='isDel != null and productStatus != ""'>
-				is_del = #{isDel,jdbcType=VARCHAR},
-			</if>
-			<if test='updateBy != null and productStatus != ""'>
-				update_by = #{updateBy,jdbcType=VARCHAR},
-			</if>
-			<if test="updateDate != null">
-				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			<if test='isDel != null and isDel != ""'>
+				td.is_del = #{isDel,jdbcType=VARCHAR},
 			</if>
 		</set>
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
 
-	<select id="getDict" resultMap="BaseResultMap"
-		parameterType="com.gubang.vo.MenuVo">
+	<select id="getDict" resultMap="BaseResultMap" parameterType="com.gubang.entity.Dict">
 		select
 		<include refid="Base_Column_List" />
 		from
 		t_dict_tree td
+		<where>
+			<if test='code != null and code != ""'>
+				and td.code like concat('%',#{code,jdbcType=VARCHAR},'%')
+			</if>
+			<if test='value != null and value != ""'>
+				and td.value like
+				concat('%',#{value,jdbcType=VARCHAR},'%')
+			</if>
+			<if test='isDel != null and isDel != ""'>
+				and td.is_del = #{isDel,jdbcType=VARCHAR}
+			</if>
+		</where>
 		order by
-			td.update_date
+		td.update_date
 	</select>
 </mapper>
