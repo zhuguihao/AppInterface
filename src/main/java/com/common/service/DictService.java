@@ -10,4 +10,5 @@ public interface DictService {
 
 	ResultDTO editDict(UserInfo userInfo, Dict params);
 
+	ResultDTO addDict(UserInfo userInfo, Dict params);
 }

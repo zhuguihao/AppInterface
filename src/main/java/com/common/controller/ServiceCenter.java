@@ -26,7 +26,7 @@ public class ServiceCenter {
 	public ResultDTO getDict(@UserInfoParam UserInfo userInfo, @RequestBody Dict params) {
 		return dictService.getDict(userInfo, params);
 	}
-	
+
 	/**
 	 * 修改数据字典
 	 * 
@@ -37,4 +37,13 @@ public class ServiceCenter {
 		return dictService.editDict(userInfo, params);
 	}
 
+	/**
+	 * 添加数据字典
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/addDict", method = RequestMethod.POST)
+	public ResultDTO addDict(@UserInfoParam UserInfo userInfo, @RequestBody Dict params) {
+		return dictService.addDict(userInfo, params);
+	}
 }

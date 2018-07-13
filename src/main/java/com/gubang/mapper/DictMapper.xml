@@ -27,82 +27,52 @@
 		td.update_date
 	</sql>
 
-	<insert id="insert" parameterType="com.gubang.entity.ProductSaleApply">
-		insert into
-		t_product_sale_apply (
-		id,
-		product_sale_id,
-		cus_name,
-		cus_telphone,
-		fault_point,
-		apply_status,
-		addressee,
-		address,
-		address_phone,
-		waybill_number,
-		is_del,
-		create_by,
-		create_date,
-		update_by,
-		update_date
-		)
-		values
-		(
-		#{id,jdbcType=VARCHAR},
-		#{productSaleId,jdbcType=VARCHAR},
-		#{cusName,jdbcType=VARCHAR},
-		#{cusTelphone,jdbcType=VARCHAR},
-		#{faultPoint,jdbcType=VARCHAR},
-		#{applyStatus,jdbcType=VARCHAR},
-		#{addressee,jdbcType=VARCHAR},
-		#{address,jdbcType=VARCHAR},
-		#{addressPhone,jdbcType=VARCHAR},
-		#{waybillNumber,jdbcType=VARCHAR},
-		#{isDel,jdbcType=VARCHAR},
-		#{createBy,jdbcType=VARCHAR},
-		#{createDate,jdbcType=TIMESTAMP},
-		#{updateBy,jdbcType=VARCHAR},
-		#{updateDate,jdbcType=TIMESTAMP}
-		)
-	</insert>
-
-	<insert id="insertSelective" parameterType="com.gubang.entity.ProductSaleApply">
-		insert into t_product_sale_apply
+	<insert id="addDict" parameterType="com.gubang.entity.Dict">
+		insert into t_dict_tree
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test='id != null and id != ""'>
 				id,
 			</if>
-			<if test='productSaleId != null and productSaleId != ""'>
-				product_sale_id,
+			<if test='code != null and code != ""'>
+				code,
 			</if>
-			<if test='cusName != null and cusName != ""'>
-				cus_name,
+			<if test='value != null and value != ""'>
+				value,
 			</if>
-			<if test='cusTelphone != null and cusTelphone != ""'>
-				cus_telphone,
+			<if test='parentId != null and parentId != ""'>
+				parent_id,
 			</if>
-			<if test='faultPoint != null and faultPoint != ""'>
-				fault_point,
+			<if test='remarks != null and remarks != ""'>
+				remarks,
 			</if>
-			<if test='applyStatus != null and applyStatus != ""'>
-				apply_status,
+			<if test='createBy != null and createBy != ""'>
+				create_by,
 			</if>
-			<if test='addressee != null and addressee != ""'>
-				addressee,
+			<if test='createDate != null'>
+				create_date,
 			</if>
-			<if test='address != null and address != ""'>
-				address,
+			<if test='updateBy != null and updateBy != ""'>
+				update_by,
 			</if>
-			<if test='addressPhone != null and addressPhone != ""'>
-				address_phone,
-			</if>
-			<if test='waybillNumber != null and waybillNumber != ""'>
-				waybill_number,
+			<if test='updateDate != null'>
+				update_date,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="isDel != null">
-				#{isDel,jdbcType=VARCHAR},
+			<if test='id != null and id != ""'>
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test='code != null and code != ""'>
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test='value != null and value != ""'>
+				#{value,jdbcType=VARCHAR},
+			</if>
+			<if test='parentId != null and parentId != ""'>
+				#{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test='remarks != null and remarks != ""'>
+				#{remarks,jdbcType=VARCHAR},
 			</if>
 			<if test='createBy != null and createBy != ""'>
 				#{createBy,jdbcType=VARCHAR},
@@ -128,7 +98,7 @@
 			<if test='value != null and value != ""'>
 				td.value = #{value,jdbcType=VARCHAR},
 			</if>
-			<if test='remarks != null and remarks != ""'>
+			<if test='remarks != null'>
 				td.remarks = #{remarks,jdbcType=VARCHAR},
 			</if>
 			<if test='isDel != null and isDel != ""'>
@@ -145,7 +115,19 @@
 		t_dict_tree td
 		<where>
 			<if test='code != null and code != ""'>
-				and td.code like concat('%',#{code,jdbcType=VARCHAR},'%')
+				and (
+					td.code like concat('%',#{code,jdbcType=VARCHAR},'%')
+					OR
+				 	td.parent_id in (
+							select
+									td.id
+							FROM
+									t_dict_tree td
+							WHERE
+								td.code like concat('%',#{code,jdbcType=VARCHAR},'%')
+						)
+					)
+					
 			</if>
 			<if test='value != null and value != ""'>
 				and td.value like
@@ -156,6 +138,6 @@
 			</if>
 		</where>
 		order by
-		td.update_date
+		td.parent_id,td.id,td.update_date
 	</select>
 </mapper>

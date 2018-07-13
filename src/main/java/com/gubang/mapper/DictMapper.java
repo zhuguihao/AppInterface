@@ -7,4 +7,6 @@ public interface DictMapper {
 	List<Dict> getDict(Dict params);
 
 	int editDict(Dict params);
+
+	int addDict(Dict params);
 }
