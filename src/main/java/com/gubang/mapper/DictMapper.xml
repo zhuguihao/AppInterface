@@ -110,7 +110,8 @@
 
 	<select id="getDict" resultMap="BaseResultMap" parameterType="com.gubang.entity.Dict">
 		select
-		<include refid="Base_Column_List" />
+		(select count(id) from t_dict_tree) count,
+		<include refid="Base_Column_List" />		
 		from
 		t_dict_tree td
 		<where>

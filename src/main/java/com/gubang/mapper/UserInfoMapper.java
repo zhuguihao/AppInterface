@@ -1,5 +1,6 @@
 package com.gubang.mapper;
 
+import java.util.List;
 import com.gubang.entity.UserInfo;
 
 public interface UserInfoMapper {
@@ -16,4 +17,6 @@ public interface UserInfoMapper {
     int updateByPrimaryKey(UserInfo record);
     
     UserInfo findByAccount(String account);
+
+	List<UserInfo> getUser(UserInfo params);
 }

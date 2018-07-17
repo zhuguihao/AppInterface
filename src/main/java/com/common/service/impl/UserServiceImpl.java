@@ -5,25 +5,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
-import com.common.service.DictService;
-import com.gubang.entity.Dict;
+import com.common.service.UserService;
 import com.gubang.entity.UserInfo;
-import com.gubang.mapper.DictMapper;
+import com.gubang.mapper.UserInfoMapper;
 import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
 
 @Service
-public class DictServiceImpl implements DictService {
+public class UserServiceImpl implements UserService {
 	@Autowired
-	private DictMapper dictMapper;
+	UserInfoMapper userInfoMapper;
 	
 	@Override
-	public ResultDTO getDict(UserInfo userInfo, Dict params) {
+	public ResultDTO getUser(UserInfo userInfo, UserInfo params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			List<Dict> getDict = dictMapper.getDict(params);
+			List<UserInfo> getUser = userInfoMapper.getUser(params);
 			
-			return result.setSuccess(getDict);
+			return result.setSuccess(getUser);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return result.setSystemError();
@@ -31,12 +30,11 @@ public class DictServiceImpl implements DictService {
 	}
 
 	@Override
-	public ResultDTO editDict(UserInfo userInfo, Dict params) {
+	public ResultDTO editUser(UserInfo userInfo, UserInfo params) {
 		ResultDTO result = new ResultDTO();
 		try {
 //			params.setUpdateBy(userInfo.getId());
 			params.setUpdateDate(new Date());
-			dictMapper.editDict(params);
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,7 +43,7 @@ public class DictServiceImpl implements DictService {
 	}
 
 	@Override
-	public ResultDTO addDict(UserInfo userInfo, Dict params) {
+	public ResultDTO addUser(UserInfo userInfo, UserInfo params) {
 		ResultDTO result = new ResultDTO();
 		try {
 			params.setId(CommonUtil.getUUid());
@@ -54,7 +52,6 @@ public class DictServiceImpl implements DictService {
 //			params.setCreateDate(new Date());
 //			params.setUpdateBy(userInfo.getId());
 //			params.setUpdateDate(new Date());
-			dictMapper.addDict(params);
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
