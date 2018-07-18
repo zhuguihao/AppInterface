@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.common.service.DictService;
+import com.common.service.CommonMenuService;
 import com.common.service.UserService;
 import com.gubang.config.UserInfoParam;
 import com.gubang.entity.Dict;
+import com.gubang.entity.Menu;
 import com.gubang.entity.UserInfo;
 import com.gubang.util.ResultDTO;
 
@@ -19,6 +21,8 @@ public class ServiceCenter {
 	private DictService dictService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CommonMenuService menuService;
 
 	/**
 	 * 获取数据字典
@@ -58,5 +62,25 @@ public class ServiceCenter {
 	@RequestMapping(value = "/getUser", method = RequestMethod.POST)
 	public ResultDTO getUser(@UserInfoParam UserInfo userInfo, @RequestBody UserInfo params) {
 		return userService.getUser(userInfo, params);
+	}
+	
+	/**
+	 * 获取用户信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
+	public ResultDTO editUser(@UserInfoParam UserInfo userInfo, @RequestBody UserInfo params) {
+		return userService.editUser(userInfo, params);
+	}
+	
+	/**
+	 * 获取菜单数据
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/getMenu", method = RequestMethod.POST)
+	public ResultDTO getMenu(@UserInfoParam UserInfo userInfo, @RequestBody Menu params) {
+		return menuService.getMenu(userInfo, params);
 	}
 }

@@ -291,13 +291,15 @@
 		from t_user
 		<where>
 			<if test='account != null and account != ""'>
-				and account = #{account,jdbcType=VARCHAR}
+				and account like
+				concat('%',#{account,jdbcType=VARCHAR},'%')
 			</if>
 			<if test='nickName != null and nickName != ""'>
-				and nick_name = #{nickName,jdbcType=VARCHAR}
+				and nick_name like
+				concat('%',#{nickName,jdbcType=VARCHAR},'%')
 			</if>
 		</where>
-		order by update_date
+		order by create_date desc
 	</select>
 
 </mapper>

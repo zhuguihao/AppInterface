@@ -7,4 +7,5 @@ import com.gubang.vo.MenuVo;
 
 public interface MenuMapper {
 	List<Menu> selectMenuByGroup(MenuVo params);
+	List<Menu> getMenu(Menu params);
 }

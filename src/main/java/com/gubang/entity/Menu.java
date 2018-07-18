@@ -26,6 +26,10 @@ public class Menu implements Serializable {
 	 * 菜单跳转参数
 	 */
 	private String menuParams;
+	/**
+	 * 类型
+	 */
+	private String type;
 	private String createBy;
 	private Date createDate;
 	private String updateBy;
@@ -70,6 +74,14 @@ public class Menu implements Serializable {
 
 	public void setMenuParams(String menuParams) {
 		this.menuParams = menuParams;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getCreateBy() {

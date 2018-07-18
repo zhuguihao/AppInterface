@@ -1,28 +1,28 @@
 package com.common.service.impl;
 
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
-import com.common.service.UserService;
+import com.common.service.CommonMenuService;
+import com.gubang.entity.Menu;
 import com.gubang.entity.UserInfo;
-import com.gubang.mapper.UserInfoMapper;
+import com.gubang.mapper.MenuMapper;
 import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class CommonMenuServiceImpl implements CommonMenuService {
 	@Autowired
-	UserInfoMapper userInfoMapper;
+	MenuMapper menuMapper;
 	
 	@Override
-	public ResultDTO getUser(UserInfo userInfo, UserInfo params) {
+	public ResultDTO getMenu(UserInfo userInfo, Menu params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			List<UserInfo> getUser = userInfoMapper.getUser(params);
+			List<Menu> getMenu = menuMapper.getMenu(params);
 			
-			return result.setSuccess(getUser);
+			return result.setSuccess(getMenu);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return result.setSystemError();
@@ -30,12 +30,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResultDTO editUser(UserInfo userInfo, UserInfo params) {
+	public ResultDTO editMenu(UserInfo userInfo, Menu params) {
 		ResultDTO result = new ResultDTO();
 		try {
 //			params.setUpdateBy(userInfo.getId());
-			params.setUpdateDate(new Date());
-			userInfoMapper.updateByPrimaryKeySelective(params);
+//			params.setUpdateDate(new Date());
+//			menuMapper.updateByPrimaryKeySelective(params);
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResultDTO addUser(UserInfo userInfo, UserInfo params) {
+	public ResultDTO addMenu(UserInfo userInfo, Menu params) {
 		ResultDTO result = new ResultDTO();
 		try {
 			params.setId(CommonUtil.getUUid());
