@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
+import com.common.dto.DictDto;
 import com.common.service.DictService;
 import com.gubang.entity.Dict;
 import com.gubang.entity.UserInfo;
@@ -56,6 +57,22 @@ public class DictServiceImpl implements DictService {
 //			params.setUpdateDate(new Date());
 			dictMapper.addDict(params);
 			return result.setSuccess(new JSONObject());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return result.setSystemError();
+		}
+	}
+
+	@Override
+	public ResultDTO getDictList(UserInfo userInfo, DictDto params) {
+		ResultDTO result = new ResultDTO();
+		try {
+			if(params.inValid()){
+				return result.setParameterInvalid();
+			}
+			List<Dict> getDict = dictMapper.getDictList(params);
+			
+			return result.setSuccess(getDict);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return result.setSystemError();

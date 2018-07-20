@@ -110,7 +110,6 @@
 
 	<select id="getDict" resultMap="BaseResultMap" parameterType="com.gubang.entity.Dict">
 		select
-		(select count(id) from t_dict_tree) count,
 		<include refid="Base_Column_List" />		
 		from
 		t_dict_tree td
@@ -136,6 +135,27 @@
 			</if>
 			<if test='isDel != null and isDel != ""'>
 				and td.is_del = #{isDel,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by
+		td.parent_id,td.id,td.update_date
+	</select>
+	
+	<select id="getDictList" resultMap="BaseResultMap" parameterType="com.common.dto.DictDto">
+		select
+		<include refid="Base_Column_List" />		
+		from
+		t_dict_tree td
+		<where>
+			<if test='code != null and code != ""'>
+				and td.parent_id = (
+					select 
+						 trf.id
+					from 
+						t_dict_tree trf
+					where
+						trf.code = #{code,jdbcType=VARCHAR}
+				)
 			</if>
 		</where>
 		order by

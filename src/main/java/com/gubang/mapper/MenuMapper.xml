@@ -69,41 +69,62 @@
 		#{updateDate,jdbcType=TIMESTAMP}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="com.gubang.entity.ProductSaleApply">
-		insert into t_product_sale_apply
+	<insert id="insertSelective" parameterType="com.gubang.entity.Menu">
+		insert into t_sys_menu
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test='id != null and id != ""'>
 				id,
 			</if>
-			<if test='productSaleId != null and productSaleId != ""'>
-				product_sale_id,
+			<if test='menuUrl != null and menuUrl != ""'>
+				menu_url,
 			</if>
-			<if test='cusName != null and cusName != ""'>
-				cus_name,
+			<if test='menuIcon != null and menuIcon != ""'>
+				menu_icon,
 			</if>
-			<if test='cusTelphone != null and cusTelphone != ""'>
-				cus_telphone,
+			<if test='menuName != null and menuName != ""'>
+				menu_name,
 			</if>
-			<if test='faultPoint != null and faultPoint != ""'>
-				fault_point,
+			<if test='menuParams != null and menuParams != ""'>
+				menu_params,
 			</if>
-			<if test='applyStatus != null and applyStatus != ""'>
-				apply_status,
+			<if test='type != null and type != ""'>
+				type,
 			</if>
-			<if test='addressee != null and addressee != ""'>
-				addressee,
+			<if test='isDel != null and isDel != ""'>
+				is_del,
 			</if>
-			<if test='address != null and address != ""'>
-				address,
+			<if test='createBy != null and createBy != ""'>
+				create_by,
 			</if>
-			<if test='addressPhone != null and addressPhone != ""'>
-				address_phone,
+			<if test="createDate != null">
+				create_date,
 			</if>
-			<if test='waybillNumber != null and waybillNumber != ""'>
-				waybill_number,
+			<if test='updateBy != null and updateBy != ""'>
+				update_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test='id != null and id != ""'>
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test='menuUrl != null and menuUrl != ""'>
+				#{menuUrl,jdbcType=VARCHAR},
+			</if>
+			<if test='menuIcon != null and menuIcon != ""'>
+				#{menuIcon,jdbcType=VARCHAR},
+			</if>
+			<if test='menuName != null and menuName != ""'>
+				#{menuName,jdbcType=VARCHAR},
+			</if>
+			<if test='menuParams != null and menuParams != ""'>
+				#{menuParams,jdbcType=VARCHAR},
+			</if>
+			<if test='type != null and type != ""'>
+				#{type,jdbcType=VARCHAR},
+			</if>
 			<if test="isDel != null">
 				#{isDel,jdbcType=VARCHAR},
 			</if>
@@ -121,40 +142,28 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.ProductSaleApply">
-		update t_product_sale_apply
+	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.Menu">
+		update t_sys_menu
 		<set>
-			<if test='productSaleId != null and productSaleId != ""'>
-				product_sale_id = #{productSaleId,jdbcType=VARCHAR},
+			<if test='menuUrl != null and menuUrl != ""'>
+				menu_url = #{menuUrl,jdbcType=VARCHAR},
 			</if>
-			<if test='cusName != null and cusName != ""'>
-				cus_name = #{cusName,jdbcType=VARCHAR},
+			<if test='menuIcon != null and menuIcon != ""'>
+				menu_icon = #{menuIcon,jdbcType=VARCHAR},
 			</if>
-			<if test='cusTelphone != null and cusTelphone != ""'>
-				cus_telphone = #{cusTelphone,jdbcType=VARCHAR},
+			<if test='menuName != null and menuName != ""'>
+				menu_name = #{menuName,jdbcType=VARCHAR},
 			</if>
-			<if test='faultPoint != null and faultPoint != ""'>
-				fault_point = #{faultPoint,jdbcType=VARCHAR},
+			<if test='menuParams != null and menuParams != ""'>
+				menu_params = #{menuParams,jdbcType=VARCHAR},
 			</if>
-			<if test='applyStatus != null and applyStatus != ""'>
-				apply_status = #{applyStatus,jdbcType=VARCHAR},
+			<if test='type != null and type != ""'>
+				type = #{type,jdbcType=VARCHAR},
 			</if>
-			<if test='addressee != null and addressee != ""'>
-				addressee = #{addressee,jdbcType=VARCHAR},
-			</if>
-			<if test='address != null and address != ""'>
-				address = #{address,jdbcType=VARCHAR},
-			</if>
-			<if test='addressPhone != null and addressPhone != ""'>
-				address_phone = #{addressPhone,jdbcType=VARCHAR},
-			</if>
-			<if test='waybillNumber != null and waybillNumber != ""'>
-				waybill_number = #{waybillNumber,jdbcType=VARCHAR},
-			</if>
-			<if test='isDel != null and productStatus != ""'>
+			<if test='isDel != null and isDel != ""'>
 				is_del = #{isDel,jdbcType=VARCHAR},
 			</if>
-			<if test='updateBy != null and productStatus != ""'>
+			<if test='updateBy != null and updateBy != ""'>
 				update_by = #{updateBy,jdbcType=VARCHAR},
 			</if>
 			<if test="updateDate != null">
@@ -190,16 +199,16 @@
 		select
 		<include refid="Base_Column_List" />
 		from
-		t_sys_menu
+		t_sys_menu tsm
 		<where>
 			<if test='menuName != null and menuName != ""'>
-				and menu_name = #{menuName,jdbcType=VARCHAR}
+				and tsm.menu_name = #{menuName,jdbcType=VARCHAR}
 			</if>
 			<if test='type != null and type != ""'>
-				and type = #{type,jdbcType=VARCHAR}
+				and tsm.type = #{type,jdbcType=VARCHAR}
 			</if>
 		</where>
-		order by create_date
+		order by tsm.create_date
 	</select>
 	
 </mapper>

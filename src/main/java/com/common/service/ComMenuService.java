@@ -4,7 +4,7 @@ import com.gubang.entity.Menu;
 import com.gubang.entity.UserInfo;
 import com.gubang.util.ResultDTO;
 
-public interface CommonMenuService {
+public interface ComMenuService {
 
 	ResultDTO getMenu(UserInfo userInfo, Menu params);
 

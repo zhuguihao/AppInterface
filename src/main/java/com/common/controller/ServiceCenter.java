@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.common.service.DictService;
-import com.common.service.CommonMenuService;
+import com.common.service.ComMenuService;
 import com.common.service.UserService;
 import com.gubang.config.UserInfoParam;
 import com.gubang.entity.Dict;
@@ -22,7 +22,7 @@ public class ServiceCenter {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private CommonMenuService menuService;
+	private ComMenuService menuService;
 
 	/**
 	 * 获取数据字典
