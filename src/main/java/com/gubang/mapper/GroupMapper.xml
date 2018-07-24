@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gubang.mapper.GroupMapper">
+	<resultMap id="BaseResultMap" type="com.gubang.entity.Group">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="t_sys_company_id" property="tSysCompanyId" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+		<result column="group_code" property="groupCode" jdbcType="VARCHAR" />
+		<result column="group_name" property="groupName" jdbcType="VARCHAR" />
+		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,
+		t_sys_company_id,
+		parent_id,
+		group_code,
+		group_name,
+		is_del,
+		create_by,
+		create_date,
+		update_by,
+		update_date
+	</sql>
+
+	<insert id="addGroup" parameterType="com.gubang.entity.Dict">
+		insert into t_dict_tree
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test='id != null and id != ""'>
+				id,
+			</if>
+			<if test='code != null and code != ""'>
+				code,
+			</if>
+			<if test='value != null and value != ""'>
+				value,
+			</if>
+			<if test='parentId != null and parentId != ""'>
+				parent_id,
+			</if>
+			<if test='remarks != null and remarks != ""'>
+				remarks,
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				create_by,
+			</if>
+			<if test='createDate != null'>
+				create_date,
+			</if>
+			<if test='updateBy != null and updateBy != ""'>
+				update_by,
+			</if>
+			<if test='updateDate != null'>
+				update_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test='id != null and id != ""'>
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test='code != null and code != ""'>
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test='value != null and value != ""'>
+				#{value,jdbcType=VARCHAR},
+			</if>
+			<if test='parentId != null and parentId != ""'>
+				#{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test='remarks != null and remarks != ""'>
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test='updateBy != null and updateBy != ""'>
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="editGroup" parameterType="com.gubang.entity.Dict">
+		update
+		t_dict_tree td
+		<set>
+			<if test='code != null and code != ""'>
+				td.code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test='value != null and value != ""'>
+				td.value = #{value,jdbcType=VARCHAR},
+			</if>
+			<if test='remarks != null'>
+				td.remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test='isDel != null and isDel != ""'>
+				td.is_del = #{isDel,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<select id="getGroup" resultMap="BaseResultMap" parameterType="com.gubang.entity.Group">
+		select
+			<include refid="Base_Column_List" />
+		from
+			t_sys_group
+		<where>
+			<if test='groupCode != null and groupCode != ""'>
+				and group_code like
+					concat('%',#{groupCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test='groupName != null and groupName != ""'>
+				and group_name like
+					concat('%',#{groupName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test='isDel != null and isDel != ""'>
+				and is_del = #{isDel,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by
+			update_date
+	</select>
+	
+	<select id="getDictList" resultMap="BaseResultMap" parameterType="com.common.dto.DictDto">
+		select
+		<include refid="Base_Column_List" />		
+		from
+		t_dict_tree td
+		<where>
+			<if test='code != null and code != ""'>
+				and td.parent_id = (
+					select 
+						 trf.id
+					from 
+						t_dict_tree trf
+					where
+						trf.code = #{code,jdbcType=VARCHAR}
+				)
+			</if>
+		</where>
+		order by
+		td.parent_id,td.id,td.update_date
+	</select>
+</mapper>
