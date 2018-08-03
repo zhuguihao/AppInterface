@@ -1,6 +1,7 @@
 package com.gubang.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import com.gubang.util.EntityHelper;
 
 public class Group extends EntityHelper implements Serializable {
@@ -22,6 +23,10 @@ public class Group extends EntityHelper implements Serializable {
 	 * 角色名称
 	 */
 	private String groupName;
+	/**
+	 * 子节点
+	 */
+	private List<Group> children;
 
 	public String getId() {
 		return id;
@@ -61,6 +66,14 @@ public class Group extends EntityHelper implements Serializable {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+
+	public List<Group> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Group> children) {
+		this.children = children;
 	}
 
 }

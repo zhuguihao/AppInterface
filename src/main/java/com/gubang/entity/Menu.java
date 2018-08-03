@@ -4,11 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Menu implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8304531234759615890L;
-
 	private String id;
 	/**
 	 * 菜单URL
@@ -30,6 +26,14 @@ public class Menu implements Serializable {
 	 * 类型
 	 */
 	private String type;
+	/**
+	 * 是否为标题
+	 */
+	private String isTitle;
+	/**
+	 * 父级ID
+	 */
+	private String parentId;
 	private String createBy;
 	private Date createDate;
 	private String updateBy;
@@ -82,6 +86,22 @@ public class Menu implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getIsTitle() {
+		return isTitle;
+	}
+
+	public void setIsTitle(String isTitle) {
+		this.isTitle = isTitle;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 
 	public String getCreateBy() {

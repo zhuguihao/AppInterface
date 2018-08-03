@@ -2,6 +2,7 @@ package com.gubang.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.alibaba.druid.util.StringUtils;
 import com.gubang.dto.query.DownloadDto;
 import com.gubang.dto.query.OssDto;
 import com.gubang.dto.query.UploadDto;
@@ -15,6 +16,8 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,8 +89,8 @@ public class UtilServiceImpl implements UtilService {
 			if (params.inValid()) {
 				return null;
 			}
-			TFile file = new TFile();
-			file.setFileId(params.getFileId());
+//			TFile file = new TFile();
+//			file.setFileId(params.getFileId());
 
 //			TFile filelist = tFileMapper.selectByFileParams(file);
 
@@ -137,6 +140,26 @@ public class UtilServiceImpl implements UtilService {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public String uploadBase64(HttpServletResponse response, DownloadDto base64) {
+		OssDto oss = new OssDto();
+		oss.setBucketName("gbbucket");
+		if(StringUtils.isEmpty(base64.getFileId())){
+			return null;
+		}
+		oss.setFile(Base64.decodeBase64(base64.getFileId()));
+		oss.setFileName("test.jpg");
+		Date expiration = new Date(System.currentTimeMillis());
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(expiration);
+		calendar.add(Calendar.MONTH, 10);
+		expiration = calendar.getTime();
+		oss.setExpiration(expiration);
+		ossService.ossUpload(oss);
+		System.out.println(ossService.downLoadUrl(oss));
+		return null;
 	}
 
 }

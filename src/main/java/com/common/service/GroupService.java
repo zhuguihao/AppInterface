@@ -10,7 +10,7 @@ public interface GroupService {
 
 	ResultDTO editGroup(UserInfo userInfo, Group params);
 
-	ResultDTO addGroup(UserInfo userInfo, Group params);
+	ResultDTO addGroupChildren(UserInfo userInfo, Group params);
 
 //	ResultDTO getGroupList(UserInfo userInfo, DictDto params);
 }

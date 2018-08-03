@@ -8,6 +8,8 @@
 		<result column="menu_name" property="menuName" jdbcType="VARCHAR" />
 		<result column="menu_params" property="menuParams" jdbcType="VARCHAR" />
 		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="is_title" property="isTitle" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
 		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
 		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -22,6 +24,8 @@
 		tsm.menu_name,
 		tsm.menu_params,
 		tsm.type,
+		tsm.is_title,
+		tsm.parent_id,
 		tsm.is_del,
 		tsm.create_by,
 		tsm.create_date,
@@ -90,6 +94,12 @@
 			<if test='type != null and type != ""'>
 				type,
 			</if>
+			<if test='isTitle != null and isTitle != ""'>
+				is_title,
+			</if>
+			<if test='parentId != null and parentId != ""'>
+				parent_id,
+			</if>
 			<if test='isDel != null and isDel != ""'>
 				is_del,
 			</if>
@@ -125,6 +135,12 @@
 			<if test='type != null and type != ""'>
 				#{type,jdbcType=VARCHAR},
 			</if>
+			<if test='isTitle != null and isTitle != ""'>
+				#{isTitle,jdbcType=VARCHAR},
+			</if>
+			<if test='parentId != null and parentId != ""'>
+				#{parentId,jdbcType=VARCHAR},
+			</if>
 			<if test="isDel != null">
 				#{isDel,jdbcType=VARCHAR},
 			</if>
@@ -142,6 +158,7 @@
 			</if>
 		</trim>
 	</insert>
+
 	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.Menu">
 		update t_sys_menu
 		<set>
@@ -191,11 +208,11 @@
 			</if>
 		</where>
 		order by
-			tsm.index
+		tsm.index,
+		tsm.create_date
 	</select>
-	
-	<select id="getMenu" resultMap="BaseResultMap"
-		parameterType="com.gubang.entity.Menu">
+
+	<select id="getMenu" resultMap="BaseResultMap" parameterType="com.gubang.entity.Menu">
 		select
 		<include refid="Base_Column_List" />
 		from
@@ -210,5 +227,5 @@
 		</where>
 		order by tsm.create_date
 	</select>
-	
+
 </mapper>

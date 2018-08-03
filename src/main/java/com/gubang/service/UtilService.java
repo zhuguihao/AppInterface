@@ -14,4 +14,6 @@ public interface UtilService {
 
 	String downLoadStream(HttpServletResponse response, DownloadDto params);
 
+	String uploadBase64(HttpServletResponse response, DownloadDto base64);
+
 }

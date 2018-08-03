@@ -5,12 +5,18 @@ import java.io.StringWriter;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+
+import com.alibaba.fastjson.JSONArray;
+import com.gubang.entity.Group;
+
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -155,8 +161,8 @@ public class CommonUtil {
 		}
 		return null;
 	}
-	
-	public static String getFormatDate(Date date,String fromat) {
+
+	public static String getFormatDate(Date date, String fromat) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat(fromat);
 			return dateFormat.format(date);
@@ -179,4 +185,45 @@ public class CommonUtil {
 		// TODO Auto-generated method stub
 		return new BASE64Encoder().encode(bytes);
 	}
+
+	public static <T extends Group> List<T> formatTree(List<T> list, String parentId) {
+		List<T> nodeList = new ArrayList<T>();
+		for (T node1 : list) {
+			boolean mark = false;
+			for (T node2 : list) {
+				if (node1.getParentId() != null && node1.getParentId().equals(node2.getId())) {
+					mark = true;
+					if (node2.getChildren() == null) {
+						node2.setChildren(new ArrayList<Group>());
+					}
+					if (node1.getChildren() == null) {
+						node1.setChildren(new ArrayList<Group>());
+					}
+					node2.getChildren().add(node1);
+					break;
+				}
+			}
+			if (!mark) {
+				nodeList.add(node1);
+			}
+		}
+		return getParentTree(nodeList,new ArrayList<T>(),parentId);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T extends Group> List<T> getParentTree(List<T> list, ArrayList<T> nodeList,String parentId) {
+		for (T node1 : list) {
+			if(parentId.equals(node1.getId())){
+				nodeList.add(node1);
+				break;
+			}
+
+			if(node1.getChildren() != null && node1.getChildren().size()>0){
+				getParentTree((List<T>) node1.getChildren(),nodeList,parentId);
+			}
+		}
+
+		return nodeList;
+	}
+
 }
