@@ -1,10 +1,13 @@
 package com.common.dto;
 
 import com.alibaba.fastjson.JSONArray;
-import com.gubang.util.CommonUtil;
 import com.gubang.util.EntityHelper;
 
 public class RelationMenuDto extends EntityHelper {
+	/**
+	 * ID
+	 */
+	private String id;
 	/**
 	 * 角色ID
 	 */
@@ -17,6 +20,14 @@ public class RelationMenuDto extends EntityHelper {
 	 * 菜单类型
 	 */
 	private String type;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getRoleId() {
 		return roleId;
@@ -40,9 +51,5 @@ public class RelationMenuDto extends EntityHelper {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public boolean inValid() {
-		return CommonUtil.isEmpty(roleId);
 	}
 }

@@ -89,6 +89,16 @@ public class ServiceCenter {
 	}
 	
 	/**
+	 * 角色获取当前拥有的菜单信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/getWebMenu", method = RequestMethod.POST)
+	public ResultDTO getWebMenu(@UserInfoParam UserInfo userInfo, @RequestBody Menu params) {
+		return menuService.getWebMenu(userInfo, params);
+	}
+	
+	/**
 	 * 获取用户角色数据
 	 * 
 	 * @return

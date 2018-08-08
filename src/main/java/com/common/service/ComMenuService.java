@@ -18,4 +18,5 @@ public interface ComMenuService {
 
 	ResultDTO relationMenu(UserInfo userInfo, RelationMenuDto params);
 
+	ResultDTO getWebMenu(UserInfo userInfo, Menu params);
 }

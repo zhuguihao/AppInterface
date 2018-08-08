@@ -158,6 +158,26 @@ public class ResultDTO implements Serializable {
 	}
 	
 	/**
+	 * 账号不存在
+	 * @return
+	 */
+	public ResultDTO setAccountError() {
+		status = ResultCode.ACCOUNT_ERROR.getCode();
+		msg = ResultCode.ACCOUNT_ERROR.getDesc();
+		return this;
+	}
+	
+	/**
+	 * 密码错误
+	 * @return
+	 */
+	public ResultDTO setPwdError() {
+		status = ResultCode.PWD_ERROR.getCode();
+		msg = ResultCode.PWD_ERROR.getDesc();
+		return this;
+	}
+	
+	/**
 	 * 产品超过售后维修期
 	 * @return
 	 */

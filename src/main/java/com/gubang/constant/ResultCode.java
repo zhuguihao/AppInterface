@@ -16,6 +16,8 @@ public enum ResultCode {
 	NOT_FOUND_APPLY_SYS("not_found_apply_sys","当前的客服售后信息不存在"),
 	NOT_SALE_PRODUCT("not_sale_product","未查询到在售产品信息"),
 	BARCODE_ERROR("barcode_error","当前产品编号已存在"),
+	ACCOUNT_ERROR("account_error","账号异常，请联系管理员"),
+	PWD_ERROR("account_error","密码错误，请联系管理员"),
 	NOT_BARCODE_ERROR("not_barcode_error","当前产品编号不存在"),
 	PARAMETER_ERROR("invalid_parameter", "参数无效"),
 	SYSTEM_ERROR("system_error", "系统异常"),

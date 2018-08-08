@@ -54,7 +54,7 @@ public class ComMenuServiceImpl implements ComMenuService {
 		ResultDTO result = new ResultDTO();
 		try {
 			params.setId(CommonUtil.getUUid());
-			
+//			params.setParentId(StringUtils.isEmpty(params.getParentId())?userInfo.getGroupId():params.getParentId());
 //			params.setCreateBy(userInfo.getId());
 			params.setCreateDate(new Date());
 //			params.setUpdateBy(userInfo.getId());
@@ -72,13 +72,11 @@ public class ComMenuServiceImpl implements ComMenuService {
 	public ResultDTO relationMenu(UserInfo userInfo, RelationMenuDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			if(params.inValid()){
-				return result.setParameterInvalid();
-			}
 			/**
 			 * 1.删除所有角色ID相关的菜单关联
 			 * 2.按照前端传的重新绑定菜单关联
 			 */
+			params.setRoleId("bd3da831b8f04e8e99f772802b250d81");//userInfo.getGroupId()
 			menuCenterMapper.deleteRoleMenu(params);
 			if(params.getIds().size()>0){
 				menuCenterMapper.insertRoleMenu(params);
@@ -107,8 +105,19 @@ public class ComMenuServiceImpl implements ComMenuService {
 			 * 已选择的菜单那列表
 			 */
 			obj.put("checked", menuCenterMapper.getGroupMenuIds(menuCenter));
-			obj.put("menuList", getMenu);
+			obj.put("menuList", CommonUtil.formatMenu(getMenu));
 			return result.setSuccess(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return result.setSystemError();
+		}
+	}
+
+	@Override
+	public ResultDTO getWebMenu(UserInfo userInfo, Menu params) {
+		ResultDTO result = new ResultDTO();
+		try {
+			return result.setSuccess(CommonUtil.formatMenu(menuMapper.getMenu(params)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return result.setSystemError();

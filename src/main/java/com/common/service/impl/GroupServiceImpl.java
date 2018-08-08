@@ -27,7 +27,7 @@ public class GroupServiceImpl implements GroupService {
 			 * 3.格式化当前角色ID下的角色信息
 			 */
 			List<Group> getGroup = groupMapper.getGroup(params);
-			List<Group> treeGroup = CommonUtil.formatTree(getGroup,"eecc50564628472f938912e658a0627b");//userInfo.getGroupId()
+			List<Group> treeGroup = CommonUtil.formatTree(getGroup,userInfo.getGroupId());
 			return result.setSuccess(treeGroup);
 		} catch (Exception e) {
 			e.printStackTrace();

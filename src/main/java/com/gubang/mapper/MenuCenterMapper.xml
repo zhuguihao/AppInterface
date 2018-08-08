@@ -50,7 +50,7 @@
 			<foreach collection="ids" index="index" item="item"
 				separator=",">
 				<trim prefix="(" suffix=")" suffixOverrides=",">
-					replace(uuid(),'-',''),
+					replace(UUID(),'-',''),
 					#{item},
 					#{roleId},
 					<if test="isDel != null">
@@ -273,28 +273,6 @@
 			</if>
 		</where>
 	</update>
-
-	<select id="selectMenuByGroup" resultMap="BaseResultMap"
-		parameterType="com.gubang.vo.MenuVo">
-		select
-		<include refid="Base_Column_List" />
-		from
-		t_menu_center tmc,
-		t_sys_menu tsm
-		<where>
-			tmc.t_sys_menu_id = tsm.id
-			and
-			tmc.is_del = 'N'
-			and
-			tsm.is_del = 'N'
-			<if test='groupId != null and groupId != ""'>
-				and tmc.t_sys_group_id = #{groupId,jdbcType=VARCHAR}
-			</if>
-		</where>
-		order by
-		tsm.index
-	</select>
-
 
 
 </mapper>

@@ -16,6 +16,7 @@ import java.util.UUID;
 
 import com.alibaba.fastjson.JSONArray;
 import com.gubang.entity.Group;
+import com.gubang.entity.Menu;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -185,7 +186,71 @@ public class CommonUtil {
 		// TODO Auto-generated method stub
 		return new BASE64Encoder().encode(bytes);
 	}
+	
+	public static <T extends Menu> List<T> formatMenu(List<T> list) {
+		List<T> nodeList = new ArrayList<T>();
+		for (T node1 : list) {
+			boolean mark = false;
+			for (T node2 : list) {
+				if (node1.getParentId() != null && node1.getParentId().equals(node2.getId())) {
+					mark = true;
+					if (node2.getChildren() == null) {
+						node2.setChildren(new ArrayList<Menu>());
+					}
+					if (node1.getChildren() == null) {
+						node1.setChildren(new ArrayList<Menu>());
+					}
+					node2.getChildren().add(node1);
+					break;
+				}
+			}
+			if (!mark) {
+				nodeList.add(node1);
+			}
+		}
+		return nodeList;
+	}
 
+	public static <T extends Menu> List<T> formatMenuTree(List<T> list, String parentId) {
+		List<T> nodeList = new ArrayList<T>();
+		for (T node1 : list) {
+			boolean mark = false;
+			for (T node2 : list) {
+				if (node1.getParentId() != null && node1.getParentId().equals(node2.getId())) {
+					mark = true;
+					if (node2.getChildren() == null) {
+						node2.setChildren(new ArrayList<Menu>());
+					}
+					if (node1.getChildren() == null) {
+						node1.setChildren(new ArrayList<Menu>());
+					}
+					node2.getChildren().add(node1);
+					break;
+				}
+			}
+			if (!mark) {
+				nodeList.add(node1);
+			}
+		}
+		return getParentMenuTree(nodeList,new ArrayList<T>(),parentId);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T extends Menu> List<T> getParentMenuTree(List<T> list, ArrayList<T> nodeList,String parentId) {
+		for (T node1 : list) {
+			if(parentId.equals(node1.getId())){
+				nodeList.add(node1);
+				break;
+			}
+
+			if(node1.getChildren() != null && node1.getChildren().size()>0){
+				getParentMenuTree((List<T>) node1.getChildren(),nodeList,parentId);
+			}
+		}
+
+		return nodeList;
+	}
+	
 	public static <T extends Group> List<T> formatTree(List<T> list, String parentId) {
 		List<T> nodeList = new ArrayList<T>();
 		for (T node1 : list) {
@@ -210,7 +275,6 @@ public class CommonUtil {
 		return getParentTree(nodeList,new ArrayList<T>(),parentId);
 	}
 	
-	@SuppressWarnings("unchecked")
 	private static <T extends Group> List<T> getParentTree(List<T> list, ArrayList<T> nodeList,String parentId) {
 		for (T node1 : list) {
 			if(parentId.equals(node1.getId())){

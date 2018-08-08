@@ -2,6 +2,7 @@ package com.gubang.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Menu implements Serializable {
 	private static final long serialVersionUID = 8304531234759615890L;
@@ -39,6 +40,7 @@ public class Menu implements Serializable {
 	private String updateBy;
 	private Date updateDate;
 	private String isDel;
+	private List<Menu> children;
 
 	public String getId() {
 		return id;
@@ -142,6 +144,14 @@ public class Menu implements Serializable {
 
 	public void setIsDel(String isDel) {
 		this.isDel = isDel;
+	}
+
+	public List<Menu> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Menu> children) {
+		this.children = children;
 	}
 
 }
