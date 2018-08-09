@@ -281,7 +281,10 @@
 		select
 		<include refid="Base_Column_List" />
 		from t_user
-		where account = #{account,jdbcType=VARCHAR}
+		where 
+		is_del = 'N'
+		and
+		account = #{account,jdbcType=VARCHAR}
 	</select>
 	
 	<select id="getUser" parameterType="com.gubang.entity.UserInfo"

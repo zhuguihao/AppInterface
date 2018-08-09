@@ -190,12 +190,13 @@
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
 
-	<select id="selectMenuByGroup" resultMap="BaseResultMap" parameterType="com.gubang.vo.MenuVo">
+	<select id="selectMenuByGroup" resultMap="BaseResultMap"
+		parameterType="com.gubang.vo.MenuVo">
 		select
-			<include refid="Base_Column_List" />
+		<include refid="Base_Column_List" />
 		from
-			t_menu_center tmc,
-			t_sys_menu tsm
+		t_menu_center tmc,
+		t_sys_menu tsm
 		<where>
 			tmc.t_sys_menu_id = tsm.id
 			and
@@ -218,7 +219,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from
-			t_sys_menu tsm
+		t_sys_menu tsm
 		<where>
 			tsm.is_del = 'N'
 			<if test='menuName != null and menuName != ""'>
@@ -227,9 +228,12 @@
 			<if test='type != null and type != ""'>
 				and tsm.type = #{type,jdbcType=VARCHAR}
 			</if>
+			<if test='isTitle != null and isTitle != ""'>
+				and tsm.is_title = #{isTitle,jdbcType=VARCHAR}
+			</if>
 		</where>
-		order by 
-			tsm.create_date desc
+		order by
+		tsm.create_date desc
 	</select>
 
 </mapper>

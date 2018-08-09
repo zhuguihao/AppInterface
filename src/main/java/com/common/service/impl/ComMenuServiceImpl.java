@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.common.dto.GroupMenuDto;
 import com.common.dto.RelationMenuDto;
@@ -23,11 +25,14 @@ public class ComMenuServiceImpl implements ComMenuService {
 	private MenuMapper menuMapper;
 	@Autowired
 	private MenuCenterMapper menuCenterMapper;
-	
+
 	@Override
 	public ResultDTO getMenu(UserInfo userInfo, Menu params) {
 		ResultDTO result = new ResultDTO();
 		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
 			return result.setSuccess(menuMapper.getMenu(params));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,7 +44,10 @@ public class ComMenuServiceImpl implements ComMenuService {
 	public ResultDTO editMenu(UserInfo userInfo, Menu params) {
 		ResultDTO result = new ResultDTO();
 		try {
-//			params.setUpdateBy(userInfo.getId());
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			params.setUpdateBy(userInfo.getId());
 			params.setUpdateDate(new Date());
 			menuMapper.updateByPrimaryKeySelective(params);
 			return result.setSuccess(new JSONObject());
@@ -53,11 +61,15 @@ public class ComMenuServiceImpl implements ComMenuService {
 	public ResultDTO addMenu(UserInfo userInfo, Menu params) {
 		ResultDTO result = new ResultDTO();
 		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
 			params.setId(CommonUtil.getUUid());
-//			params.setParentId(StringUtils.isEmpty(params.getParentId())?userInfo.getGroupId():params.getParentId());
-//			params.setCreateBy(userInfo.getId());
+			params.setParentId(
+					StringUtils.isEmpty(params.getParentId()) ? userInfo.getGroupId() : params.getParentId());
+			params.setCreateBy(userInfo.getId());
 			params.setCreateDate(new Date());
-//			params.setUpdateBy(userInfo.getId());
+			params.setUpdateBy(userInfo.getId());
 			params.setUpdateDate(new Date());
 			menuMapper.insertSelective(params);
 			return result.setSuccess(new JSONObject());
@@ -72,13 +84,23 @@ public class ComMenuServiceImpl implements ComMenuService {
 	public ResultDTO relationMenu(UserInfo userInfo, RelationMenuDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			
+			if(params.inValid()){
+				return result.setParameterInvalid();
+			}
 			/**
-			 * 1.删除所有角色ID相关的菜单关联
-			 * 2.按照前端传的重新绑定菜单关联
+			 * 1.删除所有角色ID相关的菜单关联 2.按照前端传的重新绑定菜单关联
 			 */
-			params.setRoleId("bd3da831b8f04e8e99f772802b250d81");//userInfo.getGroupId()
+			params.setRoleId(params.getRoleId());
+			params.setUpdateBy(userInfo.getId());
+			params.setUpdateDate(new Date());
 			menuCenterMapper.deleteRoleMenu(params);
-			if(params.getIds().size()>0){
+			if (params.getIds().size() > 0) {
+				params.setCreateBy(userInfo.getId());
+				params.setCreateDate(new Date());
 				menuCenterMapper.insertRoleMenu(params);
 			}
 			return result.setSuccess(new JSONObject());
@@ -92,12 +114,12 @@ public class ComMenuServiceImpl implements ComMenuService {
 	public ResultDTO getGroupMenu(UserInfo userInfo, GroupMenuDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			if(params.inValid()){
+			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
 			Menu menu = new Menu();
 			menu.setType(params.getType());
-			List<Menu> getMenu = menuMapper.getMenu(menu );
+			List<Menu> getMenu = menuMapper.getMenu(menu);
 			MenuCenter menuCenter = new MenuCenter();
 			menuCenter.settSysGroupId(params.getRoleId());
 			JSONObject obj = new JSONObject();

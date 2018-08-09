@@ -275,6 +275,7 @@ public class CommonUtil {
 		return getParentTree(nodeList,new ArrayList<T>(),parentId);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static <T extends Group> List<T> getParentTree(List<T> list, ArrayList<T> nodeList,String parentId) {
 		for (T node1 : list) {
 			if(parentId.equals(node1.getId())){

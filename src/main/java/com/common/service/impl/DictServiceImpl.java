@@ -17,13 +17,13 @@ import com.gubang.util.ResultDTO;
 public class DictServiceImpl implements DictService {
 	@Autowired
 	private DictMapper dictMapper;
-	
+
 	@Override
 	public ResultDTO getDict(UserInfo userInfo, Dict params) {
 		ResultDTO result = new ResultDTO();
 		try {
 			List<Dict> getDict = dictMapper.getDict(params);
-			
+
 			return result.setSuccess(getDict);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -35,7 +35,10 @@ public class DictServiceImpl implements DictService {
 	public ResultDTO editDict(UserInfo userInfo, Dict params) {
 		ResultDTO result = new ResultDTO();
 		try {
-//			params.setUpdateBy(userInfo.getId());
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			params.setUpdateBy(userInfo.getId());
 			params.setUpdateDate(new Date());
 			dictMapper.editDict(params);
 			return result.setSuccess(new JSONObject());
@@ -49,12 +52,15 @@ public class DictServiceImpl implements DictService {
 	public ResultDTO addDict(UserInfo userInfo, Dict params) {
 		ResultDTO result = new ResultDTO();
 		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
 			params.setId(CommonUtil.getUUid());
-			
-//			params.setCreateBy(userInfo.getId());
-//			params.setCreateDate(new Date());
-//			params.setUpdateBy(userInfo.getId());
-//			params.setUpdateDate(new Date());
+
+			params.setCreateBy(userInfo.getId());
+			params.setCreateDate(new Date());
+			params.setUpdateBy(userInfo.getId());
+			params.setUpdateDate(new Date());
 			dictMapper.addDict(params);
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
@@ -67,11 +73,14 @@ public class DictServiceImpl implements DictService {
 	public ResultDTO getDictList(UserInfo userInfo, DictDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			if(params.inValid()){
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
 			List<Dict> getDict = dictMapper.getDictList(params);
-			
+
 			return result.setSuccess(getDict);
 		} catch (Exception e) {
 			e.printStackTrace();

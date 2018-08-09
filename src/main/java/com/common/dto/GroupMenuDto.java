@@ -11,6 +11,10 @@ public class GroupMenuDto {
 	 * 菜单类型
 	 */
 	private String type;
+	/**
+	 * 是否为菜单头部
+	 */
+	private String isTitle;
 
 	public String getRoleId() {
 		return roleId;
@@ -26,6 +30,14 @@ public class GroupMenuDto {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getIsTitle() {
+		return isTitle;
+	}
+
+	public void setIsTitle(String isTitle) {
+		this.isTitle = isTitle;
 	}
 
 	public boolean inValid() {

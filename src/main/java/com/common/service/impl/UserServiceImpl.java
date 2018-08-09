@@ -99,6 +99,7 @@ public class UserServiceImpl implements UserService {
 			}
 			MenuVo menu = new MenuVo();
 			menu.setType(params.getType());
+			menu.setGroupId(userEntity.getGroupId());
 
 			redisService.remove(Constant.REDIS_USER_KEY, userEntity.getToken());
 

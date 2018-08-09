@@ -1,6 +1,7 @@
 package com.common.dto;
 
 import com.alibaba.fastjson.JSONArray;
+import com.gubang.util.CommonUtil;
 import com.gubang.util.EntityHelper;
 
 public class RelationMenuDto extends EntityHelper {
@@ -51,5 +52,9 @@ public class RelationMenuDto extends EntityHelper {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	public boolean inValid() {
+		return CommonUtil.isEmpty(roleId);
 	}
 }
