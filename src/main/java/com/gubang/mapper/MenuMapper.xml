@@ -236,4 +236,33 @@
 		tsm.create_date desc
 	</select>
 
+	<select id="select" resultMap="BaseResultMap" parameterType="com.gubang.vo.MenuVo">
+		SELECT
+		DISTINCT
+		<include refid="Base_Column_List" />
+		FROM
+		t_user_group_center tugc,
+		t_sys_group tsg,
+		t_menu_center tmc,
+		t_sys_menu tsm
+		<where>
+			tugc.t_sys_group_id = tsg.id
+			and tmc.t_sys_group_id = tsg.id
+			and tmc.t_sys_menu_id = tsm.id
+			and tugc.is_del = 'N'
+			and tmc.is_del = 'N'
+			and tsg.is_del = 'N'
+			and tsm.is_del = 'N'
+			<if test='userId != null and userId != ""'>
+				and tugc.t_sys_user_id = #{userId,jdbcType=VARCHAR}
+			</if>
+			<if test='type != null and type != ""'>
+				and tsm.type = #{type,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by
+		tsm.index,
+		tsm.create_date
+	</select>
+
 </mapper>

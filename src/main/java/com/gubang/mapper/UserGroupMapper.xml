@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gubang.mapper.UserGroupMapper">
+	<resultMap id="BaseResultMap" type="com.gubang.entity.MenuCenter">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="t_sys_group_id" property="tSysGroupId"
+			jdbcType="VARCHAR" />
+		<result column="t_sys_user_id" property="tSysUserId" jdbcType="VARCHAR" />
+		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
+		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,
+		t_sys_group_id,
+		t_sys_user_id,
+		is_del,
+		create_by,
+		create_date,
+		update_by,
+		update_date
+	</sql>
+
+	<insert id="insertRoleMenu" parameterType="com.common.dto.RelationMenuDto">
+		insert into t_menu_center
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			t_sys_menu_id,
+			t_sys_group_id,
+			<if test='isDel != null and isDel != ""'>
+				is_del,
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				create_by,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test='updateBy != null and updateBy != ""'>
+				update_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+		</trim>
+		<trim prefix="values" suffixOverrides=",">
+			<foreach collection="ids" index="index" item="item"
+				separator=",">
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+					replace(UUID(),'-',''),
+					#{item},
+					#{roleId},
+					<if test="isDel != null">
+						#{isDel,jdbcType=VARCHAR},
+					</if>
+					<if test='createBy != null and createBy != ""'>
+						#{createBy,jdbcType=VARCHAR},
+					</if>
+					<if test="createDate != null">
+						#{createDate,jdbcType=TIMESTAMP},
+					</if>
+					<if test='updateBy != null and updateBy != ""'>
+						#{updateBy,jdbcType=VARCHAR},
+					</if>
+					<if test="updateDate != null">
+						#{updateDate,jdbcType=TIMESTAMP},
+					</if>
+				</trim>
+			</foreach>
+		</trim>
+	</insert>
+
+	<select id="getGroupMenuIds" resultType="String"
+		parameterType="com.gubang.entity.MenuCenter">
+		select
+		t_sys_menu_id id
+		from
+		t_menu_center
+		<where>
+			and is_del = 'N'
+			<if test='tSysGroupId != null and tSysGroupId != ""'>
+				and t_sys_group_id = #{tSysGroupId,jdbcType=VARCHAR}
+			</if>
+			<if test='tSysMenuId != null and tSysMenuId != ""'>
+				and t_sys_menu_id = #{tSysMenuId,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insert" parameterType="com.gubang.entity.ProductSaleApply">
+		insert into
+		t_product_sale_apply (
+		id,
+		product_sale_id,
+		cus_name,
+		cus_telphone,
+		fault_point,
+		apply_status,
+		addressee,
+		address,
+		address_phone,
+		waybill_number,
+		type,
+		is_del,
+		create_by,
+		create_date,
+		update_by,
+		update_date
+		)
+		values
+		(
+		#{id,jdbcType=VARCHAR},
+		#{productSaleId,jdbcType=VARCHAR},
+		#{cusName,jdbcType=VARCHAR},
+		#{cusTelphone,jdbcType=VARCHAR},
+		#{faultPoint,jdbcType=VARCHAR},
+		#{applyStatus,jdbcType=VARCHAR},
+		#{addressee,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{addressPhone,jdbcType=VARCHAR},
+		#{waybillNumber,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR},
+		#{isDel,jdbcType=VARCHAR},
+		#{createBy,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{updateBy,jdbcType=VARCHAR},
+		#{updateDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.gubang.entity.Menu">
+		insert into t_sys_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test='id != null and id != ""'>
+				id,
+			</if>
+			<if test='menuUrl != null and menuUrl != ""'>
+				menu_url,
+			</if>
+			<if test='menuIcon != null and menuIcon != ""'>
+				menu_icon,
+			</if>
+			<if test='menuName != null and menuName != ""'>
+				menu_name,
+			</if>
+			<if test='menuParams != null and menuParams != ""'>
+				menu_params,
+			</if>
+			<if test='type != null and type != ""'>
+				type,
+			</if>
+			<if test='isDel != null and isDel != ""'>
+				is_del,
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				create_by,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test='updateBy != null and updateBy != ""'>
+				update_by,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test='id != null and id != ""'>
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test='menuUrl != null and menuUrl != ""'>
+				#{menuUrl,jdbcType=VARCHAR},
+			</if>
+			<if test='menuIcon != null and menuIcon != ""'>
+				#{menuIcon,jdbcType=VARCHAR},
+			</if>
+			<if test='menuName != null and menuName != ""'>
+				#{menuName,jdbcType=VARCHAR},
+			</if>
+			<if test='menuParams != null and menuParams != ""'>
+				#{menuParams,jdbcType=VARCHAR},
+			</if>
+			<if test='type != null and type != ""'>
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="isDel != null">
+				#{isDel,jdbcType=VARCHAR},
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				#{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test='updateBy != null and updateBy != ""'>
+				#{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.gubang.entity.Menu">
+		update t_sys_menu
+		<set>
+			<if test='menuUrl != null and menuUrl != ""'>
+				menu_url = #{menuUrl,jdbcType=VARCHAR},
+			</if>
+			<if test='menuIcon != null and menuIcon != ""'>
+				menu_icon = #{menuIcon,jdbcType=VARCHAR},
+			</if>
+			<if test='menuName != null and menuName != ""'>
+				menu_name = #{menuName,jdbcType=VARCHAR},
+			</if>
+			<if test='menuParams != null and menuParams != ""'>
+				menu_params = #{menuParams,jdbcType=VARCHAR},
+			</if>
+			<if test='type != null and type != ""'>
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test='isDel != null and isDel != ""'>
+				is_del = #{isDel,jdbcType=VARCHAR},
+			</if>
+			<if test='updateBy != null and updateBy != ""'>
+				update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<update id="deleteRoleMenu" parameterType="com.common.dto.RelationMenuDto">
+		update t_menu_center tmc
+		<set>
+			tmc.is_del = 'Y',
+			<if test='updateBy != null and updateBy != ""'>
+				tmc.update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				tmc.update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<where>
+			<if test='roleId != null and roleId != ""'>
+				and tmc.t_sys_group_id = #{roleId,jdbcType=VARCHAR}
+			</if>
+			<if test='type != null and type != ""'>
+				and tmc.t_sys_menu_id in
+				(
+				SELECT
+				ta.id
+				FROM
+				(
+				select
+				tsm.id
+				from
+				t_sys_menu tsm,
+				t_menu_center tmc
+				<where>
+					and tmc.t_sys_menu_id = tsm.id
+					and tsm.is_del = 'N'
+					and tmc.is_del = 'N'
+					<if test='type != null and type != ""'>
+						and tsm.type = #{type,jdbcType=VARCHAR}
+					</if>
+					<if test='roleId != null and roleId != ""'>
+						and tmc.t_sys_group_id = #{roleId,jdbcType=VARCHAR}
+					</if>
+				</where>
+				) AS ta
+				)
+			</if>
+		</where>
+	</update>
+
+
+</mapper>

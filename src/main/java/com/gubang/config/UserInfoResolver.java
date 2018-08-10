@@ -1,14 +1,12 @@
 package com.gubang.config;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-
 import com.gubang.constant.Constant;
 import com.gubang.entity.UserInfo;
 import com.gubang.service.RedisService;
@@ -30,5 +28,4 @@ public class UserInfoResolver implements HandlerMethodArgumentResolver {
         String token = servletRequest.getHeader(Constant.TOKEN_HEADER_KEY);
         return redisService.get(Constant.REDIS_USER_KEY, token, UserInfo.class);
     }
-
 }

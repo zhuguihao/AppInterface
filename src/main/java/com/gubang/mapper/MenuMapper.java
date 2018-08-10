@@ -9,5 +9,5 @@ public interface MenuMapper {
 	List<Menu> getMenu(Menu params);
 	void updateByPrimaryKeySelective(Menu params);
 	void insertSelective(Menu params);
-	
+	List<Menu> select(MenuVo params);
 }

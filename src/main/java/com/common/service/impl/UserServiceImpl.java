@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
 			}
 			MenuVo menu = new MenuVo();
 			menu.setType(params.getType());
-			menu.setGroupId(userEntity.getGroupId());
+			menu.setUserId(userEntity.getId());
 
 			redisService.remove(Constant.REDIS_USER_KEY, userEntity.getToken());
 
@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
 			loginInfo.setToken(token);
 			loginInfo.setUserInfo(userEntity);
 			loginInfo.getUserInfo().setToken(token);
-			loginInfo.setMenuList(CommonUtil.formatMenu(menuMapper.selectMenuByGroup(menu)));
+			loginInfo.setMenuList(CommonUtil.formatMenu(menuMapper.select(menu)));
 
 			return result.setSuccess(loginInfo);
 		} catch (Exception e) {
