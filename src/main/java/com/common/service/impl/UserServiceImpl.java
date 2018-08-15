@@ -8,16 +8,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
+import com.common.dto.GetGroupUserDto;
 import com.common.dto.LoginDto;
 import com.common.dto.LoginResult;
 import com.common.service.UserService;
 import com.gubang.constant.Constant;
+import com.gubang.entity.GroupUserCenter;
 import com.gubang.entity.UserInfo;
 import com.gubang.mapper.MenuMapper;
+import com.gubang.mapper.UserGroupMapper;
 import com.gubang.mapper.UserInfoMapper;
 import com.gubang.service.RedisService;
 import com.gubang.util.CommonUtil;
 import com.gubang.util.ResultDTO;
+import com.gubang.vo.GroupUserVo;
 import com.gubang.vo.MenuVo;
 
 @Service
@@ -26,16 +30,21 @@ public class UserServiceImpl implements UserService {
 	UserInfoMapper userInfoMapper;
 	@Autowired
 	RedisService redisService;
-	@Value(value = "${redis.userinfo.timeout}")
-	private Long timeout;
-
 	@Autowired
 	private MenuMapper menuMapper;
+	@Autowired
+	private UserGroupMapper userGroupMapper;
+	@Value(value = "${redis.userinfo.timeout}")
+	private Long timeout;
 
 	@Override
 	public ResultDTO getUser(UserInfo userInfo, UserInfo params) {
 		ResultDTO result = new ResultDTO();
 		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+
 			List<UserInfo> getUser = userInfoMapper.getUser(params);
 
 			return result.setSuccess(getUser);
@@ -46,10 +55,43 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public ResultDTO getGroupUser(UserInfo userInfo, GetGroupUserDto params) {
+		ResultDTO result = new ResultDTO();
+		try {
+			if (params.inValid()) {
+				return result.setParameterInvalid();
+			}
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+
+			GroupUserVo groupUserVo = new GroupUserVo();
+
+			UserInfo user = new UserInfo();
+			user.setAccount(params.getAccount());
+			user.setNickName(params.getNickName());
+			groupUserVo.setUserList(userInfoMapper.getUser(user));
+
+			GroupUserCenter groupUserCenter = new GroupUserCenter();
+			groupUserCenter.settSysGroupId(params.getRoleId());
+			groupUserCenter.settSysUserId(params.getUserId());
+			groupUserVo.setCheckedList(userGroupMapper.getGroupUserIds(groupUserCenter));
+
+			return result.setSuccess(groupUserVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return result.setSystemError();
+		}
+	}
+
+	@Override
 	public ResultDTO editUser(UserInfo userInfo, UserInfo params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			// params.setUpdateBy(userInfo.getId());
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			params.setUpdateBy(userInfo.getId());
 			params.setUpdateDate(new Date());
 			userInfoMapper.updateByPrimaryKeySelective(params);
 			return result.setSuccess(new JSONObject());
@@ -63,12 +105,15 @@ public class UserServiceImpl implements UserService {
 	public ResultDTO addUser(UserInfo userInfo, UserInfo params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			params.setId(CommonUtil.getUUid());
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
 
-			// params.setCreateBy(userInfo.getId());
-			// params.setCreateDate(new Date());
-			// params.setUpdateBy(userInfo.getId());
-			// params.setUpdateDate(new Date());
+			params.setId(CommonUtil.getUUid());
+			params.setCreateBy(userInfo.getId());
+			params.setCreateDate(new Date());
+			params.setUpdateBy(userInfo.getId());
+			params.setUpdateDate(new Date());
 			return result.setSuccess(new JSONObject());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,6 +142,7 @@ public class UserServiceImpl implements UserService {
 			if (!userEntity.getPassword().equals(CommonUtil.md5(params.getPwd()))) {
 				return result.setPwdError();
 			}
+			
 			MenuVo menu = new MenuVo();
 			menu.setType(params.getType());
 			menu.setUserId(userEntity.getId());
@@ -108,7 +154,7 @@ public class UserServiceImpl implements UserService {
 			UserInfo updateEntity = new UserInfo();
 			updateEntity.setId(userEntity.getId());
 			updateEntity.setLastLoginDate(lastLoginDate);
-			updateEntity.setToken(token);
+//			updateEntity.setToken(token);
 			userInfoMapper.updateByPrimaryKeySelective(updateEntity);
 
 			redisService.set(Constant.REDIS_USER_KEY, token, userEntity, timeout);

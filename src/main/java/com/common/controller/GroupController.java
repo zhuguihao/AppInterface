@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.common.dto.RelationGroupUserDto;
+import com.common.dto.RelationMenuDto;
 import com.common.service.GroupService;
 import com.gubang.config.UserInfoParam;
 import com.gubang.entity.Group;
@@ -34,5 +37,25 @@ public class GroupController {
 	@RequestMapping(value = "/editGroup", method = RequestMethod.POST)
 	public ResultDTO editGroup(@UserInfoParam UserInfo userInfo, @RequestBody Group params) {
 		return groupService.editGroup(userInfo, params);
+	}
+	
+	/**
+	 * 角色关联菜单表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/relationMenu", method = RequestMethod.POST)
+	public ResultDTO relationMenu(@UserInfoParam UserInfo userInfo, @RequestBody RelationMenuDto params) {
+		return groupService.relationMenu(userInfo, params);
+	}
+	
+	/**
+	 * 角色关联人员表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/relationUser", method = RequestMethod.POST)
+	public ResultDTO relationUser(@UserInfoParam UserInfo userInfo, @RequestBody RelationGroupUserDto params) {
+		return groupService.relationUser(userInfo, params);
 	}
 }

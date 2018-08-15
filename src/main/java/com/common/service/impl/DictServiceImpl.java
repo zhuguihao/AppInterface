@@ -22,6 +22,10 @@ public class DictServiceImpl implements DictService {
 	public ResultDTO getDict(UserInfo userInfo, Dict params) {
 		ResultDTO result = new ResultDTO();
 		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
+			
 			List<Dict> getDict = dictMapper.getDict(params);
 
 			return result.setSuccess(getDict);

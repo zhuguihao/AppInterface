@@ -1,11 +1,11 @@
 package com.gubang.mapper;
 
 import java.util.List;
-import com.common.dto.RelationMenuDto;
-import com.gubang.entity.MenuCenter;
+import com.common.dto.RelationGroupUserDto;
+import com.gubang.entity.GroupUserCenter;
 
 public interface UserGroupMapper {
-	int insertRoleMenu(RelationMenuDto params);
-	List<String> getGroupMenuIds(MenuCenter params);
-	int deleteRoleMenu(RelationMenuDto params);
+	int insertRoleUser(RelationGroupUserDto params);
+	List<String> getGroupUserIds(GroupUserCenter params);
+	int deleteRoleUser(RelationGroupUserDto params);
 }

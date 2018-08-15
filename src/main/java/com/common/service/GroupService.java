@@ -1,5 +1,7 @@
 package com.common.service;
 
+import com.common.dto.RelationGroupUserDto;
+import com.common.dto.RelationMenuDto;
 import com.gubang.entity.Group;
 import com.gubang.entity.UserInfo;
 import com.gubang.util.ResultDTO;
@@ -12,5 +14,7 @@ public interface GroupService {
 
 	ResultDTO addGroupChildren(UserInfo userInfo, Group params);
 
-//	ResultDTO getGroupList(UserInfo userInfo, DictDto params);
+	ResultDTO relationMenu(UserInfo userInfo, RelationMenuDto params);
+	
+	ResultDTO relationUser(UserInfo userInfo, RelationGroupUserDto params);
 }

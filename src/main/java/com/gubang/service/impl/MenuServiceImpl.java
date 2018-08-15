@@ -31,9 +31,7 @@ public class MenuServiceImpl implements MenuService {
 		ResultDTO result = new ResultDTO();
 		try {
 			MenuVo menuVo = new MenuVo();
-			if(null == userInfo){
-				menuVo.setGroupId(Constant.NO_USER_MENU_KEY);
-			}else if(StringUtils.isEmpty(userInfo.getGroupId())){
+			if(null == userInfo || StringUtils.isEmpty(userInfo.getGroupId())){
 				menuVo.setGroupId(Constant.NO_USER_MENU_KEY);
 			}else{
 				menuVo.setGroupId(userInfo.getGroupId());

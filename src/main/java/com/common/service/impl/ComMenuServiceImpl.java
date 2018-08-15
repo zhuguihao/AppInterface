@@ -4,12 +4,9 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.common.dto.GroupMenuDto;
-import com.common.dto.RelationMenuDto;
 import com.common.service.ComMenuService;
 import com.gubang.entity.Menu;
 import com.gubang.entity.MenuCenter;
@@ -80,43 +77,17 @@ public class ComMenuServiceImpl implements ComMenuService {
 	}
 
 	@Override
-	@Transactional
-	public ResultDTO relationMenu(UserInfo userInfo, RelationMenuDto params) {
+	public ResultDTO getGroupMenu(UserInfo userInfo, GroupMenuDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
 			if (null == userInfo) {
 				return result.setNotLogin();
 			}
-			
-			if(params.inValid()){
-				return result.setParameterInvalid();
-			}
-			/**
-			 * 1.删除所有角色ID相关的菜单关联 2.按照前端传的重新绑定菜单关联
-			 */
-			params.setRoleId(params.getRoleId());
-			params.setUpdateBy(userInfo.getId());
-			params.setUpdateDate(new Date());
-			menuCenterMapper.deleteRoleMenu(params);
-			if (params.getIds().size() > 0) {
-				params.setCreateBy(userInfo.getId());
-				params.setCreateDate(new Date());
-				menuCenterMapper.insertRoleMenu(params);
-			}
-			return result.setSuccess(new JSONObject());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return result.setSystemError();
-		}
-	}
 
-	@Override
-	public ResultDTO getGroupMenu(UserInfo userInfo, GroupMenuDto params) {
-		ResultDTO result = new ResultDTO();
-		try {
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
+
 			Menu menu = new Menu();
 			menu.setType(params.getType());
 			List<Menu> getMenu = menuMapper.getMenu(menu);
@@ -139,6 +110,9 @@ public class ComMenuServiceImpl implements ComMenuService {
 	public ResultDTO getWebMenu(UserInfo userInfo, Menu params) {
 		ResultDTO result = new ResultDTO();
 		try {
+			if (null == userInfo) {
+				return result.setNotLogin();
+			}
 			return result.setSuccess(CommonUtil.formatMenu(menuMapper.getMenu(params)));
 		} catch (Exception e) {
 			e.printStackTrace();
