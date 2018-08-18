@@ -5,11 +5,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.common.dto.RelationGroupUserDto;
 import com.common.dto.RelationMenuDto;
 import com.common.service.GroupService;
-import com.gubang.config.UserInfoParam;
+import com.gubang.config.PCUserInfoParam;
 import com.gubang.entity.Group;
 import com.gubang.entity.UserInfo;
 import com.gubang.util.ResultDTO;
@@ -26,7 +25,7 @@ public class GroupController {
 	 * @return
 	 */
 	@RequestMapping(value = "/addGroupChildren", method = RequestMethod.POST)
-	public ResultDTO addGroupChildren(@UserInfoParam UserInfo userInfo, @RequestBody Group params) {
+	public ResultDTO addGroupChildren(@PCUserInfoParam UserInfo userInfo, @RequestBody Group params) {
 		return groupService.addGroupChildren(userInfo, params);
 	}
 
@@ -35,7 +34,7 @@ public class GroupController {
 	 * @return
 	 */
 	@RequestMapping(value = "/editGroup", method = RequestMethod.POST)
-	public ResultDTO editGroup(@UserInfoParam UserInfo userInfo, @RequestBody Group params) {
+	public ResultDTO editGroup(@PCUserInfoParam UserInfo userInfo, @RequestBody Group params) {
 		return groupService.editGroup(userInfo, params);
 	}
 	
@@ -45,7 +44,7 @@ public class GroupController {
 	 * @return
 	 */
 	@RequestMapping(value = "/relationMenu", method = RequestMethod.POST)
-	public ResultDTO relationMenu(@UserInfoParam UserInfo userInfo, @RequestBody RelationMenuDto params) {
+	public ResultDTO relationMenu(@PCUserInfoParam UserInfo userInfo, @RequestBody RelationMenuDto params) {
 		return groupService.relationMenu(userInfo, params);
 	}
 	
@@ -55,7 +54,7 @@ public class GroupController {
 	 * @return
 	 */
 	@RequestMapping(value = "/relationUser", method = RequestMethod.POST)
-	public ResultDTO relationUser(@UserInfoParam UserInfo userInfo, @RequestBody RelationGroupUserDto params) {
+	public ResultDTO relationUser(@PCUserInfoParam UserInfo userInfo, @RequestBody RelationGroupUserDto params) {
 		return groupService.relationUser(userInfo, params);
 	}
 }

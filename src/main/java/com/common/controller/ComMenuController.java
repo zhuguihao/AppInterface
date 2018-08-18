@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.common.dto.GroupMenuDto;
 import com.common.service.ComMenuService;
-import com.gubang.config.UserInfoParam;
+import com.gubang.config.PCUserInfoParam;
 import com.gubang.entity.Menu;
 import com.gubang.entity.UserInfo;
 import com.gubang.util.ResultDTO;
@@ -24,7 +24,7 @@ public class ComMenuController {
 	 * @return
 	 */
 	@RequestMapping(value = "/addMenu", method = RequestMethod.POST)
-	public ResultDTO addMenu(@UserInfoParam UserInfo userInfo, @RequestBody Menu params) {
+	public ResultDTO addMenu(@PCUserInfoParam UserInfo userInfo, @RequestBody Menu params) {
 		return menuService.addMenu(userInfo, params);
 	}
 
@@ -34,7 +34,7 @@ public class ComMenuController {
 	 * @return
 	 */
 	@RequestMapping(value = "/editMenu", method = RequestMethod.POST)
-	public ResultDTO editMenu(@UserInfoParam UserInfo userInfo, @RequestBody Menu params) {
+	public ResultDTO editMenu(@PCUserInfoParam UserInfo userInfo, @RequestBody Menu params) {
 		return menuService.editMenu(userInfo, params);
 	}
 	
@@ -44,7 +44,7 @@ public class ComMenuController {
 	 * @return
 	 */
 	@RequestMapping(value = "/getGroupMenu", method = RequestMethod.POST)
-	public ResultDTO getGroupMenu(@UserInfoParam UserInfo userInfo, @RequestBody GroupMenuDto params) {
+	public ResultDTO getGroupMenu(@PCUserInfoParam UserInfo userInfo, @RequestBody GroupMenuDto params) {
 		return menuService.getGroupMenu(userInfo, params);
 	}
 }

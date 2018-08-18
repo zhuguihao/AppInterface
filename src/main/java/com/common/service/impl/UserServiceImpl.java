@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	private MenuMapper menuMapper;
 	@Autowired
 	private UserGroupMapper userGroupMapper;
-	@Value(value = "${redis.userinfo.timeout}")
+	@Value(value = "${redis.pc.userinfo.timeout}")
 	private Long timeout;
 
 	@Override
@@ -130,6 +130,7 @@ public class UserServiceImpl implements UserService {
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}
+			
 			/**
 			 * 1.验证账号是否存在,判断是否是有后台权限的用户 2.校验是否存在角色ID，不存在则需要联系管理员 3.校验验证码是否正确
 			 * 4.验证密码是否正确 5.查询当前用户的菜单信息 6.成功后将客户信息插入缓存中
@@ -147,18 +148,18 @@ public class UserServiceImpl implements UserService {
 			menu.setType(params.getType());
 			menu.setUserId(userEntity.getId());
 
-			redisService.remove(Constant.REDIS_USER_KEY, userEntity.getToken());
+			redisService.remove(Constant.PC_REDIS_USER_KEY, userEntity.getToken());
 
 			String token = CommonUtil.getUUid();
 			Date lastLoginDate = new Date();
 			UserInfo updateEntity = new UserInfo();
 			updateEntity.setId(userEntity.getId());
 			updateEntity.setLastLoginDate(lastLoginDate);
-//			updateEntity.setToken(token);
+			updateEntity.setToken(token);
+			
 			userInfoMapper.updateByPrimaryKeySelective(updateEntity);
-
-			redisService.set(Constant.REDIS_USER_KEY, token, userEntity, timeout);
-
+			redisService.set(Constant.PC_REDIS_USER_KEY, token, userEntity, timeout);
+			
 			loginInfo.setLoginResult("登录成功");
 			loginInfo.setToken(token);
 			loginInfo.setUserInfo(userEntity);

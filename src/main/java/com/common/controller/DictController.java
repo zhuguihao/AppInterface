@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.common.dto.DictDto;
 import com.common.service.DictService;
-import com.gubang.config.UserInfoParam;
+import com.gubang.config.PCUserInfoParam;
 import com.gubang.entity.UserInfo;
 import com.gubang.util.ResultDTO;
 
@@ -23,7 +23,7 @@ public class DictController {
 	 * @return
 	 */
 	@RequestMapping(value = "/getDictList", method = RequestMethod.POST)
-	public ResultDTO getDictList(@UserInfoParam UserInfo userInfo, @RequestBody DictDto params) {
+	public ResultDTO getDictList(@PCUserInfoParam UserInfo userInfo, @RequestBody DictDto params) {
 		return dictService.getDictList(userInfo, params);
 	}
 }

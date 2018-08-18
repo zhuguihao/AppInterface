@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @SpringBootApplication
 @EnableWebMvc
-@ComponentScan(basePackages={"com.gubang,com.common"})
+@ComponentScan(basePackages={"com.gubang","com.common"})
 @MapperScan(basePackages = { "com.gubang.mapper" })
 @ServletComponentScan
 public class Application {

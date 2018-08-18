@@ -13,6 +13,8 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
 	@Autowired
 	UserInfoResolver userInfoResolver;
+	@Autowired
+	PCUserInfoResolver pCUserInfoResolver;
 
 	@Override
 	public void configurePathMatch(PathMatchConfigurer configurer) {
@@ -22,5 +24,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
 	@Override
 	protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		argumentResolvers.add(userInfoResolver);
+		argumentResolvers.add(pCUserInfoResolver);
 	}
 }

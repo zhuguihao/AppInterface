@@ -18,4 +18,6 @@ public interface ProductSeriesInfoMapper {
     int updateByPrimaryKey(ProductSeriesInfo record);
     
     List<ProductSeriesInfo> findAll();
+
+	List<ProductSeriesInfo> get(ProductSeriesInfo params);
 }

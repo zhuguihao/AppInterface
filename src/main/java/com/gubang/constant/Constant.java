@@ -4,6 +4,8 @@ public class Constant {
 
 	public static final String REDIS_USER_KEY = "_gb_user_info_";
 	
+	public static final String PC_REDIS_USER_KEY = "_pc_user_info_";
+	
 	public static final String REDIS_PRODUCT_ALL_KEY = "_gb_product_all_info_";
 	
 	public static final String TOKEN_HEADER_KEY = "token";

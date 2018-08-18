@@ -5,11 +5,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.common.dto.GetGroupUserDto;
 import com.common.dto.LoginDto;
 import com.common.service.UserService;
-import com.gubang.config.UserInfoParam;
+import com.gubang.config.PCUserInfoParam;
 import com.gubang.entity.UserInfo;
 import com.gubang.util.ResultDTO;
 
@@ -35,7 +34,7 @@ public class LoginModuleController {
 	 * @return
 	 */
 	@RequestMapping(value = "/getGroupUser", method = RequestMethod.POST)
-	public ResultDTO getGroupUser(@UserInfoParam UserInfo userInfo, @RequestBody GetGroupUserDto params) {
+	public ResultDTO getGroupUser(@PCUserInfoParam UserInfo userInfo, @RequestBody GetGroupUserDto params) {
 		return userService.getGroupUser(userInfo, params);
 	}
 

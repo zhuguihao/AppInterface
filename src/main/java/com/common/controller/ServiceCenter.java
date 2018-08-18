@@ -9,7 +9,7 @@ import com.common.service.DictService;
 import com.common.service.GroupService;
 import com.common.service.ComMenuService;
 import com.common.service.UserService;
-import com.gubang.config.UserInfoParam;
+import com.gubang.config.PCUserInfoParam;
 import com.gubang.entity.Dict;
 import com.gubang.entity.Group;
 import com.gubang.entity.Menu;
@@ -34,7 +34,7 @@ public class ServiceCenter {
 	 * @return
 	 */
 	@RequestMapping(value = "/getDict", method = RequestMethod.POST)
-	public ResultDTO getDict(@UserInfoParam UserInfo userInfo, @RequestBody Dict params) {
+	public ResultDTO getDict(@PCUserInfoParam UserInfo userInfo, @RequestBody Dict params) {
 		return dictService.getDict(userInfo, params);
 	}
 
@@ -44,7 +44,7 @@ public class ServiceCenter {
 	 * @return
 	 */
 	@RequestMapping(value = "/editDict", method = RequestMethod.POST)
-	public ResultDTO editDict(@UserInfoParam UserInfo userInfo, @RequestBody Dict params) {
+	public ResultDTO editDict(@PCUserInfoParam UserInfo userInfo, @RequestBody Dict params) {
 		return dictService.editDict(userInfo, params);
 	}
 
@@ -54,7 +54,7 @@ public class ServiceCenter {
 	 * @return
 	 */
 	@RequestMapping(value = "/addDict", method = RequestMethod.POST)
-	public ResultDTO addDict(@UserInfoParam UserInfo userInfo, @RequestBody Dict params) {
+	public ResultDTO addDict(@PCUserInfoParam UserInfo userInfo, @RequestBody Dict params) {
 		return dictService.addDict(userInfo, params);
 	}
 	
@@ -64,7 +64,7 @@ public class ServiceCenter {
 	 * @return
 	 */
 	@RequestMapping(value = "/getUser", method = RequestMethod.POST)
-	public ResultDTO getUser(@UserInfoParam UserInfo userInfo, @RequestBody UserInfo params) {
+	public ResultDTO getUser(@PCUserInfoParam UserInfo userInfo, @RequestBody UserInfo params) {
 		return userService.getUser(userInfo, params);
 	}
 	
@@ -74,7 +74,7 @@ public class ServiceCenter {
 	 * @return
 	 */
 	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
-	public ResultDTO editUser(@UserInfoParam UserInfo userInfo, @RequestBody UserInfo params) {
+	public ResultDTO editUser(@PCUserInfoParam UserInfo userInfo, @RequestBody UserInfo params) {
 		return userService.editUser(userInfo, params);
 	}
 	
@@ -84,7 +84,7 @@ public class ServiceCenter {
 	 * @return
 	 */
 	@RequestMapping(value = "/getMenu", method = RequestMethod.POST)
-	public ResultDTO getMenu(@UserInfoParam UserInfo userInfo, @RequestBody Menu params) {
+	public ResultDTO getMenu(@PCUserInfoParam UserInfo userInfo, @RequestBody Menu params) {
 		return menuService.getMenu(userInfo, params);
 	}
 	
@@ -94,7 +94,7 @@ public class ServiceCenter {
 	 * @return
 	 */
 	@RequestMapping(value = "/getWebMenu", method = RequestMethod.POST)
-	public ResultDTO getWebMenu(@UserInfoParam UserInfo userInfo, @RequestBody Menu params) {
+	public ResultDTO getWebMenu(@PCUserInfoParam UserInfo userInfo, @RequestBody Menu params) {
 		return menuService.getWebMenu(userInfo, params);
 	}
 	
@@ -104,7 +104,7 @@ public class ServiceCenter {
 	 * @return
 	 */
 	@RequestMapping(value = "/getGroup", method = RequestMethod.POST)
-	public ResultDTO getGroup(@UserInfoParam UserInfo userInfo, @RequestBody Group params) {
+	public ResultDTO getGroup(@PCUserInfoParam UserInfo userInfo, @RequestBody Group params) {
 		return groupService.getGroup(userInfo, params);
 	}
 }
