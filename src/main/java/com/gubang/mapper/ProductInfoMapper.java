@@ -1,7 +1,6 @@
 package com.gubang.mapper;
 
 import java.util.List;
-
 import com.gubang.entity.ProductInfo;
 import com.gubang.vo.ProductVo;
 
@@ -21,4 +20,6 @@ public interface ProductInfoMapper {
     List<ProductInfo> findAll();
     
     ProductVo getProduct(ProductVo productVo);
+
+	List<ProductInfo> get(ProductInfo params);
 }

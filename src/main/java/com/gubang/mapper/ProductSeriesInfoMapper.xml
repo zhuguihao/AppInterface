@@ -22,6 +22,7 @@
 		<include refid="Base_Column_List" />
 		from t_product_series
 		<where>
+		    del_flag = 'N'
 			<if test="id != null">
 				and id = #{id,jdbcType=VARCHAR}
 			</if>
@@ -35,9 +36,6 @@
 			</if>
 			<if test="sort != null  and sort != ''">
 				and sort = #{sort,jdbcType=DECIMAL}
-			</if>
-			<if test="delFlag != null">
-				and del_flag = #{delFlag,jdbcType=VARCHAR}
 			</if>
 			<if test="createBy != null">
 				and create_by = #{createBy,jdbcType=VARCHAR}

@@ -4,155 +4,165 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class ProductInfo {
-    private String id;
+	private String id;
 
-    private String proNameId;
+	private String tSeriesId;
 
-    private String proModel;
+	private String proNameId;
 
-    private String voltageRange;
+	private String proModel;
 
-    private BigDecimal distributionPrice;
+	private String voltageRange;
 
-    private BigDecimal retailPrice;
+	private BigDecimal distributionPrice;
 
-    private String proDesc;
+	private BigDecimal retailPrice;
 
-    private Long policy;
+	private String proDesc;
 
-    private Long policyReplace;
+	private Long policy;
 
-    private Long sort;
+	private Long policyReplace;
 
-    private String delFlag;
+	private Long sort;
 
-    private String createBy;
+	private String delFlag;
 
-    private Date createDate;
+	private String createBy;
 
-    private String updateBy;
+	private Date createDate;
 
-    private Date updateDate;
+	private String updateBy;
 
-    public String getId() {
-        return id;
-    }
+	private Date updateDate;
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getProNameId() {
-        return proNameId;
-    }
+	public void setId(String id) {
+		this.id = id == null ? null : id.trim();
+	}
 
-    public void setProNameId(String proNameId) {
-        this.proNameId = proNameId == null ? null : proNameId.trim();
-    }
+	public String gettSeriesId() {
+		return tSeriesId;
+	}
 
-    public String getProModel() {
-        return proModel;
-    }
+	public void settSeriesId(String tSeriesId) {
+		this.tSeriesId = tSeriesId;
+	}
 
-    public void setProModel(String proModel) {
-        this.proModel = proModel == null ? null : proModel.trim();
-    }
+	public String getProNameId() {
+		return proNameId;
+	}
 
-    public String getVoltageRange() {
-        return voltageRange;
-    }
+	public void setProNameId(String proNameId) {
+		this.proNameId = proNameId == null ? null : proNameId.trim();
+	}
 
-    public void setVoltageRange(String voltageRange) {
-        this.voltageRange = voltageRange == null ? null : voltageRange.trim();
-    }
+	public String getProModel() {
+		return proModel;
+	}
 
-    public BigDecimal getDistributionPrice() {
-        return distributionPrice;
-    }
+	public void setProModel(String proModel) {
+		this.proModel = proModel == null ? null : proModel.trim();
+	}
 
-    public void setDistributionPrice(BigDecimal distributionPrice) {
-        this.distributionPrice = distributionPrice;
-    }
+	public String getVoltageRange() {
+		return voltageRange;
+	}
 
-    public BigDecimal getRetailPrice() {
-        return retailPrice;
-    }
+	public void setVoltageRange(String voltageRange) {
+		this.voltageRange = voltageRange == null ? null : voltageRange.trim();
+	}
 
-    public void setRetailPrice(BigDecimal retailPrice) {
-        this.retailPrice = retailPrice;
-    }
+	public BigDecimal getDistributionPrice() {
+		return distributionPrice;
+	}
 
-    public String getProDesc() {
-        return proDesc;
-    }
+	public void setDistributionPrice(BigDecimal distributionPrice) {
+		this.distributionPrice = distributionPrice;
+	}
 
-    public void setProDesc(String proDesc) {
-        this.proDesc = proDesc == null ? null : proDesc.trim();
-    }
+	public BigDecimal getRetailPrice() {
+		return retailPrice;
+	}
 
-    public Long getPolicy() {
-        return policy;
-    }
+	public void setRetailPrice(BigDecimal retailPrice) {
+		this.retailPrice = retailPrice;
+	}
 
-    public void setPolicy(Long policy) {
-        this.policy = policy;
-    }
+	public String getProDesc() {
+		return proDesc;
+	}
 
-    public Long getPolicyReplace() {
-        return policyReplace;
-    }
+	public void setProDesc(String proDesc) {
+		this.proDesc = proDesc == null ? null : proDesc.trim();
+	}
 
-    public void setPolicyReplace(Long policyReplace) {
-        this.policyReplace = policyReplace;
-    }
+	public Long getPolicy() {
+		return policy;
+	}
 
-    public Long getSort() {
-        return sort;
-    }
+	public void setPolicy(Long policy) {
+		this.policy = policy;
+	}
 
-    public void setSort(Long sort) {
-        this.sort = sort;
-    }
+	public Long getPolicyReplace() {
+		return policyReplace;
+	}
 
-    public String getDelFlag() {
-        return delFlag;
-    }
+	public void setPolicyReplace(Long policyReplace) {
+		this.policyReplace = policyReplace;
+	}
 
-    public void setDelFlag(String delFlag) {
-        this.delFlag = delFlag == null ? null : delFlag.trim();
-    }
+	public Long getSort() {
+		return sort;
+	}
 
-    public String getCreateBy() {
-        return createBy;
-    }
+	public void setSort(Long sort) {
+		this.sort = sort;
+	}
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy == null ? null : createBy.trim();
-    }
+	public String getDelFlag() {
+		return delFlag;
+	}
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag == null ? null : delFlag.trim();
+	}
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+	public String getCreateBy() {
+		return createBy;
+	}
 
-    public String getUpdateBy() {
-        return updateBy;
-    }
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy == null ? null : createBy.trim();
+	}
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy == null ? null : updateBy.trim();
-    }
+	public Date getCreateDate() {
+		return createDate;
+	}
 
-    public Date getUpdateDate() {
-        return updateDate;
-    }
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy == null ? null : updateBy.trim();
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
 
 	@Override
 	public String toString() {
@@ -162,5 +172,5 @@ public class ProductInfo {
 				+ ", delFlag=" + delFlag + ", createBy=" + createBy + ", createDate=" + createDate + ", updateBy="
 				+ updateBy + ", updateDate=" + updateDate + "]";
 	}
-    
+
 }

@@ -3,6 +3,7 @@ package com.gubang.mapper;
 import java.util.List;
 
 import com.gubang.entity.ProductNameInfo;
+import com.gubang.entity.ProductSeriesInfo;
 
 public interface ProductNameInfoMapper {
     int deleteByPrimaryKey(String id);
@@ -18,4 +19,6 @@ public interface ProductNameInfoMapper {
     int updateByPrimaryKey(ProductNameInfo record);
     
     List<ProductNameInfo> findAll();
+
+	List<ProductSeriesInfo> get(ProductNameInfo params);
 }

@@ -3,17 +3,15 @@
 <mapper namespace="com.gubang.mapper.ProductInfoMapper">
 	<resultMap id="BaseResultMap" type="com.gubang.entity.ProductInfo">
 		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="t_series_id" property="tSeriesId" jdbcType="VARCHAR" />
 		<result column="pro_name_id" property="proNameId" jdbcType="VARCHAR" />
 		<result column="pro_model" property="proModel" jdbcType="VARCHAR" />
-		<result column="voltage_range" property="voltageRange"
-			jdbcType="VARCHAR" />
-		<result column="distribution_price" property="distributionPrice"
-			jdbcType="DECIMAL" />
+		<result column="voltage_range" property="voltageRange" jdbcType="VARCHAR" />
+		<result column="distribution_price" property="distributionPrice" jdbcType="DECIMAL" />
 		<result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
 		<result column="pro_desc" property="proDesc" jdbcType="VARCHAR" />
 		<result column="policy" property="policy" jdbcType="DECIMAL" />
-		<result column="policy_replace" property="policyReplace"
-			jdbcType="DECIMAL" />
+		<result column="policy_replace" property="policyReplace" jdbcType="DECIMAL" />
 		<result column="sort" property="sort" jdbcType="DECIMAL" />
 		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
 		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
@@ -27,10 +25,8 @@
 		<result column="pro_name" property="proName" jdbcType="VARCHAR" />
 		<result column="pro_name_id" property="proNameId" jdbcType="VARCHAR" />
 		<result column="pro_model" property="proModel" jdbcType="VARCHAR" />
-		<result column="voltage_range" property="voltageRange"
-			jdbcType="VARCHAR" />
-		<result column="distribution_price" property="distributionPrice"
-			jdbcType="DECIMAL" />
+		<result column="voltage_range" property="voltageRange" jdbcType="VARCHAR" />
+		<result column="distribution_price" property="distributionPrice" jdbcType="DECIMAL" />
 		<result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
 		<result column="pro_desc" property="proDesc" jdbcType="VARCHAR" />
 		<result column="policy" property="policy" jdbcType="DECIMAL" />
@@ -39,12 +35,22 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, pro_name_id, pro_model, voltage_range,
-		distribution_price,
-		retail_price, pro_desc,
-		policy, policy_replace,
-		sort, del_flag, create_by, create_date, update_by,
-		update_date
+		tp.id,
+		tps.id t_series_id,
+		tp.pro_name_id, 
+		tp.pro_model, 
+		tp.voltage_range,
+		tp.distribution_price,
+		tp.retail_price, 
+		tp.pro_desc,
+		tp.policy, 
+		tp.policy_replace,
+		tp.sort, 
+		tp.del_flag, 
+		tp.create_by, 
+		tp.create_date, 
+		tp.update_by,
+		tp.update_date
 	</sql>
 
 	<sql id="Base_Pro_Column_List">
@@ -59,6 +65,71 @@
 		tp.policy,
 		tp.policy_replace
 	</sql>
+	
+	<select id="get" parameterType="com.gubang.entity.ProductInfo" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from 
+			t_product_series tps,
+			t_product_name tpn,
+			t_product tp
+		<where>
+			tps.id = tpn.t_series_id
+			AND tpn.id = tp.pro_name_id
+		    AND tp.del_flag = 'N'
+		    AND tpn.del_flag = 'N'
+		    AND tps.del_flag = 'N'
+			<if test="id != null">
+				and tp.id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="tSeriesId != null and tSeriesId != ''">
+				and tps.id = #{tSeriesId,jdbcType=VARCHAR}
+			</if>
+			<if test="proNameId != null and proNameId != ''">
+				and tpn.id = #{proNameId,jdbcType=VARCHAR}
+			</if>
+			<if test="proModel != null and proModel != ''">
+				and tp.pro_model like
+					concat('%',#{proModel,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="voltageRange != null and voltageRange != ''">
+				and tp.voltage_range like
+					concat('%',#{voltageRange,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="distributionPrice != null  and distributionPrice != ''">
+				and tp.distribution_price = #{distributionPrice,jdbcType=DECIMAL}
+			</if>
+			<if test="retailPrice != null  and retailPrice != ''">
+				and tp.retail_price = #{retailPrice,jdbcType=DECIMAL}
+			</if>
+			<if test="proDesc != null  and proDesc != ''">
+				and tp.pro_desc = #{proDesc,jdbcType=DECIMAL}
+			</if>
+			<if test="policy != null  and policy != ''">
+				and tp.policy = #{policy,jdbcType=DECIMAL}
+			</if>
+			<if test="sort != null  and sort != ''">
+				and tp.sort = #{sort,jdbcType=DECIMAL}
+			</if>
+			<if test="createBy != null">
+				and tp.create_by = #{createBy,jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				and tp.create_date = #{createDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				and tp.update_by = #{updateBy,jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				and tp.update_date = #{updateDate,jdbcType=TIMESTAMP}
+			</if>
+		</where>
+		
+		order by
+		tp.create_date,
+		tp.sort
+	</select>
+	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
 		select

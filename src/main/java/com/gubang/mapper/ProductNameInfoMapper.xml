@@ -14,11 +14,36 @@
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, t_series_id, pro_code, pro_name, sort, del_flag, create_by, create_date, update_by, 
-    update_date
+    id, t_series_id, pro_code, pro_name, sort, del_flag, create_by, create_date, update_by, update_date
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="get" resultMap="BaseResultMap" parameterType="com.gubang.entity.ProductNameInfo" >
     select 
+    <include refid="Base_Column_List" />
+    from t_product_name
+    <where>
+      del_flag = 'N'
+      <if test="id != null" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="tSeriesId != null and tSeriesId != ''" >
+        and t_series_id = #{tSeriesId,jdbcType=VARCHAR}
+      </if>
+      <if test="proCode != null and proCode != ''" >
+        and pro_code like
+					concat('%',#{proCode,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="proName != null and proName != ''" >
+        and pro_name like
+					concat('%',#{proName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="sort != null" >
+        and sort = #{sort,jdbcType=DECIMAL}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
     <include refid="Base_Column_List" />
     from t_product_name
     where id = #{id,jdbcType=VARCHAR}
