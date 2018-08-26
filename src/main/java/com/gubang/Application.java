@@ -21,7 +21,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @MapperScan(basePackages = { "com.gubang.mapper" })
 @ServletComponentScan
 public class Application {
-	
+
     public static void main(String[] args) throws Exception {
     	SpringApplication.run(Application.class, args);
     }
