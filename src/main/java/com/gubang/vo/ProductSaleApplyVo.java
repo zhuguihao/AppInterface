@@ -59,6 +59,10 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable {
 	 * 配件列表
 	 */
 	private String partsList;
+	/**
+	 * 是否直寄快递
+	 */
+	private String isMailingAccessories;
 
 	public String getId() {
 		return id;
@@ -370,6 +374,14 @@ public class ProductSaleApplyVo extends CommonEntity implements Serializable {
 
 	public void setPartsList(String partsList) {
 		this.partsList = partsList;
+	}
+
+	public String getIsMailingAccessories() {
+		return isMailingAccessories;
+	}
+
+	public void setIsMailingAccessories(String isMailingAccessories) {
+		this.isMailingAccessories = isMailingAccessories;
 	}
 
 }

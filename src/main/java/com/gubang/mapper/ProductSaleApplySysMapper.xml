@@ -16,6 +16,7 @@
 		<result column="is_recipient" property="isRecipient" jdbcType="VARCHAR" />
 		<result column="product_status" property="productStatus" jdbcType="VARCHAR" />
 		<result column="waybill_number" property="waybillNumber" jdbcType="VARCHAR" />
+		<result column="is_mailing_accessories" property="isMailingAccessories" jdbcType="VARCHAR" />
 		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
 		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -41,6 +42,7 @@
 		product_status,
 		waybill_number,
 		parts_list,
+		is_mailing_accessories,
 		is_del,
 		create_by,
 		create_date,
@@ -66,6 +68,7 @@
 		product_status,
 		waybill_number,
 		parts_list,
+		is_mailing_accessories,
 		is_del,
 		create_by,
 		create_date,
@@ -89,6 +92,7 @@
 		#{productStatus,jdbcType=VARCHAR},
 		#{waybillNumber,jdbcType=VARCHAR},
 		#{partsList,jdbcType=VARCHAR},
+		#{isMailingAccessories,jdbcType=VARCHAR},
 		#{isDel,jdbcType=VARCHAR},
 		#{createBy,jdbcType=VARCHAR},
 		#{createDate,jdbcType=TIMESTAMP},
@@ -138,6 +142,9 @@
 			</if>
 			<if test='partsList != null and partsList != ""'>
 				parts_list = #{partsList,jdbcType=VARCHAR},
+			</if>
+			<if test='isMailingAccessories != null and isMailingAccessories != ""'>
+				is_mailing_accessories = #{isMailingAccessories,jdbcType=VARCHAR},
 			</if>
 			<if test='isDel != null and isDel != ""'>
 				is_del = #{isDel,jdbcType=VARCHAR},

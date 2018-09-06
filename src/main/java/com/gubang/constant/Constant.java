@@ -23,6 +23,7 @@ public class Constant {
 	 * 是否需要付费的产品
 	 */
 	public static final String IS_PAY_GOODS = "Y";
+	public static final String IS_NO_PAY_GOODS = "N";
 	/**
 	 * 是否直寄配件
 	 */

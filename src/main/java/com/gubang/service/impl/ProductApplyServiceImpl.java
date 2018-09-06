@@ -240,9 +240,9 @@ public class ProductApplyServiceImpl implements ProductApplyService {
 	public ResultDTO applyImage(UserInfo userInfo, ApplyImageDto params) {
 		ResultDTO result = new ResultDTO();
 		try {
-			if (null == userInfo) {
-				return result.setNotLogin();
-			}
+//			if (null == userInfo) {
+//				return result.setNotLogin();
+//			}
 			if (params.inValid()) {
 				return result.setParameterInvalid();
 			}

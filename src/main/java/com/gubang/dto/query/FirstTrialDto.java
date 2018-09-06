@@ -2,6 +2,8 @@ package com.gubang.dto.query;
 
 import java.io.Serializable;
 
+import com.alibaba.druid.util.StringUtils;
+import com.gubang.constant.Constant;
 import com.gubang.util.CommonUtil;
 
 public class FirstTrialDto implements Serializable {
@@ -125,7 +127,7 @@ public class FirstTrialDto implements Serializable {
 	}
 
 	public boolean inValid() {
-		if (null == isPay) {
+		if (StringUtils.isEmpty(isPay) || Constant.IS_NO_PAY_GOODS.equals(isPay)) {
 			return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc) || CommonUtil.isEmpty(isMailingAccessories);
 		}
 		return CommonUtil.isEmpty(productSaleApplyId) || CommonUtil.isEmpty(applyDesc) || CommonUtil.isEmpty(isPay)

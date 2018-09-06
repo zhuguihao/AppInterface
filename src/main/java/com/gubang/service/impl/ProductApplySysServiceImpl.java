@@ -77,7 +77,8 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			productSaleApplySys.setExpressPhone(params.getExpressPhone());
 			productSaleApplySys.setExpressAddress(params.getExpressAddress());
 			productSaleApplySys.setApplyPolicyState(params.getApplyPolicyState());
-
+			productSaleApplySys.setIsMailingAccessories(params.getIsMailingAccessories());
+			
 			productSaleApplySys.setCreateBy(userInfo.getId());
 			productSaleApplySys.setCreateDate(new Date());
 			productSaleApplySys.setUpdateBy(userInfo.getId());
@@ -90,7 +91,9 @@ public class ProductApplySysServiceImpl implements ProductApplySysService {
 			ProductSaleApply productSaleApply = new ProductSaleApply();
 			productSaleApply.setId(params.getProductSaleApplyId());
 			/**
-			 * 20180516 新增需求 需要将部分发送配件的客户售后单流转到公司快递
+			 * 20180516 
+			 * 新增需求 
+			 * 需要将部分发送配件的客户售后单流转到公司快递
 			 */
 			productSaleApply.setApplyStatus(Constant.IS_MAILING_ACCESSORIES.equals(params.getIsMailingAccessories())
 					? SaleApplyCode.COURIER_DEPARTMENT.getCode() : SaleApplyCode.THE_TRIAL_PASS.getCode());

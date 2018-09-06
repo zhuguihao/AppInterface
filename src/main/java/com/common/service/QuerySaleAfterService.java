@@ -6,5 +6,7 @@ import com.gubang.util.ResultDTO;
 
 public interface QuerySaleAfterService {
 
-	ResultDTO getSaleAfter(UserInfo userInfo, SaleAfterDto params);
+	ResultDTO getTelephoneAudit(UserInfo userInfo, SaleAfterDto params);
+
+	ResultDTO getExpressDelivery(UserInfo userInfo, SaleAfterDto params);
 }

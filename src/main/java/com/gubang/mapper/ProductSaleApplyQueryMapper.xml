@@ -3,7 +3,8 @@
 <mapper namespace="com.gubang.mapper.ProductSaleApplyQueryMapper">
 	<resultMap id="BaseResultMap" type="com.gubang.vo.ProductSaleApplyVo">
 		<id column="id" property="id" jdbcType="VARCHAR" />
-		<!-- <result column="product_sale_id" property="productSaleId" jdbcType="VARCHAR" /> -->
+		<!-- <result column="product_sale_id" property="productSaleId" jdbcType="VARCHAR" 
+			/> -->
 		<result column="cus_name" property="cusName" jdbcType="VARCHAR" />
 		<result column="cus_telphone" property="cusTelphone" jdbcType="VARCHAR" />
 		<result column="fault_point" property="faultPoint" jdbcType="VARCHAR" />
@@ -27,7 +28,6 @@
 		<result column="pro_desc" property="proDesc" jdbcType="DECIMAL" />
 		<result column="policy" property="policy" jdbcType="DECIMAL" />
 		<result column="policy_replace" property="policyReplace" jdbcType="DECIMAL" />
-		
 		<result column="apply_user" property="applyUser" jdbcType="VARCHAR" />
 		<result column="apply_desc" property="applyDesc" jdbcType="VARCHAR" />
 		<result column="is_pay" property="isPay" jdbcType="VARCHAR" />
@@ -41,7 +41,7 @@
 		<result column="sysProductStatus" property="sysProductStatus" jdbcType="VARCHAR" />
 		<result column="sysWaybillNumber" property="sysWaybillNumber" jdbcType="VARCHAR" />
 		<result column="parts_ist" property="partsList" jdbcType="VARCHAR" />
-		
+		<result column="is_mailing_accessories" property="isMailingAccessories" jdbcType="VARCHAR" />
 		<result column="is_del" property="isDel" jdbcType="VARCHAR" />
 		<result column="create_by" property="createBy" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -87,6 +87,7 @@
 		tpsas.product_status sysProductStatus,
 		tpsas.waybill_number sysWaybillNumber,
 		tpsas.parts_list,
+		tpsas.is_mailing_accessories,
 		tpsa.is_del,
 		tpsa.create_by,
 		tpsa.create_date,
@@ -99,31 +100,32 @@
 		select
 		<include refid="Base_Column_List" />
 		from
-			t_product_sale_apply tpsa 
-		LEFT JOIN 
-			t_product_sale_apply_sys tpsas 
+		t_product_sale_apply tpsa
+		LEFT JOIN
+		t_product_sale_apply_sys tpsas
 		ON
-			tpsa.id = tpsas.product_sale_apply_id,
-			t_product_sale tps,
-			t_product_series tpse,
-			t_product_name tpn,
-			t_product tp
+		tpsa.id = tpsas.product_sale_apply_id,
+		t_product_sale tps,
+		t_product_series tpse,
+		t_product_name tpn,
+		t_product tp
 		<where>
-				tpsa.product_sale_id = tps.id
+			tpsa.product_sale_id = tps.id
 			and
-				tps.product_id = tp.id
+			tps.product_id = tp.id
 			and
-				tp.pro_name_id = tpn.id
+			tp.pro_name_id = tpn.id
 			and
-				tpn.t_series_id = tpse.id
+			tpn.t_series_id = tpse.id
 			and
-				tpsa.is_del = 'N'
+			tpsa.is_del = 'N'
 			and
-				tp.del_flag = 'N'
+			tp.del_flag = 'N'
 			<if test='id != null and id != ""'>
 				and tpsa.id = #{id,jdbcType=VARCHAR}
 			</if>
-			<if test='applyStatus != null and applyStatus != "" and applyStatus != "all" '>
+			<if
+				test='applyStatus != null and applyStatus != "" and applyStatus != "all" '>
 				and tpsa.apply_status =
 				#{applyStatus,jdbcType=VARCHAR}
 			</if>
@@ -136,42 +138,146 @@
 			</if>
 		</where>
 		order by
-			tpsa.create_date
+		tpsa.create_date
 		desc
 	</select>
-	
+
+	<select id="getTelephoneAudit" resultMap="BaseResultMap"
+		parameterType="com.gubang.vo.ProductSaleApplyVo">
+		select
+		<include refid="Base_Column_List" />
+		from
+		t_product_sale_apply tpsa
+		LEFT JOIN
+		t_product_sale_apply_sys tpsas
+		ON
+		tpsa.id = tpsas.product_sale_apply_id,
+		t_product_sale tps,
+		t_product_series tpse,
+		t_product_name tpn,
+		t_product tp
+		<where>
+			tpsa.product_sale_id = tps.id
+			and
+			tps.product_id = tp.id
+			and
+			tp.pro_name_id = tpn.id
+			and
+			tpn.t_series_id = tpse.id
+			and
+			tpsa.is_del = 'N'
+			and
+			tp.del_flag = 'N'
+			and (
+			apply_status = 'first_trial' or apply_status = 'the_trial_pass' or apply_status =
+			'the_trial_reject'
+			)
+			<if test='id != null and id != ""'>
+				and tpsa.id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if
+				test='applyStatus != null and applyStatus != "" and applyStatus != "all" '>
+				and tpsa.apply_status =
+				#{applyStatus,jdbcType=VARCHAR}
+			</if>
+			<if test='barCode != null and barCode != ""'>
+				and tps.bar_code =
+				#{barCode,jdbcType=VARCHAR}
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				and tpsa.create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+		</where>
+		order by
+		tpsa.create_date
+		desc
+	</select>
+
+	<select id="getExpressDelivery" resultMap="BaseResultMap"
+		parameterType="com.gubang.vo.ProductSaleApplyVo">
+		select
+		<include refid="Base_Column_List" />
+		from
+		t_product_sale_apply tpsa
+		LEFT JOIN
+		t_product_sale_apply_sys tpsas
+		ON
+		tpsa.id = tpsas.product_sale_apply_id,
+		t_product_sale tps,
+		t_product_series tpse,
+		t_product_name tpn,
+		t_product tp
+		<where>
+	tpsa.product_sale_id = tps.id
+	and
+	tps.product_id = tp.id
+	and
+	tp.pro_name_id = tpn.id
+	and
+	tpn.t_series_id = tpse.id
+	and
+	tpsa.is_del = 'N'
+	and
+	tp.del_flag = 'N'
+	and (
+	apply_status = 'courier_tracking_reject' or apply_status = 'courier_tracking' or
+	apply_status = 'courier_department' or apply_status =
+	'company_courier_tracking'
+	)
+			<if test='id != null and id != ""'>
+				and tpsa.id = #{id,jdbcType=VARCHAR}
+			</if>
+			<if
+				test='applyStatus != null and applyStatus != "" and applyStatus != "all" '>
+				and tpsa.apply_status =
+				#{applyStatus,jdbcType=VARCHAR}
+			</if>
+			<if test='barCode != null and barCode != ""'>
+				and tps.bar_code =
+				#{barCode,jdbcType=VARCHAR}
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				and tpsa.create_by = #{createBy,jdbcType=VARCHAR},
+			</if>
+		</where>
+		order by
+		tpsa.create_date
+		desc
+	</select>
+
 	<select id="productSaleApplyByParam" resultMap="BaseResultMap"
 		parameterType="com.gubang.vo.ProductSaleApplyVo">
 		select
 		<include refid="Base_Column_List" />
 		from
-			t_product_sale_apply tpsa 
-		LEFT JOIN 
-			t_product_sale_apply_sys tpsas 
+		t_product_sale_apply tpsa
+		LEFT JOIN
+		t_product_sale_apply_sys tpsas
 		ON
-			tpsa.id = tpsas.product_sale_apply_id,
-			t_product_sale tps,
-			t_product_series tpse,
-			t_product_name tpn,
-			t_product tp
+		tpsa.id = tpsas.product_sale_apply_id,
+		t_product_sale tps,
+		t_product_series tpse,
+		t_product_name tpn,
+		t_product tp
 		<where>
-				tpsa.product_sale_id = tps.id
+			tpsa.product_sale_id = tps.id
 			and
-				tps.product_id = tp.id
+			tps.product_id = tp.id
 			and
-				tp.pro_name_id = tpn.id
+			tp.pro_name_id = tpn.id
 			and
-				tpn.t_series_id = tpse.id
+			tpn.t_series_id = tpse.id
 			and
-				tpsa.is_del = 'N'
+			tpsa.is_del = 'N'
 			and
-				tp.del_flag = 'N'
+			tp.del_flag = 'N'
 			and
-				tpsa.apply_status != 'finsh_apply'
+			tpsa.apply_status != 'finsh_apply'
 			<if test='id != null and id != ""'>
 				and tpsa.id = #{id,jdbcType=VARCHAR}
 			</if>
-			<if test='applyStatus != null and applyStatus != "" and applyStatus != "all" '>
+			<if
+				test='applyStatus != null and applyStatus != "" and applyStatus != "all" '>
 				and tpsa.apply_status =
 				#{applyStatus,jdbcType=VARCHAR}
 			</if>
@@ -184,7 +290,7 @@
 			</if>
 		</where>
 		order by
-			tpsa.create_date
+		tpsa.create_date
 		desc
 	</select>
 </mapper>

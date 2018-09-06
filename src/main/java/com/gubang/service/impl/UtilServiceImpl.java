@@ -45,7 +45,7 @@ public class UtilServiceImpl implements UtilService {
 			type = fileName.substring(fileName.lastIndexOf("."), fileName.length()) == "." ? ""
 					: fileName.substring(fileName.lastIndexOf("."), fileName.length());
 		}
-		fileName = CommonUtil.getFormatDate(new Date(), "yyyyMM/") + CommonUtil.getUUid() + type;
+		fileName = CommonUtil.getFormatDate(new Date(), "yyyyMM/")+ CommonUtil.getFormatDate(new Date(), "dd/") + CommonUtil.getUUid() + type;
 		/**
 		 * 入库保存当前文件信息
 		 */
@@ -74,9 +74,9 @@ public class UtilServiceImpl implements UtilService {
 		expiration = calendar.getTime();
 		oss.setExpiration(expiration);
 		file.setDownLoadUrl(ossService.downLoadUrl(oss).toString());
-		file.setCreateBy(userInfo.getId());
+		file.setCreateBy(null==userInfo?"":userInfo.getId());
 		file.setCreateDate(new Date());
-		file.setUpdateBy(userInfo.getId());
+		file.setUpdateBy(null==userInfo?"":userInfo.getId());
 		file.setUpdateDate(new Date());
 
 		tFileMapper.insert(file);
