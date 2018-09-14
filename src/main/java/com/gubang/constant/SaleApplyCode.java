@@ -1,5 +1,9 @@
 package com.gubang.constant;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * 售后申请单状态
  * 
@@ -11,7 +15,7 @@ public enum SaleApplyCode {
 	FIRST_TRIAL("first_trial", "售后初审"),
 	THE_TRIAL_PASS("the_trial_pass", "初审通过"),
 	COURIER_TRACKING_REJECT("courier_tracking_reject", "快递驳回"),
-	THE_TRIAL_REJECT("the_trial_reject","初审拒绝"),
+	THE_TRIAL_REJECT("the_trial_reject","初审拒绝"),	
 	COURIER_TRACKING("courier_tracking","客户快递"),
 	AFTERSALE_DEPARTMENT("aftersale_department","售后部"),
 	COURIER_DEPARTMENT("courier_department","售后寄件"),
@@ -41,5 +45,21 @@ public enum SaleApplyCode {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+	
+	public static JSONArray getList(){
+		JSONArray list = new JSONArray();
+		for (SaleApplyCode item:SaleApplyCode.values()) {
+			JSONObject obj = new JSONObject();
+			obj.put("code",item.code);
+			obj.put("desc",item.desc);
+			list.add(obj);
+		}
+		System.out.println(JSON.toJSONString(list));
+		return list;
+	}
+	
+	public static void main(String[] args) {
+		SaleApplyCode.getList();
 	}
 }
