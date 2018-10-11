@@ -211,7 +211,7 @@
 			</if>
 		</where>
 		order by
-		tsm.index,
+		tsm.sort,
 		tsm.create_date
 	</select>
 
@@ -261,7 +261,7 @@
 			</if>
 		</where>
 		order by
-		tsm.index,
+		tsm.sort,
 		tsm.create_date
 	</select>
 
