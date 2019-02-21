@@ -14,6 +14,7 @@ import com.gubang.entity.UserInfo;
 import com.gubang.mapper.MenuCenterMapper;
 import com.gubang.mapper.MenuMapper;
 import com.gubang.util.CommonUtil;
+import com.gubang.util.HttpRequest;
 import com.gubang.util.ResultDTO;
 
 @Service
@@ -119,5 +120,13 @@ public class ComMenuServiceImpl implements ComMenuService {
 			return result.setSystemError();
 		}
 	}
-
+	public static void main(String[] args) {
+		 //发送 GET 请求
+        String s=HttpRequest.sendGet("http://crc.free.idcfengye.com/index.php/api/wechat/userAuth", "");
+        System.out.println(s);
+        
+        //发送 POST 请求
+        String sr=HttpRequest.sendPost("http://crc.free.idcfengye.com/index.php/api/wechat/userAuth", "");
+        System.out.println(sr);
+	}
 }

@@ -2,10 +2,8 @@ package com.common.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.common.dto.SaleAfterDto;
 import com.common.service.QuerySaleAfterService;
 import com.gubang.config.PCUserInfoParam;
-import com.gubang.config.UserInfoParam;
 import com.gubang.dto.apply.FirstTrialRejectDto;
 import com.gubang.dto.apply.SignExpressDto;
 import com.gubang.dto.query.FirstTrialDto;
